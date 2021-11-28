@@ -6,6 +6,10 @@
   --clr-text: #5f6c7b;
   --main-font: "Montserrat", "Roboto", sans-serif;
   --title-font: "Lato", "Roboto", sans-serif;
+  --screen-xs: 600px;
+  --screen-sm: 720px;
+  --screen-md: 1024px;
+  --screen-l: 1536px;
 }
 
 *,
@@ -92,7 +96,7 @@ h6 {
   border-radius: 5px;
   width: 300px;
   height: 200px;
-  margin: 1rem auto;
+  margin: 0.258rem auto;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -122,8 +126,19 @@ h6 {
 }
 
 footer {
-  display: flex;
-  justify-content: space-around;
+  min-height: 300px;
+  display:flex;
+  align-items: center;
+  background-color: var(--clr-light-blue);
+}
+
+footer p, footer label{
+  text-shadow: var(--clr-dark-blue);
+  font-weight: 700;
+}
+
+footer a{
+  color:var(--clr-background)
 }
 
 footer section,
@@ -136,4 +151,27 @@ footer section form {
 footer section a,
 footer section form input {
   margin-top: 0.5rem;
+}
+
+.footer-wrapper{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  height: 250px;
+  width:100%;
+}
+
+@media screen and (min-width: 600px) {
+  
+}
+
+@media screen and (min-width: 720px) {
+  .footer-wrapper{
+    max-width: 920px;
+    width:100%;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+ 
 }
