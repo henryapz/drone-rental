@@ -1,72 +1,150 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700;900&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" type="text/css" href="styles.css" media="screen" />
-    <title>Document</title>
-  </head>
-  <body>
-    <header>
-      <nav><div>NavBar</div></nav>
-    </header>
-    <main>
-      <section class="industries-section-wrapper">
-        <h1 class="section-title">Industrias</h1>
-        <div class="industry-card-container">
-          <div id="card-security" class="industry-card">
-            <a href=""><h2 class="section-title industry-card-title">Seguridad</h2></a>
-          </div>
-          <div id="card-audiovisual" class="industry-card">
-            <a href=""
-              ><h2 class="section-title industry-card-title">
-                Audiovisual
-              </h2></a
-            >
-          </div>
-          <div id="card-realstate" class="industry-card">
-            <a href=""><h2 class="section-title industry-card-title">Inmobiliaria</h2></a>
-          </div>
-          <div id="card-agriculture" class="industry-card">
-            <a href=""><h2 class="section-title industry-card-title">Agrícola</h2></a>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" type="text/css" href="styles.css" media="screen" />
+  <title>Document</title>
+</head>
+
+<body>
+  <header class="flex" id="header">
+    <nav id="logo-container">
+      <a class="flex" href="">
+        <img class="drone-icon" src="./assets/drone-icon.png" alt="drones">
+        <h2>logoname</h2>
+      </a>
+    </nav>
+    <nav class="flex">
+      <div class="nav-item">
+        <a href="http://">Home</a>
+      </div>
+      <div class="nav-item">
+        <a href="http://">Alquilar</a>
+      </div>
+      <div class="nav-item">
+        <a href="http://">FAQs</a>
+      </div>
+    </nav>
+    <nav class="flex" id="actions-nav">
+      <div id="cart">
+        <i class="material-icons">shopping_cart</i>
+      </div>
+      <div id="user">
+        <i class="material-icons">menu</i>
+        <i class="material-icons">account_circle</i>
+      </div>
+    </nav>
+  </header>
+  <main>
+    <section>
+      <div id="banner-container">
+        <img src="./assets//drones.jpg" alt="banner">
+        <div id="banner-content">
+          <span>¿Buscas drones?</span>
+          <span>Tranquilo, te rentamos los que necesites</span>
+          <a href="" class="search">Buscar ></a>
+        </div>
+      </div>
+    </section>
+    <section id="us">
+      <h1>Acerca de nosotros</h1>
+      <div class="flex" id="us-container">
+        <div class="flex us-card">
+          <img src="./assets/remote-control.png" alt="">
+          <div>
+            LogoName es su ventanilla única para el alquiler de equipos UAV. Poseemos y
+            mantenemos nuestra propia flota de alquiler amplia y diversa de la última
+            tecnología de sensores y plataformas UAV.
           </div>
         </div>
-      </section>
-    </main>
-    <footer>
-      <div class="footer-wrapper">
-        <section>
-          <p>Soporte</p>
-          <a href="">Cobertura</a>
-          <a href="">Ordenes</a>
-          <a href="">Pago</a>
-          <a href="">FAQ's</a>
-        </section>
-        <section>
-          <p>Nosotros</p>
-          <a href="">Historia</a>
-          <a href="">Experiencia</a>
-          <a href="">Testimonios</a>
-        </section>
-        <section>
-          <p>Soporte</p>
-          <a href="">Cobertura</a><a href="">FAQ's</a>
-        </section>
-        <section>
-          <form action="">
-            <label for="email">Correo</label>
-            <input type="email" name="email" id="email" />
-            <input type="button" value="Enviar" />
-          </form>
-        </section>
+        <div class="flex us-card">
+          <img src="./assets/uav.png" alt="">
+          <div>
+            Tenemos muchas opciones, desde
+            plataformas de ala fija hasta plataformas multirrotor y sensores, desde
+            ópticos de alta gama hasta térmicos / IR, multiespectrales e incluso LIDAR.
+          </div>
+        </div>
+        <div class="flex us-card">
+          <img src="./assets/south-america.png" alt="">
+          <div>
+            El equipo está disponible para enviar a cualquier ubicación de Sudamérica o mediante
+            recogida local de uno de nuestros diversos socios.
+          </div>
+        </div>
+        <div class="flex us-card">
+          <img src="./assets/city.png" alt="">
+          <div>
+            No importa la industria, lo tenemos cubierto: agricultura de precisión,
+            cinematografía profesional, inspección de edificios, topografía, energía,
+            servicios públicos y energía, servicio público, incendios / seguridad y más.
+          </div>
+        </div>
       </div>
-    </footer>
-  </body>
+    </section>
+    <section class="industries-section-wrapper">
+      <h1 class="section-title">Industrias</h1>
+      <div class="industry-card-container">
+        <div id="card-security" class="industry-card">
+          <a href="">
+            <h2 class="section-title industry-card-title">Seguridad</h2>
+          </a>
+        </div>
+        <div id="card-audiovisual" class="industry-card">
+          <a href="">
+            <h2 class="section-title industry-card-title">
+              Audiovisual
+            </h2>
+          </a>
+        </div>
+        <div id="card-realstate" class="industry-card">
+          <a href="">
+            <h2 class="section-title industry-card-title">Inmobiliaria</h2>
+          </a>
+        </div>
+        <div id="card-agriculture" class="industry-card">
+          <a href="">
+            <h2 class="section-title industry-card-title">Agrícola</h2>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer>
+    <div class="footer-wrapper">
+      <section>
+        <p>Soporte</p>
+        <a href="">Cobertura</a>
+        <a href="">Ordenes</a>
+        <a href="">Pago</a>
+        <a href="">FAQ's</a>
+      </section>
+      <section>
+        <p>Nosotros</p>
+        <a href="">Historia</a>
+        <a href="">Experiencia</a>
+        <a href="">Testimonios</a>
+      </section>
+      <section>
+        <p>Soporte</p>
+        <a href="">Cobertura</a><a href="">FAQ's</a>
+      </section>
+      <section>
+        <form action="">
+          <label for="email">Correo</label>
+          <input type="email" name="email" id="email" />
+          <input type="button" value="Enviar" />
+        </form>
+      </section>
+    </div>
+  </footer>
+</body>
+
 </html>
