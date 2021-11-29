@@ -325,6 +325,7 @@ h6 {
   display: flex;
   justify-content: center;
   align-items: center;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
 
 #card-security {
@@ -454,7 +455,7 @@ footer section form input {
 
 .drone-card {
   border: var(--light-border);
-  box-shadow: #5f6c7b;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   border-radius: 6px 25px;
   width: 350px;
   height: 400px;
