@@ -91,6 +91,7 @@ h6 {
   top: 0;
   background-color: var(--clr-background);
   z-index: 1;
+  border-bottom: 1px solid var(--light-border);
 }
 
 #logo-container {
@@ -149,16 +150,19 @@ h6 {
 
 /* banner */
 
+#banner {
+  padding:30px 0;
+}
+
 #banner-container {
   position: relative;
   text-align: center;
-  padding: 20px 100px;
 }
 
 #banner-container>img {
-  width: 100%;
+  width: 90%;
   max-height: 700px;
-  border-radius: 20px;
+  border-radius: 10px;
 }
 
 #banner-content {
@@ -192,7 +196,7 @@ h6 {
 
 #us {
   background-color: var(--clr-dark-background);
-  padding: 40px 100px; 
+  padding: 30px 0; 
   text-align: center;
 }
 
@@ -202,20 +206,21 @@ h6 {
   justify-content: center;
   gap: 50px;
   margin-top: 40px;
+  width: 90%;
 }
 
 .us-card {
   background-color: white;
-  width: 35%;
   padding: 40px;
   border-radius: 10px;
   margin:0;
   align-items: center;
   text-align: start;
+  line-height: 30px;
 }
 
 .us-card>img {
-  height: 150px;
+  width: 25%;
   padding-right: 20px;
 }
 
@@ -476,10 +481,37 @@ footer section form input {
   margin: 2rem auto;
 }
 
-@media screen and (min-width: 400px) {
+@media screen and (max-width: 540px) {
+  #user>i:last-child {
+    display: none;
+  }
+
+  #banner-content>span {
+    font-size: 1rem;
+  }
+  #logo-container>a>h2 {
+    display: none;
+  }
+  
+  .us-card {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .us-card>img {
+    width: 45%;
+  }
+
+  .us-card>div {
+    margin-top: 10px;
+  }
 }
 
-@media screen and (min-width: 720px) {
+@media screen and (min-width: 800px) {
+  .us-card {
+    width: 47%;
+  }
+
   .footer-wrapper {
     max-width: 920px;
     width: 100%;
