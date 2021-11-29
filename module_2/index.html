@@ -1,216 +1,247 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    />
+    <link rel="stylesheet" type="text/css" href="styles.css" media="screen" />
+    <title>Document</title>
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-  <link rel="stylesheet" type="text/css" href="styles.css" media="screen" />
-  <title>Document</title>
-</head>
-
-<body>
-  <header id="header">
-    <nav class="box" id="logo-container">
-      <a id="logo" href="">
-        <img class="drone-icon" src="./assets/drone-icon.png" alt="drones">
-        <h2>logoname</h2>
-      </a>
-    </nav>
-    <nav class="box">
-      <div class="nav-item">
-        <a href="http://">Home</a>
-      </div>
-      <div class="nav-item">
-        <a href="http://">Alquilar</a>
-      </div>
-      <div class="nav-item">
-        <a href="http://">FAQs</a>
-      </div>
-    </nav>
-    <nav class="box" id="actions-nav">
-      <div class="actions">
-        <div id="cart">
-          <i class="material-icons">shopping_cart</i>
+  <body>
+    <header id="header">
+      <nav class="box" id="logo-container">
+        <a id="logo" href="./index.html">
+          <img class="drone-icon" src="./assets/drone-icon.png" alt="drones" />
+          <h2>logoname</h2>
+        </a>
+      </nav>
+      <nav class="box">
+        <div class="nav-item">
+          <a href="./index.html">Home</a>
         </div>
-        <div id="user">
-          <i class="material-icons">menu</i>
-          <i class="material-icons">account_circle</i>
+        <div class="nav-item">
+          <a href="./drones-list.html">Alquilar</a>
         </div>
-      </div>
-    </nav>
-  </header>
-  <main>
-    <section id="banner">
-      <div id="banner-container">
-        <img src="./assets//drones.jpg" alt="banner">
-        <div id="banner-content">
-          <span>¿Buscas drones?</span>
-          <span>Tranquilo, te rentamos los que necesites</span>
-          <a href="" class="search">Buscar ></a>
+        <div class="nav-item">
+          <a href="./faqs.html">FAQs</a>
         </div>
-      </div>
-    </section>
-    <section id="us">
-      <h1>Acerca de nosotros</h1>
-      <div id="us-container">
-        <div class="us-card">
-          <img src="./assets/remote-control.png" alt="">
-          <div>
-            <h3>LogoName es su ventanilla</h3>
-            única para el alquiler de equipos UAV. Poseemos y
-            mantenemos nuestra propia flota de alquiler amplia y diversa de la última
-            tecnología de sensores y plataformas UAV.
+      </nav>
+      <nav class="box" id="actions-nav">
+        <div class="actions">
+          <div id="cart">
+            <i class="material-icons">shopping_cart</i>
+          </div>
+          <div id="user">
+            <i class="material-icons">menu</i>
+            <i class="material-icons">account_circle</i>
           </div>
         </div>
-        <div class="us-card">
-          <img src="./assets/uav.png" alt="">
-          <div>
-            <h3>Tenemos muchas opciones</h3>
-            desde plataformas de ala fija hasta plataformas multirrotor y sensores, desde
-            ópticos de alta gama hasta térmicos / IR, multiespectrales e incluso LIDAR.
+      </nav>
+    </header>
+    <main>
+      <section id="banner">
+        <div id="banner-container">
+          <img src="./assets//drones.jpg" alt="banner" />
+          <div id="banner-content">
+            <span>¿Buscas drones?</span>
+            <span>Tranquilo, te rentamos los que necesites</span>
+            <a href="./drones-list.html" class="search">Buscar ></a>
           </div>
         </div>
-        <div class="us-card">
-          <img src="./assets/south-america.png" alt="">
-          <div>
-            <h3>El equipo está disponible</h3>
-            para enviar a cualquier ubicación de Sudamérica o mediante
-            recogida local de uno de nuestros diversos socios.
-          </div>
-        </div>
-        <div class="us-card">
-          <img src="./assets/city.png" alt="">
-          <div>
-            <h3>No importa la industria,</h3>
-            lo tenemos cubierto: agricultura de precisión,
-            cinematografía profesional, inspección de edificios, topografía, energía,
-            servicios públicos y energía, servicio público, incendios / seguridad y más.
-          </div>
-        </div>
-      </div>
-    </section>
-    <section class="steps-section">
-      <h1 class="section-title"> ¿Como funciona el servicio de alquiler de drones? </h1>
-      <h2 class="section-subtitle">"Hay cinco sencillos pasos para alquilar un dron"</h2>
-      <div class="steps-container">
-        <div class="step-card">
-          <div class="card-container">
-            <h3>1. Elija el dron de su gusto</h3>
-            <img src="assets/75571-choose.gif" alt="Escoje" height="200px" width="200px">
-          </div>
-        </div>
-        <div class="step-card">
-          <div class="card-container">
-            <h3>2. Seleccione las fechas que requiera</h3>
-            <img src="assets/66346-marking-a-calendar.gif" alt="Escoje" height="200px" width="200px">
-          </div>
-        </div>
-        <div class="step-card">
-          <div class="card-container">
-            <h3>3. Complete el formulario de verificación</h3>
-            <img src="assets/42476-register.gif" alt="Escoje" height="200px" width="200px">
-          </div>
-        </div>
-        <div class="step-card">
-          <div class="card-container">
-            <h3>4. Verifique sus datos y vaya a pagar</h3>
-            <img src="assets/5535-pay-for-everyting.gif" alt="Escoje" height="200px" width="200px">
-          </div>
-        </div>
-        <div class="step-card">
-          <div class="card-container">
-            <h3>5. Reciba el equipo a tiempo</h3>
-            <img src="assets/69149-adress.gif" alt="Escoje" height="200px" width="200px">
-          </div>
-        </div>
-      </div>
-    </section>
-    <section class="steps-section">
-      <h1 class="section-title"> Nuestro clientes coníian en nosotros </h1>
-      <div class="comments-container">
-        <div class="comment-card">
-          <div class="card-container" style="max-width: 400px; align-items: center;">
-            <img src="assets/left-quote.png" width="42" height="42">
-            <h1>
-              "Ha cumplido con todas mis expectativas. El servicio fue estupendo.
-              El trabajo final ha quedado con buena resolución y con gran calidad de detalles."
-            </h1>
-            <h5>-Brayan Vargaz</h5>
-          </div>
-        </div>
-        <div class="comment-card">
-          <div class="card-container" style="max-width: 400px; align-items: center;">
-            <img src="assets/left-quote.png" width="42" height="42">
-            <h1>
-              "Me ha ayudado a tener unas grandes tomas de los departamentos que alquilo. Mucha gente me conocío
-              gracias a estos videos."
-            </h1>
-            <h5>-Joaquín García</h5>
-          </div>
-        </div>
-      </div>
-    </section>
-    <section class="industries-section-wrapper">
-      <h1 class="section-title">Industrias</h1>
-      <div class="industry-card-container">
-        <div id="card-security" class="industry-card">
-          <a href="">
-            <h2 class="section-title industry-card-title">Seguridad</h2>
-          </a>
-        </div>
-        <div id="card-audiovisual" class="industry-card">
-          <a href="">
-            <h2 class="section-title industry-card-title">
-              Audiovisual
-            </h2>
-          </a>
-        </div>
-        <div id="card-realstate" class="industry-card">
-          <a href="">
-            <h2 class="section-title industry-card-title">Inmobiliaria</h2>
-          </a>
-        </div>
-        <div id="card-agriculture" class="industry-card">
-          <a href="">
-            <h2 class="section-title industry-card-title">Agrícola</h2>
-          </a>
-        </div>
-      </div>
-    </section>
-  </main>
-  <footer>
-    <div class="footer-wrapper">
-      <section>
-        <p>Soporte</p>
-        <a href="">Cobertura</a>
-        <a href="">Ordenes</a>
-        <a href="">Pago</a>
-        <a href="">FAQ's</a>
       </section>
-      <section>
-        <p>Nosotros</p>
-        <a href="">Historia</a>
-        <a href="">Experiencia</a>
-        <a href="">Testimonios</a>
+      <section id="us">
+        <h1>Acerca de nosotros</h1>
+        <div id="us-container">
+          <div class="us-card">
+            <img src="./assets/remote-control.png" alt="" />
+            <div>
+              <h3>LogoName es su ventanilla</h3>
+              única para el alquiler de equipos UAV. Poseemos y mantenemos nuestra propia
+              flota de alquiler amplia y diversa de la última tecnología de sensores y
+              plataformas UAV.
+            </div>
+          </div>
+          <div class="us-card">
+            <img src="./assets/uav.png" alt="" />
+            <div>
+              <h3>Tenemos muchas opciones</h3>
+              desde plataformas de ala fija hasta plataformas multirrotor y sensores,
+              desde ópticos de alta gama hasta térmicos / IR, multiespectrales e incluso
+              LIDAR.
+            </div>
+          </div>
+          <div class="us-card">
+            <img src="./assets/south-america.png" alt="" />
+            <div>
+              <h3>El equipo está disponible</h3>
+              para enviar a cualquier ubicación de Sudamérica o mediante recogida local de
+              uno de nuestros diversos socios.
+            </div>
+          </div>
+          <div class="us-card">
+            <img src="./assets/city.png" alt="" />
+            <div>
+              <h3>No importa la industria,</h3>
+              lo tenemos cubierto: agricultura de precisión, cinematografía profesional,
+              inspección de edificios, topografía, energía, servicios públicos y energía,
+              servicio público, incendios / seguridad y más.
+            </div>
+          </div>
+        </div>
       </section>
-      <section>
-        <p>Soporte</p>
-        <a href="">Cobertura</a><a href="">FAQ's</a>
+      <section class="steps-section">
+        <h1 class="section-title">¿Como funciona el servicio de alquiler de drones?</h1>
+        <h2 class="section-subtitle">
+          "Hay cinco sencillos pasos para alquilar un dron"
+        </h2>
+        <div class="steps-container">
+          <div class="step-card">
+            <div class="card-container">
+              <h3>1. Elija el dron de su gusto</h3>
+              <img
+                src="assets/75571-choose.gif"
+                alt="Escoje"
+                height="200px"
+                width="200px"
+              />
+            </div>
+          </div>
+          <div class="step-card">
+            <div class="card-container">
+              <h3>2. Seleccione las fechas que requiera</h3>
+              <img
+                src="assets/66346-marking-a-calendar.gif"
+                alt="Escoje"
+                height="200px"
+                width="200px"
+              />
+            </div>
+          </div>
+          <div class="step-card">
+            <div class="card-container">
+              <h3>3. Complete el formulario de verificación</h3>
+              <img
+                src="assets/42476-register.gif"
+                alt="Escoje"
+                height="200px"
+                width="200px"
+              />
+            </div>
+          </div>
+          <div class="step-card">
+            <div class="card-container">
+              <h3>4. Verifique sus datos y vaya a pagar</h3>
+              <img
+                src="assets/5535-pay-for-everyting.gif"
+                alt="Escoje"
+                height="200px"
+                width="200px"
+              />
+            </div>
+          </div>
+          <div class="step-card">
+            <div class="card-container">
+              <h3>5. Reciba el equipo a tiempo</h3>
+              <img
+                src="assets/69149-adress.gif"
+                alt="Escoje"
+                height="200px"
+                width="200px"
+              />
+            </div>
+          </div>
+        </div>
       </section>
-      <section>
-        <form action="">
-          <label for="email">Correo</label>
-          <input type="email" name="email" id="email" />
-          <input type="button" value="Enviar" />
-        </form>
+      <section class="steps-section">
+        <h1 class="section-title">Nuestro clientes coníian en nosotros</h1>
+        <div class="comments-container">
+          <div class="comment-card">
+            <div class="card-container" style="max-width: 400px; align-items: center">
+              <img src="assets/left-quote.png" width="42" height="42" />
+              <h1>
+                "Ha cumplido con todas mis expectativas. El servicio fue estupendo. El
+                trabajo final ha quedado con buena resolución y con gran calidad de
+                detalles."
+              </h1>
+              <h5>-Brayan Vargaz</h5>
+            </div>
+          </div>
+          <div class="comment-card">
+            <div class="card-container" style="max-width: 400px; align-items: center">
+              <img src="assets/left-quote.png" width="42" height="42" />
+              <h1>
+                "Me ha ayudado a tener unas grandes tomas de los departamentos que
+                alquilo. Mucha gente me conocío gracias a estos videos."
+              </h1>
+              <h5>-Joaquín García</h5>
+            </div>
+          </div>
+        </div>
       </section>
-    </div>
-  </footer>
-</body>
-
+      <section class="industries-section-wrapper">
+        <h1 class="section-title">Industrias</h1>
+        <div class="industry-card-container">
+          <div id="card-security" class="industry-card">
+            <a href="">
+              <h2 class="section-title industry-card-title">Seguridad</h2>
+            </a>
+          </div>
+          <div id="card-audiovisual" class="industry-card">
+            <a href="">
+              <h2 class="section-title industry-card-title">Audiovisual</h2>
+            </a>
+          </div>
+          <div id="card-realstate" class="industry-card">
+            <a href="">
+              <h2 class="section-title industry-card-title">Inmobiliaria</h2>
+            </a>
+          </div>
+          <div id="card-agriculture" class="industry-card">
+            <a href="">
+              <h2 class="section-title industry-card-title">Agrícola</h2>
+            </a>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer>
+      <div class="footer-wrapper">
+        <section>
+          <p>Soporte</p>
+          <a href="">Cobertura</a>
+          <a href="">Ordenes</a>
+          <a href="">Pago</a>
+          <a href="">FAQ's</a>
+        </section>
+        <section>
+          <p>Nosotros</p>
+          <a href="">Historia</a>
+          <a href="">Experiencia</a>
+          <a href="">Testimonios</a>
+        </section>
+        <section>
+          <p>Soporte</p>
+          <a href="">Cobertura</a><a href="">FAQ's</a>
+        </section>
+        <section>
+          <form action="">
+            <label for="email">Correo</label>
+            <input type="email" name="email" id="email" />
+            <input type="button" value="Enviar" />
+          </form>
+        </section>
+      </div>
+    </footer>
+  </body>
 </html>

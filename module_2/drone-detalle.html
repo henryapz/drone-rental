@@ -7,6 +7,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    />
+
+    <link
       href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700;900&display=swap"
       rel="stylesheet"
     />
@@ -14,8 +19,35 @@
     <title>Document</title>
   </head>
   <body>
-    <header>
-      <nav><div>NavBar</div></nav>
+    <header id="header">
+      <nav class="box" id="logo-container">
+        <a id="logo" href="./index.html">
+          <img class="drone-icon" src="./assets/drone-icon.png" alt="drones" />
+          <h2>logoname</h2>
+        </a>
+      </nav>
+      <nav class="box">
+        <div class="nav-item">
+          <a href="./index.html">Home</a>
+        </div>
+        <div class="nav-item">
+          <a href="./drones-list.html">Alquilar</a>
+        </div>
+        <div class="nav-item">
+          <a href="./faqs.html">FAQs</a>
+        </div>
+      </nav>
+      <nav class="box" id="actions-nav">
+        <div class="actions">
+          <div id="cart">
+            <i class="material-icons">shopping_cart</i>
+          </div>
+          <div id="user">
+            <i class="material-icons">menu</i>
+            <i class="material-icons">account_circle</i>
+          </div>
+        </div>
+      </nav>
     </header>
     <main>
       <div class="drone-banner"></div>
@@ -29,7 +61,7 @@
             Una calidad de imagen, potencia e inteligencia capaces de satisfacer las
             necesidades de los cineastas profesionales y empresas de todo el mundo.
           </p>
-          <button class='form-btn btn-md'>Seleccionar</button>
+          <button class="form-btn btn-md">Seleccionar</button>
         </section>
       </div>
     </main>
