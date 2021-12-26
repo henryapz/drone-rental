@@ -1,6 +1,5 @@
 import React from 'react';
-import { Button, Box, Paper, TextField, Stack, Container } from '@mui/material';
-import { useTheme } from '@mui/material/styles';
+import { Box, Paper } from '@mui/material';
 import categories from '../../../services/mock/categories';
 
 const CategoryCard = () => {
