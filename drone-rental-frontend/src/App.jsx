@@ -4,6 +4,7 @@ import Layout from './components/Shared/Layout/Layout';
 import LandingPage from './pages/LandingPage/LandingPage';
 import SigninPage from './pages/Signin/SigninPage';
 import LoginPage from './pages/Login/LoginPage';
+import DronesList from './pages/DronesList/DronesList';
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/signin" element={<SigninPage />} />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/droneslist" element={<DronesList />} />
       </Routes>
     </Layout>
   );
