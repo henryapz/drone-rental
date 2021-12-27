@@ -8,8 +8,17 @@ function Layout({ children }) {
   return (
     <Box sx={{ fontFamily: theme.typography.main }}>
       <header>
-        <Link to="/">Home</Link>
-        <Link to="/signin">Sign In</Link>
+        <ul>
+          <li>
+            <Link to="/">Home</Link>
+          </li>
+          <li>
+            <Link to="/signin">Signin</Link>
+          </li>
+          <li>
+            <Link to="/login">Login</Link>
+          </li>
+        </ul>
       </header>
       <main>{children}</main>
       <Footer />

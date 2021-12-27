@@ -1,7 +1,14 @@
 import React from 'react';
-import { Button, TextField, Stack, Container } from '@mui/material';
+import {
+  Button,
+  TextField,
+  Stack,
+  Container,
+  FormControlLabel,
+  Checkbox,
+} from '@mui/material';
 
-function SignForm() {
+function SignForm({ register }) {
   return (
     <Container>
       <Stack spacing={1} justifyContent="center" alignItems="center" margin="1rem">
@@ -22,24 +29,19 @@ function SignForm() {
             placeholder="email@someemail.com"
           />
 
-          <TextField
-            // error
-            // helperText="Incorrect entry."
-            type="password"
-            id="sign-form-passwd"
-            label="Password"
-            // placeholder="email@someemail.com"
-          />
-
-          <TextField
-            // error
-            // helperText="Incorrect entry."
-            type="password"
-            id="sign-form-confirm-passwd"
-            label="Confirm Password"
-            // placeholder="email@someemail.com"
-          />
+          <TextField type="password" id="sign-form-passwd" label="Password" />
         </Stack>
+
+        {register ? (
+          <>
+            <TextField
+              type="password"
+              id="sign-form-confirm-passwd"
+              label="Confirm Password"
+            />
+            <FormControlLabel control={<Checkbox />} label="Políticas de privacidad" />
+          </>
+        ) : null}
 
         <Button variant="contained">Enviar </Button>
       </Stack>

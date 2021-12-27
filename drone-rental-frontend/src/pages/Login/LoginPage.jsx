@@ -1,12 +1,12 @@
 import React from 'react';
 import SignForm from '../../components/Shared/SignForm/SignForm';
 
-function SigninPage() {
+function LoginPage() {
   return (
     <div>
-      <SignForm register />
+      <SignForm />
     </div>
   );
 }
 
-export default SigninPage;
+export default LoginPage;
