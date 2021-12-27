@@ -1,7 +1,8 @@
 import React from 'react';
 import { Button, Box, TextField, Stack, Container } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
-const Footer = () => {
+
+function Footer() {
   const theme = useTheme();
   return (
     <footer>
@@ -9,10 +10,10 @@ const Footer = () => {
         <Container>
           <Stack spacing={1} justifyContent="center" alignItems="center" margin="1rem">
             <p>Soporte</p>
-            <a href="#">Cobertura</a>
-            <a href="#">Ordenes</a>
-            <a href="#">Pago</a>
-            <a href="#">FAQ's</a>
+            <a href="/">Cobertura</a>
+            <a href="/">Ordenes</a>
+            <a href="/">Pago</a>
+            <a href="/">FAQ`s</a>
           </Stack>
         </Container>
         <Container>
@@ -23,7 +24,8 @@ const Footer = () => {
                 '& .MuiTextField-root': { m: 1, width: '25ch' },
               }}
               noValidate
-              autoComplete="off">
+              autoComplete="off"
+            >
               <TextField
                 // error
                 // helperText="Incorrect entry."
@@ -39,6 +41,6 @@ const Footer = () => {
       </Stack>
     </footer>
   );
-};
+}
 
 export default Footer;
