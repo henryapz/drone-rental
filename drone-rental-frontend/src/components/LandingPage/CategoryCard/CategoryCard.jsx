@@ -24,6 +24,7 @@ function CategoryCard() {
     >
       {categories.map(category => (
         <Card
+          key={category.name}
           raised
           sx={{
             width: '360px',
