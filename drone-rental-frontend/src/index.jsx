@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import { ThemeProvider } from '@mui/material/styles';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { ThemeProvider } from '@mui/material/styles';
 import theme from './assets/styles/theme';
 
 ReactDOM.render(

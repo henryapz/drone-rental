@@ -1,14 +1,14 @@
 import React from 'react';
 import Footer from '../Footer/Footer';
 
-const Layout = (props) => {
+function Layout({ children }) {
   return (
     <>
-      <header/>
-      <main>{props.children}</main>
-      <Footer/>
+      <header />
+      <main>{children}</main>
+      <Footer />
     </>
   );
-};
+}
 
 export default Layout;
