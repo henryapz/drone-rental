@@ -3,7 +3,7 @@ import { createTheme } from '@mui/material/styles';
 const theme = createTheme({
   pallete: {
     bg: '#fffffe',
-    darkBg: 'd8eefe',
+    darkBg: '#d8eefe',
     text: '#5f6c7b',
     contrast: '#ef4565',
     darkBlue: '#094067',
