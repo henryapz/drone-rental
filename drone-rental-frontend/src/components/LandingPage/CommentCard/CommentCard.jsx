@@ -19,6 +19,7 @@ function CommentCard() {
   ];
   return (
     <div className="comment">
+      <h3 className="comment__title">Nuestros clientes confían en nosotros</h3>
       <Grid
         container
         alignItems="center"
@@ -37,7 +38,7 @@ function CommentCard() {
             className="comment__item"
           >
             <CardContent className="comment__item__content">
-              <Typography sx={{ fontSize: 24 }}>{elem.content}</Typography>
+              <Typography sx={{ fontSize: 20 }}>{elem.content}</Typography>
               <Typography
                 sx={{ fontSize: 14, display: 'flex', justifyContent: 'flex-end' }}
                 color="text.secondary"

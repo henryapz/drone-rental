@@ -58,6 +58,7 @@ function ServiceStepCard() {
           <Grid
             item
             component={Card}
+            xs={11}
             sm={11}
             md={2}
             key={elem.id}
