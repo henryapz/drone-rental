@@ -1,0 +1,21 @@
+.step {
+  &__title {
+    text-align: center;
+    margin: 1rem auto;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #094067;
+  }
+  &__subtitle {
+    text-align: center;
+    margin: 1rem auto;
+    font-size: 1.2rem;
+    opacity: 0.6;
+    font-weight: 600;
+    color: #094067;
+  }
+  &__card {
+    box-shadow: rgb(100 100 111 / 20%) 0px 7px 29px 0px !important;
+    border-radius: 15px !important;
+  }
+}
