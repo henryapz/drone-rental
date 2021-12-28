@@ -46,7 +46,7 @@ function DroneCard() {
               alt={category.reference}
             />
             <CardContent sx={{ textAlign: 'center' }}>
-              <Typography gutterBottom variant="h5" component="div">
+              <Typography gutterBottom variant="h5">
                 {category.reference}
               </Typography>
               <Typography gutterBottom variant="h6" component="div">

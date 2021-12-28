@@ -7,6 +7,7 @@ import {
   FormControlLabel,
   Checkbox,
 } from '@mui/material';
+import PropTypes from 'prop-types';
 
 function SignForm({ register }) {
   return (
@@ -48,5 +49,13 @@ function SignForm({ register }) {
     </Container>
   );
 }
+
+SignForm.propTypes = {
+  register: PropTypes.bool,
+};
+
+SignForm.defaultProps = {
+  register: false,
+};
 
 export default SignForm;
