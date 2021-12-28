@@ -2,7 +2,7 @@ import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Layout from './components/Shared/Layout/Layout';
 import LandingPage from './pages/LandingPage/LandingPage';
-import SigninPage from './pages/Signin/SigninPage';
+import SignInPage from './pages/SignIn/SignInPage';
 import LoginPage from './pages/Login/LoginPage';
 import DronesList from './pages/DronesList/DronesList';
 
@@ -11,7 +11,7 @@ function App() {
     <Layout>
       <Routes>
         <Route path="/" element={<LandingPage />} />
-        <Route path="/signin" element={<SigninPage />} />
+        <Route path="/signin" element={<SignInPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/droneslist" element={<DronesList />} />
       </Routes>
