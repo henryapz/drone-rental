@@ -1,0 +1,14 @@
+.comment {
+  margin: 4rem 0;
+  &__item {
+    box-shadow: rgb(100 100 111 / 20%) 0px 7px 29px 0px !important;
+    border-radius: 15px !important;
+    &__content {
+      display: flex;
+      justify-content: space-between;
+      flex-direction: column;
+      height: 200px;
+      padding: 2rem;
+    }
+  }
+}

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Box, useTheme } from '@mui/material';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import Footer from '../Footer/Footer';
 
 function Layout({ children }) {
@@ -16,5 +17,13 @@ function Layout({ children }) {
     </Box>
   );
 }
+
+Layout.propTypes = {
+  children: PropTypes.node,
+};
+
+Layout.defaultProps = {
+  children: <div />,
+};
 
 export default Layout;
