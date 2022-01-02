@@ -8,6 +8,7 @@
     "@lottiefiles/lottie-player": "^1.5.3",
     "@mui/icons-material": "^5.2.5",
     "@mui/material": "^5.2.4",
+    "@mui/styles": "^5.2.3",
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
