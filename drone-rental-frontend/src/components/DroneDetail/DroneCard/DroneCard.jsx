@@ -6,12 +6,10 @@ import {
   CardContent,
   Typography,
   CardActionArea,
-  useTheme,
 } from '@mui/material';
 import drones from '../../../services/mock/drones';
 
 function DroneCard() {
-  const theme = useTheme();
   return (
     <Container
       sx={{
@@ -35,7 +33,6 @@ function DroneCard() {
             justfyContent: 'center',
             alignItems: 'space-around',
             borderRadius: '19px',
-            backgroundColor: theme.pallete.darkBg,
           }}
         >
           <CardActionArea>
@@ -46,10 +43,10 @@ function DroneCard() {
               alt={category.reference}
             />
             <CardContent sx={{ textAlign: 'center' }}>
-              <Typography gutterBottom variant="h5" component="div">
+              <Typography gutterBottom variant="h5">
                 {category.reference}
               </Typography>
-              <Typography gutterBottom variant="h6" component="div">
+              <Typography gutterBottom variant="h6">
                 {category.brand}
               </Typography>
             </CardContent>

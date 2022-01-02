@@ -2,9 +2,9 @@ import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Layout from './components/Shared/Layout/Layout';
 import LandingPage from './pages/LandingPage/LandingPage';
-import SignInPage from './pages/SignIn/SignInPage';
 import LoginPage from './pages/Login/LoginPage';
 import DronesList from './pages/DronesList/DronesList';
+import SignInPage from './pages/SignIn/SignInPage';
 
 function App() {
   return (

@@ -1,80 +1,45 @@
-import { Card, CardContent, Grid, Typography } from '@mui/material';
+import { Box, Card, CardContent, Grid } from '@mui/material';
 import React from 'react';
-import LottieComponent from '../../shared/LottieComponent/LottieComponent';
-import './ServiceStepCard.scss';
+import steps from '../../../services/mock/steps';
+import LandingCardLayout from '../../Shared/Layout/LandingCardLayout';
+import LottieComponent from '../../Shared/LottieComponent/LottieComponent';
 
 function ServiceStepCard() {
-  const steps = [
-    {
-      id: '1',
-      title: '1. Elija el dron de su gusto',
-      url: 'https://assets2.lottiefiles.com/packages/lf20_zunhpwue.json',
-    },
-    {
-      id: '2',
-      title: '2. Seleccione las fechas que requiera',
-      url: 'https://assets3.lottiefiles.com/packages/lf20_ytg7s6tx.json',
-    },
-    {
-      id: '3',
-      title: '3. Complete el formulario de verificación',
-      url: 'https://assets10.lottiefiles.com/packages/lf20_wd1udlcz.json',
-    },
-    {
-      id: '4',
-      title: '4. Verifique sus datos y vaya a pagar',
-      url: 'https://assets3.lottiefiles.com/temp/lf20_4PGdiS.json',
-    },
-    {
-      id: '5',
-      title: '5. Reciba el equipo a tiempo',
-      url: 'https://assets10.lottiefiles.com/packages/lf20_qjeqt7ez.json',
-    },
-  ];
-  const separation = {
-    margin: '10px 0px 0px',
-  };
-  const content = {
-    display: 'flex',
-    justifyContent: 'space-between',
-    flexDirection: 'column',
-    height: '310px',
-  };
   return (
-    <div className="step">
-      <h2 className="step__title">¿Como funciona el servicio de alquiler de drones?</h2>
-      <h3 className="step__subtitle">
-        &quot;Hay cinco sencillos pasos para alquilar un dron&quot;
-      </h3>
-      <Grid
-        container
-        alignItems="center"
-        spacing={1}
-        rowSpacing={1}
-        direction="row"
-        justifyContent="space-evenly"
+    <LandingCardLayout
+      backgroundColor="secondary.light"
+      title="¿Como funciona el servicio de alquiler de drones?"
+    >
+      <Box
+        color="primary.main"
+        textAlign="center"
+        typography="h6"
+        fontWeight="bold"
+        mb={2}
       >
+        Existen cinco sencillos pasos para alquilar un dron
+      </Box>
+      <Grid container spacing={1} justifyContent="space-between" alignItems="stretch">
         {steps.map(elem => (
-          <Grid
-            item
-            component={Card}
-            xs={11}
-            sm={11}
-            md={2}
-            key={elem.id}
-            style={separation}
-            className="step__card"
-          >
-            <CardContent style={content}>
-              <Typography variant="h5" component="div">
-                {elem.title}
-              </Typography>
+          <Grid key={elem.title} item xs={6} sm={4} md={2}>
+            <Card sx={{ height: '100%' }}>
+              <CardContent>
+                <Box
+                  color="primary.dark"
+                  textAlign="center"
+                  typography="subtitle1"
+                  fontWeight="bold"
+                  mb={1}
+                >
+                  {elem.title}{' '}
+                </Box>
+              </CardContent>
               <LottieComponent url={elem.url} />
-            </CardContent>
+            </Card>
           </Grid>
         ))}
       </Grid>
-    </div>
+    </LandingCardLayout>
   );
 }
 

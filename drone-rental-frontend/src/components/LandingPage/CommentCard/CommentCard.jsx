@@ -1,56 +1,36 @@
-import { Card, CardContent, Grid, Typography } from '@mui/material';
+import { Box, Card, CardContent, Grid, Typography } from '@mui/material';
+import FormatQuoteIcon from '@mui/icons-material/FormatQuote';
 import React from 'react';
-import './CommentCard.scss';
+import LandingCardLayout from '../../Shared/Layout/LandingCardLayout';
+import comments from '../../../services/mock/comments';
+import styles from './CommentCard.module.css';
 
 function CommentCard() {
-  const comments = [
-    {
-      id: 1,
-      content:
-        'Ha cumplido con todas mis expectativas. El servicio fue estupendo. El trabajo final ha quedado con buena resolución y con gran calidad de detalles.',
-      user: 'Brayan Vargaz',
-    },
-    {
-      id: 2,
-      content:
-        'Me ha ayudado a tener unas grandes tomas de los departamentos que alquilo. Mucha gente me conocío gracias a estos videos.',
-      user: 'Joaquín García',
-    },
-  ];
   return (
-    <div className="comment">
-      <h3 className="comment__title">Nuestros clientes confían en nosotros</h3>
-      <Grid
-        container
-        alignItems="center"
-        spacing={1}
-        rowSpacing={1}
-        direction="row"
-        justifyContent="space-evenly"
-      >
+    <LandingCardLayout
+      backgroundColor="primary.light"
+      title="Nuestros clientes confían en nosotros"
+    >
+      <Grid container spacing={2} justifyContent="space-between" alignItems="stretch">
         {comments.map(elem => (
-          <Grid
-            item
-            component={Card}
-            sm={10}
-            md={5}
-            key={elem.id}
-            className="comment__item"
-          >
-            <CardContent className="comment__item__content">
-              <Typography sx={{ fontSize: 20 }}>{elem.content}</Typography>
-              <Typography
-                sx={{ fontSize: 14, display: 'flex', justifyContent: 'flex-end' }}
-                color="text.secondary"
-                gutterBottom
-              >
-                {elem.user}
-              </Typography>
-            </CardContent>
+          <Grid key={elem.user} item xs={12} sm={6} md={6}>
+            <Card sx={{ height: '100%' }}>
+              <CardContent className={styles.comment__text}>
+                <Box textAlign="center">
+                  <FormatQuoteIcon fontSize="large" color="primary" />
+                </Box>
+                <Typography variant="subtitle1" fontWeight="light">
+                  {elem.content}
+                </Typography>
+                <Typography textAlign="right" color="text.secondary">
+                  -{elem.user}
+                </Typography>
+              </CardContent>
+            </Card>
           </Grid>
         ))}
       </Grid>
-    </div>
+    </LandingCardLayout>
   );
 }
 

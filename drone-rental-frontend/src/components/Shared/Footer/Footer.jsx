@@ -1,45 +1,103 @@
 import React from 'react';
-import { Button, Box, TextField, Stack, Container } from '@mui/material';
-import { useTheme } from '@mui/material/styles';
+import { Link as RouterLink } from 'react-router-dom';
+import {
+  Button,
+  Box,
+  TextField,
+  Stack,
+  Container,
+  Divider,
+  Link,
+  IconButton,
+} from '@mui/material';
+import FacebookIcon from '@mui/icons-material/Facebook';
+import InstagramIcon from '@mui/icons-material/Instagram';
+import TwitterIcon from '@mui/icons-material/Twitter';
 
 function Footer() {
-  const theme = useTheme();
   return (
-    <footer>
-      <Stack spacing={5} direction="row" bgcolor={theme.pallete.darkBg}>
-        <Container>
-          <Stack spacing={1} justifyContent="center" alignItems="center" margin="1rem">
-            <p>Soporte</p>
-            <a href="/">Cobertura</a>
-            <a href="/">Ordenes</a>
-            <a href="/">Pago</a>
-            <a href="/">FAQ`s</a>
-          </Stack>
-        </Container>
-        <Container>
-          <Stack spacing={1} justifyContent="center" alignItems="center" margin="1rem">
-            <Box
-              component="form"
-              sx={{
-                '& .MuiTextField-root': { m: 1, width: '25ch' },
-              }}
-              noValidate
-              autoComplete="off"
-            >
-              <TextField
-                // error
-                // helperText="Incorrect entry."
-                type="email"
-                id="footer-email"
-                label="Email"
-                placeholder="email@someemail.com"
-              />
-            </Box>
-            <Button variant="contained">Enviar </Button>
-          </Stack>
-        </Container>
-      </Stack>
-    </footer>
+    <Box sx={{ pt: '50px', pb: '50px', backgroundColor: 'primary.light' }}>
+      <Container>
+        <Stack
+          direction={{ xs: 'column', sm: 'row' }}
+          spacing={{ xs: 1, sm: 2, md: 4 }}
+          divider={<Divider orientation="vertical" flexItem />}
+          justifyContent="center"
+        >
+          <Link
+            textAlign="center"
+            variant="body1"
+            underline="none"
+            component={RouterLink}
+            to="/"
+          >
+            Cobertura
+          </Link>
+          <Link
+            textAlign="center"
+            variant="body1"
+            underline="none"
+            component={RouterLink}
+            to="/"
+          >
+            Órdenes
+          </Link>
+          <Link
+            textAlign="center"
+            variant="body1"
+            underline="none"
+            component={RouterLink}
+            to="/"
+          >
+            Pago
+          </Link>
+          <Link
+            textAlign="center"
+            variant="body1"
+            underline="none"
+            component={RouterLink}
+            to="/"
+          >
+            FAQs
+          </Link>
+        </Stack>
+        <Stack
+          direction="row"
+          spacing={2}
+          justifyContent="center"
+          alignItems="center"
+          margin="2rem"
+        >
+          <Box component="form" noValidate autoComplete="off">
+            <TextField
+              type="email"
+              id="footer-email"
+              label="Email"
+              placeholder="email@someemail.com"
+            />
+          </Box>
+          <Button color="secondary" variant="contained">
+            Enviar{' '}
+          </Button>
+        </Stack>
+        <Stack
+          direction="row"
+          divider={<Divider orientation="vertical" flexItem />}
+          spacing={3}
+          justifyContent="center"
+        >
+          <IconButton color="primary" aria-label="upload picture" component="span">
+            <FacebookIcon />
+          </IconButton>
+          <IconButton color="primary" aria-label="upload picture" component="span">
+            <InstagramIcon />
+          </IconButton>
+          <IconButton color="primary" aria-label="upload picture" component="span">
+            <TwitterIcon />
+          </IconButton>
+        </Stack>
+      </Container>
+    </Box>
   );
 }
 

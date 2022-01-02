@@ -1,29 +1,13 @@
 import React from 'react';
-import { Box, useTheme } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Box } from '@mui/material';
 import PropTypes from 'prop-types';
 import Footer from '../Footer/Footer';
+import Header from '../Header/Header';
 
 function Layout({ children }) {
-  const theme = useTheme();
   return (
-    <Box sx={{ fontFamily: theme.typography.main }}>
-      <header>
-        <ul>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li>
-            <Link to="/signin">Signin</Link>
-          </li>
-          <li>
-            <Link to="/login">Login</Link>
-          </li>
-          <li>
-            <Link to="/droneslist">lista drones</Link>
-          </li>
-        </ul>
-      </header>
+    <Box>
+      <Header />
       <main>{children}</main>
       <Footer />
     </Box>

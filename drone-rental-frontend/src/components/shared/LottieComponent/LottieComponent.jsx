@@ -3,7 +3,7 @@ import Lottie from 'react-lottie-player';
 import PropTypes from 'prop-types';
 
 function LottieComponent({ url }) {
-  return <Lottie path={url} play style={{ width: '200px', alignSelf: 'center' }} />;
+  return <Lottie path={url} play style={{ alignSelf: 'center' }} />;
 }
 
 LottieComponent.propTypes = {

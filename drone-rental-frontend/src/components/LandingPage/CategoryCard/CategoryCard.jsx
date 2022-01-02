@@ -1,58 +1,39 @@
 import React from 'react';
-import {
-  Card,
-  Container,
-  CardMedia,
-  CardContent,
-  Typography,
-  CardActionArea,
-} from '@mui/material';
-import { useTheme } from '@mui/material/styles';
+import { Card, CardMedia, Typography, CardActionArea, Grid } from '@mui/material';
 import categories from '../../../services/mock/categories';
+import LandingCardLayout from '../../Shared/Layout/LandingCardLayout';
+import styles from './CategoryCard.module.css';
 
 function CategoryCard() {
-  const theme = useTheme();
   return (
-    <Container
-      sx={{
-        display: 'flex',
-        flexWrap: 'wrap',
-        justifyContent: 'center',
-        width: '100%',
-        margin: '1rem auto',
-      }}
+    <LandingCardLayout
+      backgroundColor="secondary.light"
+      title="Disponibles para múltiples entornos"
     >
-      {categories.map(category => (
-        <Card
-          key={category.name}
-          raised
-          sx={{
-            width: '360px',
-            height: '300px',
-            marginTop: '0.1rem',
-            display: 'flex',
-            flexDirection: 'column',
-            justfyContent: 'center',
-            alignItems: 'center',
-            backgroundColor: theme.pallete.darkBg,
-          }}
-        >
-          <CardActionArea>
-            <CardMedia
-              component="img"
-              height="230"
-              image={category.url}
-              alt={category.name}
-            />
-            <CardContent>
-              <Typography gutterBottom variant="h5" component="div">
-                {category.name}
-              </Typography>
-            </CardContent>
-          </CardActionArea>
-        </Card>
-      ))}
-    </Container>
+      <Grid container justifyContent="space-between" alignItems="stretch">
+        {categories.map(category => (
+          <Grid key={category.name} item xs={12} sm={6} md={4}>
+            <Card sx={{ borderRadius: '0' }}>
+              <CardActionArea>
+                <CardMedia
+                  className={styles.category__image}
+                  component="img"
+                  image={category.url}
+                  alt={category.name}
+                />
+                <Typography
+                  color="secondary.light"
+                  className={styles.category__title}
+                  variant="h6"
+                >
+                  {category.name}
+                </Typography>
+              </CardActionArea>
+            </Card>
+          </Grid>
+        ))}
+      </Grid>
+    </LandingCardLayout>
   );
 }
 
