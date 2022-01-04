@@ -10,11 +10,14 @@ import {
   MenuItem,
   Avatar,
 } from '@mui/material';
-import React from 'react';
+import React, { useState } from 'react';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import PersonIcon from '@mui/icons-material/Person';
+import MenuIcon from '@mui/icons-material/Menu';
 import { Link } from 'react-router-dom';
 import DroneIcon from '../../../assets/images/drone-icon.png';
+import SideBar from '../SideBar/SideBar';
+import styles from './Header.module.css';
 
 const navPages = [
   { name: 'Home', url: '/' },
@@ -28,7 +31,8 @@ const userPages = [
 ];
 
 function Header() {
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [anchorElUser, setAnchorElUser] = useState(null);
+  const [openSideBar, setOpenSideBar] = useState(false);
 
   const handleOpenUserMenu = event => {
     setAnchorElUser(event.currentTarget);
@@ -39,57 +43,77 @@ function Header() {
   };
 
   return (
-    <AppBar position="static">
-      <Container maxWidth="xl">
-        <Toolbar disableGutters>
-          <Avatar alt="Logo" src={DroneIcon} variant="square" />
-          <Typography variant="h6" component="div" flexGrow={1}>
-            D-rental
-          </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {navPages.map(page => (
-              <Button component={Link} to={page.url} color="inherit" key={page.name}>
-                {page.name}
-              </Button>
-            ))}
-          </Box>
-          <IconButton color="inherit" aria-label="delete">
-            <ShoppingCartIcon />
-          </IconButton>
-          <Box sx={{ flexGrow: 0 }}>
-            <IconButton onClick={handleOpenUserMenu} color="inherit">
-              <PersonIcon />
-            </IconButton>
-            <Menu
-              sx={{ mt: '45px' }}
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
+    <>
+      <AppBar position="static">
+        <Container>
+          <Toolbar disableGutters>
+            <Box className={styles.logo__container}>
+              <IconButton
+                size="large"
+                color="inherit"
+                sx={{
+                  display: { md: 'none' },
+                }}
+                onClick={() => setOpenSideBar(true)}
+              >
+                <MenuIcon />
+              </IconButton>
+              <Avatar alt="Logo" src={DroneIcon} variant="square" />
+              <Typography variant="h6" component="div">
+                D-rental
+              </Typography>
+            </Box>
+            <Box
+              className={styles.links__container}
+              sx={{
+                display: { xs: 'none', md: 'flex' },
               }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
             >
-              {userPages.map(page => (
-                <MenuItem
-                  component={Link}
-                  to={page.url}
-                  key={page.name}
-                  onClick={handleCloseUserMenu}
-                >
-                  <Typography textAlign="center">{page.name}</Typography>
-                </MenuItem>
+              {navPages.map(page => (
+                <Button component={Link} to={page.url} color="inherit" key={page.name}>
+                  {page.name}
+                </Button>
               ))}
-            </Menu>
-          </Box>
-        </Toolbar>
-      </Container>
-    </AppBar>
+            </Box>
+            <Box className={styles.actions__container}>
+              <IconButton color="inherit" aria-label="delete">
+                <ShoppingCartIcon />
+              </IconButton>
+              <IconButton onClick={handleOpenUserMenu} color="inherit">
+                <PersonIcon />
+              </IconButton>
+              <Menu
+                sx={{ mt: '45px' }}
+                anchorEl={anchorElUser}
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                open={Boolean(anchorElUser)}
+                onClose={handleCloseUserMenu}
+              >
+                {userPages.map(page => (
+                  <MenuItem
+                    component={Link}
+                    to={page.url}
+                    key={page.name}
+                    onClick={handleCloseUserMenu}
+                  >
+                    {page.name}
+                  </MenuItem>
+                ))}
+              </Menu>
+            </Box>
+          </Toolbar>
+        </Container>
+      </AppBar>
+      <SideBar navPages={navPages} open={openSideBar} setOpen={setOpenSideBar} />
+    </>
   );
 }
 
