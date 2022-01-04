@@ -5,6 +5,7 @@ import LandingPage from './pages/LandingPage/LandingPage';
 import LoginPage from './pages/Login/LoginPage';
 import DronesList from './pages/DronesList/DronesList';
 import SignInPage from './pages/SignIn/SignInPage';
+import FAQs from './pages/FAQs/FAQs';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="/signin" element={<SignInPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/droneslist" element={<DronesList />} />
+        <Route path="/faqs" element={<FAQs />} />
       </Routes>
     </Layout>
   );
