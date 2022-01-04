@@ -33,7 +33,7 @@ const theme = responsiveFontSizes(
       },
       MuiContainer: {
         defaultProps: {
-          maxWidth: 'xl',
+          maxWidth: 'lg',
         },
       },
     },
