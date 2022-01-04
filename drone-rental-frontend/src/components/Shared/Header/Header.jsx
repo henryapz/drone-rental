@@ -19,7 +19,7 @@ import DroneIcon from '../../../assets/images/drone-icon.png';
 const navPages = [
   { name: 'Home', url: '/' },
   { name: 'Alquilar', url: '/droneslist' },
-  { name: 'FAQs', url: '/' },
+  { name: 'FAQs', url: '/faqs' },
 ];
 
 const userPages = [
