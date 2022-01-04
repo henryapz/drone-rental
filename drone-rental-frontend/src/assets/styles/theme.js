@@ -1,6 +1,6 @@
 import { createTheme, responsiveFontSizes } from '@mui/material/styles';
 
-const bgColor = '#fffffe';
+const secondaryLight = '#fffffe';
 const primaryDark = '#094067';
 
 const theme = responsiveFontSizes(
@@ -13,7 +13,7 @@ const theme = responsiveFontSizes(
         contrastText: '#fff',
       },
       secondary: {
-        light: '#fffffe',
+        light: secondaryLight,
         main: '#ef4565',
         dark: '#ba3750',
         contrastText: '#fff',
@@ -26,9 +26,14 @@ const theme = responsiveFontSizes(
       MuiAppBar: {
         styleOverrides: {
           root: {
-            background: bgColor,
+            background: secondaryLight,
             color: primaryDark,
           },
+        },
+      },
+      MuiContainer: {
+        defaultProps: {
+          maxWidth: 'lg',
         },
       },
     },
