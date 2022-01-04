@@ -2,7 +2,7 @@ import React from 'react';
 import { Card, CardMedia, Typography, CardActionArea, Grid } from '@mui/material';
 import categories from '../../../services/mock/categories';
 import LandingCardLayout from '../../Shared/Layout/LandingCardLayout';
-import styles from './CategoryCard.module.css';
+import styles from './CategoryCard.module.scss';
 
 function CategoryCard() {
   return (

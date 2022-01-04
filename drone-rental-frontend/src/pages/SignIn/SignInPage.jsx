@@ -1,7 +1,7 @@
 import React from 'react';
 import SignForm from '../../components/Shared/SignForm/SignForm';
 
-function SignInPage() {
+function SigninPage() {
   return (
     <div>
       <SignForm register />
@@ -9,4 +9,4 @@ function SignInPage() {
   );
 }
 
-export default SignInPage;
+export default SigninPage;

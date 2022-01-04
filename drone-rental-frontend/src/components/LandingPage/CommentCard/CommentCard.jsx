@@ -3,7 +3,7 @@ import FormatQuoteIcon from '@mui/icons-material/FormatQuote';
 import React from 'react';
 import LandingCardLayout from '../../Shared/Layout/LandingCardLayout';
 import comments from '../../../services/mock/comments';
-import styles from './CommentCard.module.css';
+import styles from './CommentCard.module.scss';
 
 function CommentCard() {
   return (

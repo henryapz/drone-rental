@@ -2,7 +2,7 @@ import { Box, Card, CardMedia, Container, Typography } from '@mui/material';
 import React from 'react';
 import Carousel from 'react-material-ui-carousel';
 import banners from '../../../services/mock/carousel';
-import styles from './CarouselCard.module.css';
+import styles from './CarouselCard.module.scss';
 
 function CarouselCard() {
   return (
