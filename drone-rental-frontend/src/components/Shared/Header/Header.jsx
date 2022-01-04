@@ -10,11 +10,12 @@ import {
   MenuItem,
   Avatar,
 } from '@mui/material';
-import React from 'react';
+import React, { useState } from 'react';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import PersonIcon from '@mui/icons-material/Person';
 import { Link } from 'react-router-dom';
 import DroneIcon from '../../../assets/images/drone-icon.png';
+import ShoppingCart from '../ShoppingCart/ShoppingCart';
 
 const navPages = [
   { name: 'Home', url: '/' },
@@ -23,12 +24,15 @@ const navPages = [
 ];
 
 const userPages = [
-  { name: 'Inicio de sesión', url: '/signin' },
-  { name: 'Registro', url: '/login' },
+  { name: 'Inicio de sesión', url: '/login' },
+  { name: 'Registro', url: '/signin' },
 ];
 
 function Header() {
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [anchorElUser, setAnchorElUser] = useState(null);
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   const handleOpenUserMenu = event => {
     setAnchorElUser(event.currentTarget);
@@ -53,9 +57,11 @@ function Header() {
               </Button>
             ))}
           </Box>
-          <IconButton color="inherit" aria-label="delete">
+          <IconButton onClick={handleOpen} color="inherit" aria-label="delete">
             <ShoppingCartIcon />
           </IconButton>
+          <ShoppingCart open={open} handleClose={handleClose} />
+
           <Box sx={{ flexGrow: 0 }}>
             <IconButton onClick={handleOpenUserMenu} color="inherit">
               <PersonIcon />
