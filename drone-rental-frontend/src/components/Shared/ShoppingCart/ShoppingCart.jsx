@@ -2,6 +2,7 @@ import React from 'react';
 import { Box, Button, Typography, Modal } from '@mui/material';
 import { PropTypes } from 'prop-types';
 import styles from './ShoppingCart.module.scss';
+import DatePicker from '../DatePicker/DatePicker';
 
 function ShoppingCart({ open, handleClose }) {
   // const style = {
@@ -29,6 +30,7 @@ function ShoppingCart({ open, handleClose }) {
           </Button>
         </Box>
         <Box className={styles.modal__content}>
+          <DatePicker />
           <Typography id="modal-modal-title" variant="h6" component="h2">
             Text in a modal
           </Typography>
