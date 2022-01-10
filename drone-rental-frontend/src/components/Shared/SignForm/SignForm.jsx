@@ -8,31 +8,33 @@ import {
   Checkbox,
 } from '@mui/material';
 import { PropTypes } from 'prop-types';
+import styles from './SignForm.module.scss';
 
 function SignForm({ register }) {
   return (
     <Container>
-      <Stack spacing={1} justifyContent="center" alignItems="center" margin="1rem">
-        <Stack
-          component="form"
-          sx={{
-            '& .MuiTextField-root': { m: 1, width: '25ch' },
-          }}
-          noValidate
-          autoComplete="off"
-        >
-          <TextField
-            // error
-            // helperText="Incorrect entry."
-            type="email"
-            id="sign-form-email"
-            label="Email"
-            placeholder="email@someemail.com"
-          />
+      <Stack
+        component="form"
+        spacing={2}
+        justifyContent="center"
+        alignItems="center"
+        margin="8rem auto"
+        sx={{
+          '& .MuiTextField-root': { width: '20rem' },
+        }}
+        noValidate
+        autoComplete="off"
+      >
+        <TextField
+          // error
+          // helperText="Incorrect entry."
+          type="email"
+          id="sign-form-email"
+          label="Email"
+          placeholder="email@someemail.com"
+        />
 
-          <TextField type="password" id="sign-form-passwd" label="Password" />
-        </Stack>
-
+        <TextField type="password" id="sign-form-passwd" label="Password" />
         {register ? (
           <>
             <TextField
@@ -40,11 +42,17 @@ function SignForm({ register }) {
               id="sign-form-confirm-passwd"
               label="Confirm Password"
             />
-            <FormControlLabel control={<Checkbox />} label="Políticas de privacidad" />
+            <FormControlLabel
+              control={<Checkbox />}
+              label="Políticas de privacidad"
+              className={styles.signForm__checkBtn}
+            />
           </>
         ) : null}
 
-        <Button variant="contained">Enviar </Button>
+        <Button className={styles.signForm__btn} variant="contained">
+          Enviar{' '}
+        </Button>
       </Stack>
     </Container>
   );
