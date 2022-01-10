@@ -8,6 +8,7 @@ import SigninPage from './pages/Signin/SigninPage';
 import FAQs from './pages/FAQs/FAQs';
 import CreateDron from './pages/CreateDron/CreateDron';
 import AdminDashboard from './pages/AdminDashboard/AdminDashboard';
+import UserProfile from './pages/UserProfile/UserProfile';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/signin" element={<SigninPage />} />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/profile" element={<UserProfile />} />
         <Route path="/droneslist" element={<DronesList />} />
         <Route path="/faqs" element={<FAQs />} />
         <Route path="/create-dron" element={<CreateDron />} />
