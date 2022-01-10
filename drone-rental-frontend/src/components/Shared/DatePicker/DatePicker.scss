@@ -4,7 +4,12 @@
   font-family: 'Montserrat', 'Roboto', 'sans-serif';
   width: 80%;
   margin: 1.5rem auto;
+
+  &__clear-button{
+   display: none;
+  }
 }
+
 .react-daterange-picker,
 .react-daterange-picker *,
 .react-daterange-picker *:before,

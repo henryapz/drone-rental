@@ -5,17 +5,6 @@ import styles from './ShoppingCart.module.scss';
 import DatePicker from '../DatePicker/DatePicker';
 
 function ShoppingCart({ open, handleClose }) {
-  // const style = {
-  //   position: 'absolute',
-  //   top: '1px',
-  //   right: '1px',
-  //   // transform: 'translate(-50%, -50%)',
-  //   width: 400,
-  //   bgcolor: 'background.paper',
-  //   border: '2px solid #000',
-  //   boxShadow: 24,
-  //   p: 4,
-  // };
   return (
     <Modal
       open={open}
@@ -30,6 +19,7 @@ function ShoppingCart({ open, handleClose }) {
           </Button>
         </Box>
         <Box className={styles.modal__content}>
+          <Typography>Seleccione rango de fechas</Typography>
           <DatePicker />
           <Typography id="modal-modal-title" variant="h6" component="h2">
             Text in a modal

@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import DateRangePicker from '@wojtekmaj/react-daterange-picker/dist/entry.nostyle';
-// import DateRangePicker from '@wojtekmaj/react-daterange-picker';
+import { Box } from '@mui/material';
 import './DatePicker.scss';
 
 function DatePicker() {
   const [value, onChange] = useState([new Date(), new Date()]);
 
   return (
-    <div>
+    <Box>
       <DateRangePicker
         onChange={onChange}
         value={value}
@@ -18,7 +18,7 @@ function DatePicker() {
         calendarAriaLabel="toggle"
         showLeadingZeros
       />
-    </div>
+    </Box>
   );
 }
 
