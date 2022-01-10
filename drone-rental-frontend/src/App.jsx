@@ -7,6 +7,7 @@ import DronesList from './pages/DronesList/DronesList';
 import SignInPage from './pages/SignIn/SignInPage';
 import FAQs from './pages/FAQs/FAQs';
 import CreateDron from './pages/CreateDron/CreateDron';
+import AdminDashboard from './pages/AdminDashboard/AdminDashboard';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path="/droneslist" element={<DronesList />} />
         <Route path="/faqs" element={<FAQs />} />
         <Route path="/create-dron" element={<CreateDron />} />
+        <Route path="/admin/dashboard" element={<AdminDashboard />} />
       </Routes>
     </Layout>
   );
