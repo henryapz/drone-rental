@@ -1,25 +1,19 @@
 import React from 'react';
 import { Box } from '@mui/material';
-import PropTypes from 'prop-types';
+import { Outlet } from 'react-router-dom';
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
 
-function Layout({ children }) {
+function Layout() {
   return (
     <Box>
       <Header />
-      <main>{children}</main>
+      <main>
+        <Outlet />
+      </main>
       <Footer />
     </Box>
   );
 }
-
-Layout.propTypes = {
-  children: PropTypes.node,
-};
-
-Layout.defaultProps = {
-  children: <div />,
-};
 
 export default Layout;
