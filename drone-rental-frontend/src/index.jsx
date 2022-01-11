@@ -4,7 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material/styles';
 import App from './App';
 // import reportWebVitals from './reportWebVitals';
-import './index.css';
+import './index.scss';
 import 'typeface-montserrat';
 import theme from './assets/styles/theme';
 

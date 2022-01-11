@@ -16,6 +16,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import MenuIcon from '@mui/icons-material/Menu';
 import { Link } from 'react-router-dom';
 import DroneIcon from '../../../assets/images/drone-icon.png';
+import ShoppingCart from '../ShoppingCart/ShoppingCart';
 import SideBar from '../SideBar/SideBar';
 import styles from './Header.module.css';
 
@@ -26,13 +27,16 @@ const navPages = [
 ];
 
 const userPages = [
-  { name: 'Inicio de sesión', url: '/signin' },
-  { name: 'Registro', url: '/login' },
+  { name: 'Inicio de sesión', url: '/login' },
+  { name: 'Registro', url: '/signin' },
 ];
 
 function Header() {
   const [anchorElUser, setAnchorElUser] = useState(null);
   const [openSideBar, setOpenSideBar] = useState(false);
+  const [openCart, setOpenCart] = useState(false);
+  const handleOpenCart = () => setOpenCart(true);
+  const handleCloseCart = () => setOpenCart(false);
 
   const handleOpenUserMenu = event => {
     setAnchorElUser(event.currentTarget);
@@ -76,9 +80,11 @@ function Header() {
               ))}
             </Box>
             <Box className={styles.actions__container}>
-              <IconButton color="inherit" aria-label="delete">
+              <IconButton onClick={handleOpenCart} color="inherit" aria-label="delete">
                 <ShoppingCartIcon />
               </IconButton>
+              <ShoppingCart open={openCart} handleClose={handleCloseCart} />
+
               <IconButton onClick={handleOpenUserMenu} color="inherit">
                 <PersonIcon />
               </IconButton>
