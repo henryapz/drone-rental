@@ -14,9 +14,9 @@ import { Link } from 'react-router-dom';
 
 const drawerWidth = 240;
 const navPages = [
-  { name: 'Dashboard', url: '/' },
-  { name: 'Drones', url: '/droneslist' },
-  { name: 'Pedidos', url: '/faqs' },
+  { name: 'Dashboard', url: '/admin/dashboard' },
+  { name: 'Drones', url: '/admin/drones' },
+  { name: 'Pedidos', url: '/admin/orders' },
 ];
 
 function AdminSideBar() {
