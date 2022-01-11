@@ -4,6 +4,7 @@ import Layout from './components/Shared/Layout/Layout';
 import LandingPage from './pages/LandingPage/LandingPage';
 import LoginPage from './pages/Login/LoginPage';
 import DronesList from './pages/DronesList/DronesList';
+import DroneDetail from './pages/DroneDetail/DroneDetail';
 import SigninPage from './pages/Signin/SigninPage';
 import FAQs from './pages/FAQs/FAQs';
 import CreateDron from './pages/CreateDron/CreateDron';
@@ -17,6 +18,7 @@ function App() {
         <Route path="/signin" element={<SigninPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/droneslist" element={<DronesList />} />
+        <Route path="/droneDetail" element={<DroneDetail />} />
         <Route path="/faqs" element={<FAQs />} />
         <Route path="/create-dron" element={<CreateDron />} />
         <Route path="/admin/dashboard" element={<AdminDashboard />} />
