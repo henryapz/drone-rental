@@ -32,15 +32,9 @@ function SideBar({ navPages, open, setOpen }) {
 }
 
 SideBar.propTypes = {
-  navPages: PropTypes.instanceOf(Array),
-  open: PropTypes.bool,
-  setOpen: PropTypes.func,
-};
-
-SideBar.defaultProps = {
-  navPages: [],
-  open: false,
-  setOpen: () => {},
+  navPages: PropTypes.instanceOf(Array).isRequired,
+  open: PropTypes.bool.isRequired,
+  setOpen: PropTypes.func.isRequired,
 };
 
 export default SideBar;

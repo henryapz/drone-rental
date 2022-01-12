@@ -40,15 +40,15 @@ function RecentActivity() {
         <CardContent>
           <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
             {activities.map(elem => (
-              <>
-                <ListItem secondaryAction="1hr ago" key={elem}>
+              <React.Fragment key={elem}>
+                <ListItem secondaryAction="1hr ago">
                   <ListItemText
                     primary={`Cliente ${elem} (Name Name)`}
                     secondary="$5000"
                   />
                 </ListItem>
-                <Divider key={`${elem * 10}`} />
-              </>
+                <Divider />
+              </React.Fragment>
             ))}
           </List>
         </CardContent>

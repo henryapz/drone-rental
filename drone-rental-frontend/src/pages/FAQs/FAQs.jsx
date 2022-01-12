@@ -2,6 +2,8 @@ import {
   Accordion,
   AccordionDetails,
   AccordionSummary,
+  Box,
+  Container,
   Grid,
   Typography,
 } from '@mui/material';
@@ -60,34 +62,64 @@ function FAQs() {
         'Es posible que se aplique una tarifa de cancelación según la cantidad ' +
         'de aviso que haya dado antes de la fecha de inicio.',
     },
+    {
+      id: 'panel6',
+      title: '¿Puedo viajar con el dron alquilado?',
+      description:
+        'Intente notificarnos tan pronto como sepa que debe cancelar. Si el dron' +
+        ' se ha enviado, el alquiler no se puede cancelar. Si el dron aún no se ' +
+        'ha enviado, puede reprogramarlo para otro momento o puede cancelarlo. ' +
+        'Es posible que se aplique una tarifa de cancelación según la cantidad ' +
+        'de aviso que haya dado antes de la fecha de inicio.',
+    },
+    {
+      id: 'panel7',
+      title: '¿Por qué se requiere un depósito?',
+      description:
+        'Intente notificarnos tan pronto como sepa que debe cancelar. Si el dron' +
+        ' se ha enviado, el alquiler no se puede cancelar. Si el dron aún no se ' +
+        'ha enviado, puede reprogramarlo para otro momento o puede cancelarlo. ' +
+        'Es posible que se aplique una tarifa de cancelación según la cantidad ' +
+        'de aviso que haya dado antes de la fecha de inicio.',
+    },
+    {
+      id: 'panel8',
+      title: '¿Cuándo tengo que Pagar el Depósito?',
+      description:
+        'Intente notificarnos tan pronto como sepa que debe cancelar. Si el dron' +
+        ' se ha enviado, el alquiler no se puede cancelar. Si el dron aún no se ' +
+        'ha enviado, puede reprogramarlo para otro momento o puede cancelarlo. ' +
+        'Es posible que se aplique una tarifa de cancelación según la cantidad ' +
+        'de aviso que haya dado antes de la fecha de inicio.',
+    },
   ];
 
-  const styles = {
-    container: {
-      margin: '4rem 0',
-    },
-  };
   return (
-    <div style={styles.container}>
-      <Grid container direction="row" justifyContent="center" alignItems="center">
-        <Grid item xs={10}>
-          {data.map(elem => (
-            <Accordion
-              expanded={expanded === elem.id}
-              onChange={handleChange(elem.id)}
-              key={elem.id}
-            >
-              <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                <Typography>{elem.title}</Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                <Typography>{elem.description}</Typography>
-              </AccordionDetails>
-            </Accordion>
-          ))}
+    <Box sx={{ pt: '50px', pb: '50px' }}>
+      <Container>
+        <Typography gutterBottom variant="h3" component="div" textAlign="center">
+          Preguntas Frecuentes (FAQs)
+        </Typography>
+        <Grid container direction="row" justifyContent="center" alignItems="center">
+          <Grid item xs={10}>
+            {data.map(elem => (
+              <Accordion
+                expanded={expanded === elem.id}
+                onChange={handleChange(elem.id)}
+                key={elem.id}
+              >
+                <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                  <Typography>{elem.title}</Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <Typography>{elem.description}</Typography>
+                </AccordionDetails>
+              </Accordion>
+            ))}
+          </Grid>
         </Grid>
-      </Grid>
-    </div>
+      </Container>
+    </Box>
   );
 }
 

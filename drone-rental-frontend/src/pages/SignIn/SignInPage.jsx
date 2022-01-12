@@ -1,12 +1,18 @@
 import React from 'react';
+import { Typography, Container, Box } from '@mui/material';
 import SignForm from '../../components/Shared/SignForm/SignForm';
 
-function SigninPage() {
+function SignInPage() {
   return (
-    <div>
-      <SignForm register />
-    </div>
+    <Box sx={{ pt: '50px', pb: '50px' }}>
+      <Container>
+        <Typography gutterBottom variant="h3" component="div" textAlign="center">
+          Registro
+        </Typography>
+        <SignForm register />
+      </Container>
+    </Box>
   );
 }
 
-export default SigninPage;
+export default SignInPage;
