@@ -7,6 +7,8 @@ import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import DeleteIcon from '@mui/icons-material/Delete';
 import FilterListIcon from '@mui/icons-material/FilterList';
+import { Button } from '@mui/material';
+import { Link } from 'react-router-dom';
 
 function DronesTableToolbar({ numSelected }) {
   return (
@@ -21,11 +23,11 @@ function DronesTableToolbar({ numSelected }) {
       }}
     >
       {numSelected ? (
-        <Typography sx={{ flex: '1 1 100%' }} variant="subtitle1">
+        <Typography flex="1 1 100%" variant="subtitle1">
           {numSelected} selected
         </Typography>
       ) : (
-        <Typography sx={{ flex: '1 1 100%' }} variant="h6">
+        <Typography flex="1 1 100%" variant="h6">
           Drones
         </Typography>
       )}
@@ -37,11 +39,21 @@ function DronesTableToolbar({ numSelected }) {
           </IconButton>
         </Tooltip>
       ) : (
-        <Tooltip title="Filtrar">
-          <IconButton>
-            <FilterListIcon />
-          </IconButton>
-        </Tooltip>
+        <>
+          <Button
+            component={Link}
+            to="/admin/crear-dron"
+            variant="contained"
+            color="secondary"
+          >
+            Crear
+          </Button>
+          <Tooltip title="Filtrar">
+            <IconButton>
+              <FilterListIcon />
+            </IconButton>
+          </Tooltip>
+        </>
       )}
     </Toolbar>
   );

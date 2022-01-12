@@ -15,15 +15,15 @@ function App() {
   return (
     <Routes>
       <Route path="admin" element={<AdminLayout />}>
-        <Route path="create-dron" element={<CreateDron />} />
+        <Route path="crear-dron" element={<CreateDron />} />
         <Route path="drones" element={<AdminDrones />} />
         <Route path="dashboard" element={<AdminDashboard />} />
       </Route>
       <Route element={<Layout />}>
         <Route path="/" element={<LandingPage />} />
-        <Route path="/signin" element={<SigninPage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/droneslist" element={<DronesList />} />
+        <Route path="/registrar" element={<SigninPage />} />
+        <Route path="/iniciar-sesion" element={<LoginPage />} />
+        <Route path="/drones" element={<DronesList />} />
         <Route path="/faqs" element={<FAQs />} />
       </Route>
     </Routes>

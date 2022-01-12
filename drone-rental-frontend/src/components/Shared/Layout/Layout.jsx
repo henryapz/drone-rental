@@ -1,13 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Box } from '@mui/material';
 import { Outlet } from 'react-router-dom';
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
+import SideBar from '../SideBar/SideBar';
+
+const navPages = [
+  { name: 'Home', url: '/' },
+  { name: 'Alquilar', url: '/droneslist' },
+  { name: 'FAQs', url: '/faqs' },
+];
 
 function Layout() {
+  const [openSideBar, setOpenSideBar] = useState(false);
+
   return (
     <Box>
-      <Header />
+      <Header onMenuButtonClick={setOpenSideBar} />
+      <SideBar navPages={navPages} open={openSideBar} setOpen={setOpenSideBar} />
       <main>
         <Outlet />
       </main>

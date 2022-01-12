@@ -1,16 +1,7 @@
-import {
-  AppBar,
-  CssBaseline,
-  Divider,
-  Drawer,
-  List,
-  ListItem,
-  ListItemText,
-  Toolbar,
-  Typography,
-} from '@mui/material';
+import { Box, Drawer } from '@mui/material';
+import PropTypes from 'prop-types';
 import React from 'react';
-import { Link } from 'react-router-dom';
+import AdminSideBarList from '../AdminSideBarList/AdminSideBarList';
 
 const drawerWidth = 240;
 const navPages = [
@@ -19,50 +10,35 @@ const navPages = [
   { name: 'Pedidos', url: '/admin/orders' },
 ];
 
-function AdminSideBar() {
+function AdminSideBar({ open, onClose }) {
+  const handleClose = () => {
+    onClose(false);
+  };
   return (
-    <>
-      <CssBaseline />
-      <AppBar
-        position="fixed"
-        sx={{ width: `calc(100% - ${drawerWidth}px)`, ml: `${drawerWidth}px` }}
-      >
-        <Toolbar>
-          <Typography variant="h6" noWrap component="div">
-            Permanent drawer
-          </Typography>
-        </Toolbar>
-      </AppBar>
+    <Box sx={{ width: { sm: drawerWidth } }}>
       <Drawer
         sx={{
+          display: { xs: 'none', sm: 'block' },
+          '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
           width: drawerWidth,
-          flexShrink: 0,
-          '& .MuiDrawer-paper': {
-            width: drawerWidth,
-            boxSizing: 'border-box',
-          },
         }}
         variant="permanent"
-        anchor="left"
+        open
       >
-        <Toolbar />
-        <Divider />
-        <List>
-          {navPages.map(page => (
-            <ListItem button component={Link} to={page.url} key={page.name}>
-              <ListItemText
-                primary={page.name}
-                primaryTypographyProps={{
-                  color: 'primary.dark',
-                  fontWeight: 'medium',
-                }}
-              />
-            </ListItem>
-          ))}
-        </List>
+        <AdminSideBarList navPages={navPages} onItemClick={handleClose} />
       </Drawer>
-    </>
+      <Drawer anchor="left" open={open} onClose={handleClose}>
+        <Box width={drawerWidth} role="presentation">
+          <AdminSideBarList navPages={navPages} onItemClick={handleClose} />
+        </Box>
+      </Drawer>
+    </Box>
   );
 }
+
+AdminSideBar.propTypes = {
+  open: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
+};
 
 export default AdminSideBar;

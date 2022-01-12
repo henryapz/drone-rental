@@ -9,29 +9,38 @@ import Checkbox from '@mui/material/Checkbox';
 const headCells = [
   {
     id: 'model',
+    align: 'left',
     disablePadding: true,
     label: 'Modelo',
   },
   {
     id: 'category',
+    align: 'right',
     disablePadding: false,
     label: 'Categoría',
   },
   {
     id: 'quantity',
+    align: 'right',
     disablePadding: false,
     label: 'Cantidad',
   },
   {
     id: 'actions',
+    align: 'right',
     disablePadding: false,
     label: 'Acción',
   },
 ];
 
-function DronesTableHead(props) {
-  const { onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } =
-    props;
+function DronesTableHead({
+  onSelectAll,
+  order,
+  orderBy,
+  numSelected,
+  rowCount,
+  onRequestSort,
+}) {
   const createSortHandler = property => event => {
     onRequestSort(event, property);
   };
@@ -42,14 +51,15 @@ function DronesTableHead(props) {
         <TableCell padding="checkbox">
           <Checkbox
             color="primary"
-            indeterminate={numSelected && numSelected < rowCount}
+            indeterminate={numSelected > 0 && numSelected < rowCount}
             checked={rowCount && numSelected === rowCount}
-            onChange={onSelectAllClick}
+            onChange={onSelectAll}
           />
         </TableCell>
         {headCells.map(headCell => (
           <TableCell
             key={headCell.id}
+            align={headCell.align}
             padding={headCell.disablePadding ? 'none' : 'normal'}
             sortDirection={orderBy === headCell.id ? order : false}
           >
@@ -70,7 +80,7 @@ function DronesTableHead(props) {
 DronesTableHead.propTypes = {
   numSelected: PropTypes.number.isRequired,
   onRequestSort: PropTypes.func.isRequired,
-  onSelectAllClick: PropTypes.func.isRequired,
+  onSelectAll: PropTypes.func.isRequired,
   order: PropTypes.oneOf(['asc', 'desc']).isRequired,
   orderBy: PropTypes.string.isRequired,
   rowCount: PropTypes.number.isRequired,
