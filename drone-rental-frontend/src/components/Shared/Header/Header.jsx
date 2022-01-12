@@ -15,10 +15,10 @@ import React, { useState } from 'react';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import PersonIcon from '@mui/icons-material/Person';
 import MenuIcon from '@mui/icons-material/Menu';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import DroneIcon from '../../../assets/images/drone-icon.png';
 import ShoppingCart from '../ShoppingCart/ShoppingCart';
-import styles from './Header.module.css';
+import styles from './Header.module.scss';
 
 const navPages = [
   { name: 'Home', url: '/' },
@@ -72,9 +72,15 @@ function Header({ onMenuButtonClick }) {
             }}
           >
             {navPages.map(page => (
-              <Button component={Link} to={page.url} color="inherit" key={page.name}>
-                {page.name}
-              </Button>
+              <NavLink
+                to={page.url}
+                key={page.name}
+                className={({ isActive }) =>
+                  isActive ? styles.navlink__active : styles.navlink__link
+                }
+              >
+                <Button color="inherit">{page.name}</Button>
+              </NavLink>
             ))}
           </Box>
           <Box className={styles.actions__container}>

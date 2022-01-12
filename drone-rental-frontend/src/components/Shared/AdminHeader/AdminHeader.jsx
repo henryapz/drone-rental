@@ -1,7 +1,7 @@
 import { AppBar, CssBaseline, IconButton, Toolbar } from '@mui/material';
 import React from 'react';
 import MenuIcon from '@mui/icons-material/Menu';
-import PersonIcon from '@mui/icons-material/Person';
+// import PersonIcon from '@mui/icons-material/Person';
 import PropTypes from 'prop-types';
 
 function AdminHeader({ drawerWidth, onOpen }) {
@@ -24,9 +24,9 @@ function AdminHeader({ drawerWidth, onOpen }) {
           >
             <MenuIcon />
           </IconButton>
-          <IconButton color="inherit">
+          {/* <IconButton color="inherit">
             <PersonIcon />
-          </IconButton>
+          </IconButton> */}
         </Toolbar>
       </AppBar>
     </>
