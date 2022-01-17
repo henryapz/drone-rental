@@ -18,3 +18,14 @@
   display: flex;
   justify-content: flex-end;
 }
+
+.navlink__active {
+  border-bottom: 1px solid;
+  text-decoration: none;
+  color: inherit;
+}
+
+.navlink__link {
+  color: inherit;
+  text-decoration: none;
+}

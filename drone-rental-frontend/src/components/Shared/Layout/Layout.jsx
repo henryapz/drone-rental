@@ -1,25 +1,29 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Box } from '@mui/material';
-import PropTypes from 'prop-types';
+import { Outlet } from 'react-router-dom';
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
+import SideBar from '../SideBar/SideBar';
 
-function Layout({ children }) {
+const navPages = [
+  { name: 'Home', url: '/' },
+  { name: 'Alquilar', url: '/droneslist' },
+  { name: 'FAQs', url: '/faqs' },
+];
+
+function Layout() {
+  const [openSideBar, setOpenSideBar] = useState(false);
+
   return (
     <Box>
-      <Header />
-      <main>{children}</main>
+      <Header onMenuButtonClick={setOpenSideBar} />
+      <SideBar navPages={navPages} open={openSideBar} setOpen={setOpenSideBar} />
+      <main>
+        <Outlet />
+      </main>
       <Footer />
     </Box>
   );
 }
-
-Layout.propTypes = {
-  children: PropTypes.node,
-};
-
-Layout.defaultProps = {
-  children: <div />,
-};
 
 export default Layout;
