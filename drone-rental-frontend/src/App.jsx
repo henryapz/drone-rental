@@ -4,12 +4,8 @@ import Layout from './components/Shared/Layout/Layout';
 import LandingPage from './pages/LandingPage/LandingPage';
 import LoginPage from './pages/Login/LoginPage';
 import DronesList from './pages/DronesList/DronesList';
-<<<<<<< HEAD
 import DroneDetail from './pages/DroneDetail/DroneDetail';
-import SigninPage from './pages/Signin/SigninPage';
-=======
 import SigninPage from './pages/SignIn/SignInPage';
->>>>>>> 15404f031eaf0d4ba684385fa8b5a8f3c3e08151
 import FAQs from './pages/FAQs/FAQs';
 import CreateDron from './pages/CreateDron/CreateDron';
 import AdminLayout from './components/Shared/Layout/AdminLayout';
