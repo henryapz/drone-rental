@@ -1,6 +1,6 @@
 import React from 'react';
 import { Typography, Container, Box } from '@mui/material';
-import DroneCard from '../../components/DroneDetail/DroneCard/DroneCard';
+import DroneCard from '../../components/DronesList/DroneCard/DroneCard';
 
 function DronesList() {
   return (
