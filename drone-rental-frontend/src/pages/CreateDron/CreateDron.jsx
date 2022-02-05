@@ -31,8 +31,8 @@ function CreateDron() {
   };
   return (
     <Container fixed>
-      <Grid container spacing={2} style={styles.mainContainer}>
-        <Grid item xs={6}>
+      <Grid container style={styles.mainContainer}>
+        <Grid item xs={12} sm={6}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <img src={UploadImage} alt="upload" style={styles.mainImage} />
@@ -56,7 +56,7 @@ function CreateDron() {
             </Grid>
           </Grid>
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={12} sm={6}>
           <FormControl fullWidth>
             <Typography variant="h4">Crear Drone</Typography>
             <TextField
