@@ -1,10 +1,13 @@
 import React from 'react';
 import { Container } from '@mui/material';
+import { useParams } from 'react-router-dom';
 import Hero from '../../components/Shared/Hero/Hero';
 import DroneInfo from '../../components/DroneDetail/DroneInfo/DroneInfo';
 import dronesData from '../../services/mock/drones';
 
 function DroneDetail() {
+  const { reference } = useParams();
+  const droneData = dronesData.filter(drone => drone.reference === reference)[0];
   return (
     <>
       <Hero
@@ -12,7 +15,7 @@ function DroneDetail() {
         alt="Drone volando"
       />
       <Container>
-        <DroneInfo data={dronesData[0]} />
+        <DroneInfo data={droneData} />
       </Container>
     </>
   );

@@ -12,13 +12,7 @@ function DroneInfo({ data }) {
       className={styles.droneInfo}
     >
       <Card className={styles.droneInfo__card}>
-        <CardMedia
-          component="img"
-          // height="100"
-          // height="200"
-          image={data.image}
-          alt={`Drone ${data.reference}`}
-        />
+        <CardMedia component="img" image={data.image} alt={`Drone ${data.reference}`} />
       </Card>
       <Stack spacing={2} className={styles.droneInfo__content}>
         <Box>
