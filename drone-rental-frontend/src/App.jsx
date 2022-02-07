@@ -23,14 +23,14 @@ function App() {
       </Route>
       <Route element={<Layout />}>
         <Route path="/" element={<LandingPage />} />
-        <Route path="/signin" element={<SigninPage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/droneDetail" element={<DroneDetail />} />
-        <Route path="/profile" element={<UserProfile />} />
-        <Route path="/registrar" element={<SigninPage />} />
-        <Route path="/iniciar-sesion" element={<LoginPage />} />
-        <Route path="/drones" element={<DronesList />} />
-        <Route path="/faqs" element={<FAQs />} />
+        <Route path="signin" element={<SigninPage />} />
+        <Route path="login" element={<LoginPage />} />
+        <Route path="profile" element={<UserProfile />} />
+        <Route path="registrar" element={<SigninPage />} />
+        <Route path="iniciar-sesion" element={<LoginPage />} />
+        <Route path="faqs" element={<FAQs />} />
+        <Route path="drones" element={<DronesList />} />
+        <Route path="drones/:reference" element={<DroneDetail />} />
       </Route>
     </Routes>
   );
