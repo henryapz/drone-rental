@@ -1,0 +1,36 @@
+.droneInfo {
+  justify-content: space-evenly;
+  margin: 2rem auto;
+
+  &__card {
+    width: 320px;
+  }
+  &__content {
+    max-width: 600px;
+  }
+  &__textContainer {
+    font-weight: 700;
+    margin-right: 0.5rem;
+  }
+}
+
+.droneInfoBooking {
+  // TODO: revisar width del datepicker, y estilos de __text que no se ven reflejados.
+  align-items: center;
+  //   & div{
+  //       width: 100%;
+  //   }
+
+  &__quantity {
+    width: 10rem;
+    & input {
+      padding-left: 1rem;
+    }
+  }
+  &__text {
+    font-weight: 600;
+    font-size: 0.5rem;
+    line-height: 2.66;
+    text-transform: uppercase;
+  }
+}

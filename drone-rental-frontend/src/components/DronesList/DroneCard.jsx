@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   Card,
   CardMedia,
@@ -10,11 +11,16 @@ import {
 import drones from '../../services/mock/drones';
 
 function DroneCard() {
+  const navigate = useNavigate();
+
+  function handleClick(reference) {
+    navigate(`./${reference}`);
+  }
   return (
     <Grid container spacing={2} alignItems="stretch">
       {drones.map(drone => (
         <Grid key={drone.reference} item xs={6} sm={3}>
-          <Card sx={{ height: '100%' }}>
+          <Card sx={{ height: '100%' }} onClick={() => handleClick(drone.reference)}>
             <CardActionArea>
               <CardMedia
                 component="img"
