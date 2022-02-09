@@ -7,11 +7,11 @@ import {
   CardActionArea,
   Grid,
 } from '@mui/material';
-import drones from '../../../services/mock/drones';
+import drones from '../../services/mock/drones';
 
 function DroneCard() {
   return (
-    <Grid container spacing={2} justifyContent="space-evenly" alignItems="stretch">
+    <Grid container spacing={2} alignItems="stretch">
       {drones.map(drone => (
         <Grid key={drone.reference} item xs={6} sm={3}>
           <Card sx={{ height: '100%' }}>
