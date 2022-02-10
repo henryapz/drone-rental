@@ -8,7 +8,7 @@ import TableRow from '@mui/material/TableRow';
 import Checkbox from '@mui/material/Checkbox';
 import IconButton from '@mui/material/IconButton';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
-import dronesList from '../../../services/mock/dronesList';
+import dronesList from '../../../../services/mock/dronesList';
 import DronesTableHead from '../DronesTableHead/DronesTableHead';
 
 function descendingComparator(a, b, orderBy) {

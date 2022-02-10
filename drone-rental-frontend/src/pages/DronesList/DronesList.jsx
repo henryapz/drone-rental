@@ -11,7 +11,7 @@ import {
   Pagination,
 } from '@mui/material';
 import DroneCard from '../../components/DronesList/DroneCard';
-// import DronesFilter from '../../components/DronesList/DronesFilter';
+import DronesFilter from '../../components/DronesList/DronesFilter';
 
 function DronesList() {
   return (
@@ -33,8 +33,8 @@ function DronesList() {
             </FormControl>
           </Box>
         </Box>
-        <Box display="flex">
-          {/* <DronesFilter /> */}
+        <Box display="flex" gap={5}>
+          <DronesFilter />
           <DroneCard />
         </Box>
         <Stack spacing={2} mt={3}>

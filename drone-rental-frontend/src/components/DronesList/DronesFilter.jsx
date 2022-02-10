@@ -1,14 +1,6 @@
 import { Box, Checkbox, FormControlLabel, Typography } from '@mui/material';
 import React, { useState } from 'react';
-
-const categories = [
-  'Agrícola',
-  'Producción',
-  'Audiovisual',
-  'Seguridad',
-  'Cine',
-  'Fotografías',
-];
+import categories from '../../services/mock/categories';
 
 function DronesFilter() {
   const [checked, setChecked] = useState([true, false]);
@@ -36,7 +28,7 @@ function DronesFilter() {
       <Box sx={{ display: 'flex', flexDirection: 'column', ml: 3 }}>
         {categories.map(category => (
           <FormControlLabel
-            label={category}
+            label={category.name}
             control={<Checkbox checked={checked[0]} onChange={handleChange2} />}
           />
         ))}
