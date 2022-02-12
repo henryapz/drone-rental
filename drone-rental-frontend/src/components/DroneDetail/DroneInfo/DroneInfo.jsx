@@ -1,10 +1,37 @@
-import React from 'react';
-import { Box, Typography, Card, CardMedia, Stack, TextField } from '@mui/material';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import {
+  Box,
+  Button,
+  Typography,
+  Card,
+  CardMedia,
+  Stack,
+  TextField,
+} from '@mui/material';
 import { PropTypes } from 'prop-types';
 import DatePicker from '../../Shared/DatePicker/DatePicker';
 import styles from './DroneInfo.module.scss';
+import { addElements } from '../../../app/slices/cartSlice';
 
 function DroneInfo({ data }) {
+  const [inputValue, setInputValue] = useState('');
+  const dispatch = useDispatch();
+
+  const handleSend = () => {
+    const payload = {
+      ref: data.reference,
+      quantity: inputValue,
+      initialDate: '',
+      finalDate: '',
+    };
+    dispatch(addElements(payload));
+    setInputValue('');
+  };
+
+  const handleChange = e => {
+    setInputValue(e.target.value);
+  };
   return (
     <Stack
       direction={{ xs: 'column', sm: 'row' }}
@@ -45,9 +72,14 @@ function DroneInfo({ data }) {
             id="quantity"
             label="Cantidad"
             variant="standard"
+            value={inputValue}
+            onChange={handleChange}
             className={styles.droneInfoBooking__quantity}
           />
           <DatePicker />
+          <Button color="primary" variant="contained" onClick={handleSend}>
+            Enviar
+          </Button>
         </Stack>
         <Typography>{data.description}</Typography>
       </Stack>
