@@ -10,8 +10,8 @@ import {
 } from '@mui/material';
 import React from 'react';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
-import UploadImage from '../../assets/images/img_ph.svg';
-import categories from '../../services/mock/categories';
+import UploadImage from '../../../assets/images/img_ph.svg';
+import categories from '../../../services/mock/categories';
 
 function CreateDron() {
   const styles = {
