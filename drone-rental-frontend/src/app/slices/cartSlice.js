@@ -1,6 +1,10 @@
+/* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialState = [];
+const initialState = {
+  total: 0,
+  products: [],
+};
 
 const cartSlice = createSlice({
   name: 'cart',
@@ -8,13 +12,16 @@ const cartSlice = createSlice({
   reducers: {
     addElements(state, action) {
       const { payload } = action;
-      state.push(payload);
+      state.products.push(payload);
+    },
+    updateTotal(state, action) {
+      state.total += action.payload;
     },
   },
 });
 
 const { actions, reducer } = cartSlice;
 
-export const { addElements } = actions;
+export const { addElements, updateTotal } = actions;
 
 export default reducer;

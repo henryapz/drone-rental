@@ -1,15 +1,21 @@
 import React, { useState } from 'react';
+import { PropTypes } from 'prop-types';
 import DateRangePicker from '@wojtekmaj/react-daterange-picker/dist/entry.nostyle';
 import { Box } from '@mui/material';
 import './DatePicker.scss';
 
-function DatePicker() {
-  const [value, onChange] = useState([new Date(), new Date()]);
+function DatePicker({ setDates }) {
+  const [value, setValue] = useState([new Date(), new Date()]);
+
+  const handleChange = dateRange => {
+    setValue(dateRange);
+    setDates(dateRange);
+  };
 
   return (
     <Box>
       <DateRangePicker
-        onChange={onChange}
+        onChange={handleChange}
         value={value}
         rangeDivider="to"
         dayPlaceholder="dd"
@@ -22,4 +28,11 @@ function DatePicker() {
   );
 }
 
+DatePicker.propTypes = {
+  setDates: PropTypes.func,
+};
+
+DatePicker.defaultProps = {
+  setDates: () => {},
+};
 export default DatePicker;

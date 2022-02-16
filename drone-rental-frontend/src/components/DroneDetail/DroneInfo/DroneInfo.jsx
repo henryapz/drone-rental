@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import moment from 'moment';
 import {
   Box,
   Button,
@@ -12,25 +13,41 @@ import {
 import { PropTypes } from 'prop-types';
 import DatePicker from '../../Shared/DatePicker/DatePicker';
 import styles from './DroneInfo.module.scss';
-import { addElements } from '../../../app/slices/cartSlice';
+import { addElements, updateTotal } from '../../../app/slices/cartSlice';
 
 function DroneInfo({ data }) {
   const [inputValue, setInputValue] = useState('');
+  const [inputHasError, setInputHasError] = useState(false);
+  const [rentDates, setRentDates] = useState([]);
   const dispatch = useDispatch();
 
   const handleSend = () => {
+    const initialDate = moment(rentDates[0]);
+    const finalDate = moment(rentDates[1]);
+    const days = finalDate.diff(initialDate, 'days');
+
     const payload = {
       ref: data.reference,
       quantity: inputValue,
-      initialDate: '',
-      finalDate: '',
+      price: data.price,
+      subtotal: inputValue * data.price * days,
+      initialDate: initialDate.format('DD/MM/YYYY'),
+      finalDate: finalDate.format('DD/MM/YYYY'),
+      days,
     };
     dispatch(addElements(payload));
+    dispatch(updateTotal(inputValue * data.price * days));
     setInputValue('');
   };
 
   const handleChange = e => {
-    setInputValue(e.target.value);
+    const { value } = e.target;
+    if (Number(value) <= 0) {
+      setInputHasError(true);
+    } else {
+      setInputHasError(false);
+    }
+    setInputValue(value);
   };
   return (
     <Stack
@@ -69,6 +86,8 @@ function DroneInfo({ data }) {
             Seleccione el rango de fechas y cantidad
           </Typography>
           <TextField
+            error={inputHasError}
+            helperText={inputHasError ? 'cantidad debe ser mayor a 0' : null}
             id="quantity"
             label="Cantidad"
             variant="standard"
@@ -76,7 +95,7 @@ function DroneInfo({ data }) {
             onChange={handleChange}
             className={styles.droneInfoBooking__quantity}
           />
-          <DatePicker />
+          <DatePicker setDates={setRentDates} />
           <Button color="primary" variant="contained" onClick={handleSend}>
             Enviar
           </Button>

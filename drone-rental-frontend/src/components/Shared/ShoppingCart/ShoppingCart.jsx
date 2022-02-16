@@ -1,10 +1,12 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { Box, Button, Typography, Modal } from '@mui/material';
 import { PropTypes } from 'prop-types';
 import styles from './ShoppingCart.module.scss';
-import DatePicker from '../DatePicker/DatePicker';
+import Productstable from './Productstable';
 
 function ShoppingCart({ open, handleClose }) {
+  const cartTotal = useSelector(state => state.cart.total);
   return (
     <Modal
       open={open}
@@ -19,14 +21,13 @@ function ShoppingCart({ open, handleClose }) {
           </Button>
         </Box>
         <Box className={styles.modal__content}>
-          <Typography>Seleccione rango de fechas</Typography>
-          <DatePicker />
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            Text in a modal
+            Items agregados
           </Typography>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-          </Typography>
+          <Productstable />
+        </Box>
+        <Box width="100%" display="flex" justifyContent="flex-end">
+          <Typography variant="h6" component="p">{`Total: ${cartTotal}`}</Typography>
         </Box>
 
         <Box className={styles.modal__checkoutBtnsContainer}>
