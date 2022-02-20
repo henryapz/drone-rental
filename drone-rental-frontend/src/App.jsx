@@ -7,12 +7,13 @@ import DronesList from './pages/DronesList/DronesList';
 import DroneDetail from './pages/DroneDetail/DroneDetail';
 import SigninPage from './pages/SignIn/SignInPage';
 import FAQs from './pages/FAQs/FAQs';
-import CreateDron from './pages/CreateDron/CreateDron';
+import DronCreation from './pages/admin/CreateDron/DronCreation';
 import AdminLayout from './components/Shared/Layout/AdminLayout';
-import AdminDrones from './pages/AdminDrones/AdminDrones';
-import AdminDashboard from './pages/AdminDashboard/AdminDashboard';
+import Drones from './pages/admin/Drones/Drones';
+import Dashboard from './pages/admin/Dashboard/Dashboard';
 import UserProfile from './pages/UserProfile/UserProfile';
 import Checkout from './pages/Checkout/Checkout';
+import Orders from './pages/admin/Orders/Orders';
 import CategoryDetail from './pages/CategoryDetail/CategoryDetail';
 import NotFound from './components/Shared/NotFound/NotFound';
 
@@ -20,9 +21,10 @@ function App() {
   return (
     <Routes>
       <Route path="admin" element={<AdminLayout />}>
-        <Route path="crear-dron" element={<CreateDron />} />
-        <Route path="drones" element={<AdminDrones />} />
-        <Route path="dashboard" element={<AdminDashboard />} />
+        <Route path="crear-dron" element={<DronCreation />} />
+        <Route path="drones" element={<Drones />} />
+        <Route path="dashboard" element={<Dashboard />} />
+        <Route path="orders" element={<Orders />} />
       </Route>
       <Route element={<Layout />}>
         <Route path="/" element={<LandingPage />} />

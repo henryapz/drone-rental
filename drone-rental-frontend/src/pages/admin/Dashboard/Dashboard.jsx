@@ -1,10 +1,10 @@
 import { Box, Grid } from '@mui/material';
 import React from 'react';
-import DetailCard from '../../components/AdminDashboard/DetailCard/DetailCard';
-import RecentActivity from '../../components/AdminDashboard/RecentActivity/RecentActivity';
-import TotalProfit from '../../components/AdminDashboard/TotalProfit/TotalProfit';
-import ApexBarchar from '../../components/Shared/ApexBarchar/ApexBarchar';
-import ApexLineChar from '../../components/Shared/ApexLineChar/ApexLineChar';
+import DetailCard from '../../../components/admin/Dashboard/DetailCard/DetailCard';
+import RecentActivity from '../../../components/admin/Dashboard/RecentActivity/RecentActivity';
+import TotalProfit from '../../../components/admin/Dashboard/TotalProfit/TotalProfit';
+import ApexBarchar from '../../../components/Shared/ApexBarchar/ApexBarchar';
+import ApexLineChar from '../../../components/Shared/ApexLineChar/ApexLineChar';
 
 function AdminDashboard() {
   return (

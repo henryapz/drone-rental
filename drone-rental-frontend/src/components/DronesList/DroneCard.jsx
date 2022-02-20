@@ -26,7 +26,7 @@ function DroneCard({ dronesList }) {
       {dronesList.map(drone => (
         <Grid key={drone.reference} item xs={6} sm={3}>
           <Card sx={{ height: '100%' }} onClick={() => handleClick(drone.reference)}>
-            <CardActionArea>
+            <CardActionArea sx={{ height: '100%' }}>
               <CardMedia
                 component="img"
                 height="200"

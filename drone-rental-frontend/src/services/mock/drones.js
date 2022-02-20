@@ -5,6 +5,7 @@ const drones = [
     category: 'fotografia',
     quantity: 3,
     price: 200,
+    categoryId: 1,
     description:
       'Featuring a 1-inch CMOS sensor that can shoot 4K/60fps videos and 20MP photos, the Phantom 4 Pro V2.0 grants filmmakers absolute creative freedom. The OcuSync 2.0 HD transmission system ensures stable connectivity and reliability, five directions of obstacle sensing ensures additional safety, and a dedicated remote controller with a built-in screen grants even greater precision and control. [1] A wide array of intelligent features makes flying that much easier. The Phantom 4 Pro V2.0 is a complete aerial imaging solution, designed for the professional creator.',
     image:
@@ -16,6 +17,7 @@ const drones = [
     category: 'aventura',
     quantity: 3,
     price: 200,
+    categoryId: 1,
     description:
       'Featuring a 1-inch CMOS sensor that can shoot 4K/60fps videos and 20MP photos, the Phantom 4 Pro V2.0 grants filmmakers absolute creative freedom. The OcuSync 2.0 HD transmission system ensures stable connectivity and reliability, five directions of obstacle sensing ensures additional safety, and a dedicated remote controller with a built-in screen grants even greater precision and control. [1] A wide array of intelligent features makes flying that much easier. The Phantom 4 Pro V2.0 is a complete aerial imaging solution, designed for the professional creator.',
     image:
@@ -27,6 +29,7 @@ const drones = [
     category: 'agricola',
     quantity: 3,
     price: 200,
+    categoryId: 2,
     description:
       'Featuring a 1-inch CMOS sensor that can shoot 4K/60fps videos and 20MP photos, the Phantom 4 Pro V2.0 grants filmmakers absolute creative freedom. The OcuSync 2.0 HD transmission system ensures stable connectivity and reliability, five directions of obstacle sensing ensures additional safety, and a dedicated remote controller with a built-in screen grants even greater precision and control. [1] A wide array of intelligent features makes flying that much easier. The Phantom 4 Pro V2.0 is a complete aerial imaging solution, designed for the professional creator.',
     image:
@@ -37,6 +40,7 @@ const drones = [
     brand: 'DJI',
     category: 'seguridad',
     quantity: 3,
+    categoryId: 3,
     price: 200,
     description:
       'Featuring a 1-inch CMOS sensor that can shoot 4K/60fps videos and 20MP photos, the Phantom 4 Pro V2.0 grants filmmakers absolute creative freedom. The OcuSync 2.0 HD transmission system ensures stable connectivity and reliability, five directions of obstacle sensing ensures additional safety, and a dedicated remote controller with a built-in screen grants even greater precision and control. [1] A wide array of intelligent features makes flying that much easier. The Phantom 4 Pro V2.0 is a complete aerial imaging solution, designed for the professional creator.',
@@ -48,6 +52,7 @@ const drones = [
     brand: 'DJI',
     category: 'cine',
     quantity: 3,
+    categoryId: 3,
     price: 200,
     description:
       'Featuring a 1-inch CMOS sensor that can shoot 4K/60fps videos and 20MP photos, the Phantom 4 Pro V2.0 grants filmmakers absolute creative freedom. The OcuSync 2.0 HD transmission system ensures stable connectivity and reliability, five directions of obstacle sensing ensures additional safety, and a dedicated remote controller with a built-in screen grants even greater precision and control. [1] A wide array of intelligent features makes flying that much easier. The Phantom 4 Pro V2.0 is a complete aerial imaging solution, designed for the professional creator.',
@@ -60,6 +65,7 @@ const drones = [
     category: 'aventura',
     quantity: 3,
     price: 200,
+    categoryId: 4,
     description:
       'Featuring a 1-inch CMOS sensor that can shoot 4K/60fps videos and 20MP photos, the Phantom 4 Pro V2.0 grants filmmakers absolute creative freedom. The OcuSync 2.0 HD transmission system ensures stable connectivity and reliability, five directions of obstacle sensing ensures additional safety, and a dedicated remote controller with a built-in screen grants even greater precision and control. [1] A wide array of intelligent features makes flying that much easier. The Phantom 4 Pro V2.0 is a complete aerial imaging solution, designed for the professional creator.',
     image:
