@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, TextField, Stack, FormControlLabel, Checkbox, Box } from '@mui/material';
+import { TextField, Stack, FormControlLabel, Checkbox } from '@mui/material';
 
 function CheckoutForm() {
   return (
