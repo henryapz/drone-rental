@@ -1,10 +1,62 @@
-import React from 'react';
-import { Box, Typography, Card, CardMedia, Stack, TextField } from '@mui/material';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import moment from 'moment';
+import {
+  Box,
+  Button,
+  Typography,
+  Card,
+  CardMedia,
+  Stack,
+  TextField,
+  Alert,
+  Snackbar,
+} from '@mui/material';
 import { PropTypes } from 'prop-types';
 import DatePicker from '../../Shared/DatePicker/DatePicker';
 import styles from './DroneInfo.module.scss';
+import { addElements, updateTotal } from '../../../app/slices/cartSlice';
 
 function DroneInfo({ data }) {
+  const [inputValue, setInputValue] = useState('');
+  const [inputHasError, setInputHasError] = useState(false);
+  const [succes, setSucces] = useState(false);
+  const [rentDates, setRentDates] = useState([]);
+  const dispatch = useDispatch();
+
+  const handleSend = () => {
+    if (inputValue && rentDates.length > 0 && !rentDates.includes(null)) {
+      const initialDate = moment(rentDates[0]);
+      const finalDate = moment(rentDates[1]);
+      const days = finalDate.diff(initialDate, 'days');
+
+      const payload = {
+        ref: data.reference,
+        quantity: inputValue,
+        price: data.price,
+        subtotal: inputValue * data.price * days,
+        initialDate: initialDate.format('DD/MM/YYYY'),
+        finalDate: finalDate.format('DD/MM/YYYY'),
+        days,
+      };
+
+      dispatch(addElements(payload));
+      dispatch(updateTotal(inputValue * data.price * days));
+      setSucces(true);
+      setInputValue('');
+    }
+  };
+
+  const handleChange = e => {
+    const { value } = e.target;
+    if (Number(value) <= 0) {
+      setInputHasError(true);
+    } else {
+      setInputHasError(false);
+    }
+    setInputValue(value);
+  };
+
   return (
     <Stack
       direction={{ xs: 'column', sm: 'row' }}
@@ -42,12 +94,31 @@ function DroneInfo({ data }) {
             Seleccione el rango de fechas y cantidad
           </Typography>
           <TextField
+            error={inputHasError}
+            helperText={inputHasError ? 'cantidad debe ser mayor a 0' : null}
             id="quantity"
             label="Cantidad"
             variant="standard"
+            value={inputValue}
+            onChange={handleChange}
             className={styles.droneInfoBooking__quantity}
           />
-          <DatePicker />
+          <DatePicker setDates={setRentDates} />
+          {succes && (
+            <Snackbar
+              open={succes}
+              anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+              autoHideDuration={1000}
+              onClose={() => setSucces(false)}
+            >
+              <Alert severity="success">
+                <strong>Producto agregado al carrito</strong>
+              </Alert>
+            </Snackbar>
+          )}
+          <Button color="primary" variant="contained" onClick={handleSend}>
+            Agregar
+          </Button>
         </Stack>
         <Typography>{data.description}</Typography>
       </Stack>

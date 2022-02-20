@@ -7,7 +7,7 @@ import SideBar from '../SideBar/SideBar';
 
 const navPages = [
   { name: 'Home', url: '/' },
-  { name: 'Alquilar', url: '/droneslist' },
+  { name: 'Alquilar', url: '/drones' },
   { name: 'FAQs', url: '/faqs' },
 ];
 

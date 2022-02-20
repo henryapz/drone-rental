@@ -3,12 +3,12 @@ import React, { useState, useEffect } from 'react';
 import PeopleIcon from '@mui/icons-material/People';
 import InventoryIcon from '@mui/icons-material/Inventory';
 import VisibilityIcon from '@mui/icons-material/Visibility';
-import DetailCard from '../../components/AdminDashboard/DetailCard/DetailCard';
-import RecentActivity from '../../components/AdminDashboard/RecentActivity/RecentActivity';
-import TotalProfit from '../../components/AdminDashboard/TotalProfit/TotalProfit';
-import ApexBarchar from '../../components/Shared/ApexBarchar/ApexBarchar';
-import ApexLineChar from '../../components/Shared/ApexLineChar/ApexLineChar';
-import getAdminDashboarStats from '../../services/api/adminStats';
+import DetailCard from '../../../components/admin/Dashboard/DetailCard/DetailCard';
+import RecentActivity from '../../../components/admin/Dashboard/RecentActivity/RecentActivity';
+import TotalProfit from '../../../components/admin/Dashboard/TotalProfit/TotalProfit';
+import ApexBarchar from '../../../components/Shared/ApexBarchar/ApexBarchar';
+import ApexLineChar from '../../../components/Shared/ApexLineChar/ApexLineChar';
+import getAdminDashboarStats from '../../../services/api/adminStats';
 
 function AdminDashboard() {
   const data = {
