@@ -2,9 +2,9 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import TablePagination from '@mui/material/TablePagination';
 import Paper from '@mui/material/Paper';
-import dronesList from '../../services/mock/dronesList';
-import DronesTableToolbar from '../../components/AdminDrones/DronesTableToolbar/DronesTableToolbar';
-import DronesTable from '../../components/AdminDrones/DronesTable/DronesTable';
+import dronesList from '../../../services/mock/dronesList';
+import DronesTableToolbar from '../../../components/admin/Drones/DronesTableToolbar/DronesTableToolbar';
+import DronesTable from '../../../components/admin/Drones/DronesTable/DronesTable';
 
 export default function AdminDrones() {
   const [selected, setSelected] = React.useState([]);
