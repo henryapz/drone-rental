@@ -12,6 +12,7 @@ import AdminLayout from './components/Shared/Layout/AdminLayout';
 import AdminDrones from './pages/AdminDrones/AdminDrones';
 import AdminDashboard from './pages/AdminDashboard/AdminDashboard';
 import UserProfile from './pages/UserProfile/UserProfile';
+import Checkout from './pages/Checkout/Checkout';
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
         <Route path="faqs" element={<FAQs />} />
         <Route path="drones" element={<DronesList />} />
         <Route path="drones/:reference" element={<DroneDetail />} />
+        <Route path="checkout" element={<Checkout />} />
       </Route>
     </Routes>
   );

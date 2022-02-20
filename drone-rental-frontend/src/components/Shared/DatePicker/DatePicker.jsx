@@ -6,7 +6,6 @@ import './DatePicker.scss';
 
 function DatePicker({ setDates }) {
   const [value, setValue] = useState([new Date(), new Date()]);
-
   const handleChange = dateRange => {
     setValue(dateRange);
     setDates(dateRange);
@@ -17,6 +16,7 @@ function DatePicker({ setDates }) {
       <DateRangePicker
         onChange={handleChange}
         value={value}
+        minDate={new Date()}
         rangeDivider="to"
         dayPlaceholder="dd"
         monthPlaceholder="mm"
