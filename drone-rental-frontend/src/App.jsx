@@ -13,6 +13,8 @@ import AdminDrones from './pages/AdminDrones/AdminDrones';
 import AdminDashboard from './pages/AdminDashboard/AdminDashboard';
 import UserProfile from './pages/UserProfile/UserProfile';
 import Checkout from './pages/Checkout/Checkout';
+import CategoryDetail from './pages/CategoryDetail/CategoryDetail';
+import NotFound from './components/Shared/NotFound/NotFound';
 
 function App() {
   return (
@@ -33,6 +35,8 @@ function App() {
         <Route path="drones" element={<DronesList />} />
         <Route path="drones/:reference" element={<DroneDetail />} />
         <Route path="checkout" element={<Checkout />} />
+        <Route path="categoria/:name" element={<CategoryDetail />} />
+        <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>
   );

@@ -1,5 +1,6 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { PropTypes } from 'prop-types';
 import {
   Card,
   CardMedia,
@@ -8,17 +9,21 @@ import {
   CardActionArea,
   Grid,
 } from '@mui/material';
-import drones from '../../../services/mock/drones';
 
-function DroneCard() {
+function DroneCard({ dronesList }) {
   const navigate = useNavigate();
+  const currentUrl = useLocation();
 
   function handleClick(reference) {
-    navigate(`./${reference}`);
+    if (currentUrl.pathname === '/drones') {
+      navigate(`./${reference}`);
+    } else {
+      navigate(`../drones/${reference}`, { options: { replace: true } });
+    }
   }
   return (
     <Grid container spacing={2} justifyContent="space-evenly" alignItems="stretch">
-      {drones.map(drone => (
+      {dronesList.map(drone => (
         <Grid key={drone.reference} item xs={6} sm={3}>
           <Card sx={{ height: '100%' }} onClick={() => handleClick(drone.reference)}>
             <CardActionArea>
@@ -44,5 +49,22 @@ function DroneCard() {
     </Grid>
   );
 }
+
+DroneCard.propTypes = {
+  dronesList: PropTypes.arrayOf(
+    PropTypes.shape({
+      reference: PropTypes.string,
+      brand: PropTypes.string,
+      quantity: PropTypes.number,
+      price: PropTypes.number,
+      description: PropTypes.string,
+      image: PropTypes.string,
+    }),
+  ),
+};
+
+DroneCard.defaultProps = {
+  dronesList: [],
+};
 
 export default DroneCard;
