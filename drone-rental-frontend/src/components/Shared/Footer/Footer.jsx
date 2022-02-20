@@ -47,7 +47,7 @@ function Footer() {
             variant="body1"
             underline="none"
             component={RouterLink}
-            to="/"
+            to="/pago"
           >
             Pago
           </Link>
@@ -56,7 +56,7 @@ function Footer() {
             variant="body1"
             underline="none"
             component={RouterLink}
-            to="/"
+            to="/faqs"
           >
             FAQs
           </Link>

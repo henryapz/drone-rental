@@ -2,6 +2,7 @@ const drones = [
   {
     reference: 'Inspire 2',
     brand: 'DJI',
+    category: 'fotografia',
     quantity: 3,
     price: 200,
     categoryId: 1,
@@ -13,6 +14,7 @@ const drones = [
   {
     reference: 'Phantom 4 Pro+ V2.0',
     brand: 'DJI',
+    category: 'aventura',
     quantity: 3,
     price: 200,
     categoryId: 1,
@@ -24,6 +26,7 @@ const drones = [
   {
     reference: 'Matrice 300 RTK',
     brand: 'DJI',
+    category: 'agricola',
     quantity: 3,
     price: 200,
     categoryId: 2,
@@ -35,6 +38,7 @@ const drones = [
   {
     reference: 'Mavic 2 Enterprise Advanced',
     brand: 'DJI',
+    category: 'seguridad',
     quantity: 3,
     categoryId: 3,
     price: 200,
@@ -46,6 +50,7 @@ const drones = [
   {
     reference: 'Mavic 3',
     brand: 'DJI',
+    category: 'cine',
     quantity: 3,
     categoryId: 3,
     price: 200,
@@ -57,6 +62,7 @@ const drones = [
   {
     reference: 'Skydio 2',
     brand: 'Skydio',
+    category: 'aventura',
     quantity: 3,
     price: 200,
     categoryId: 4,

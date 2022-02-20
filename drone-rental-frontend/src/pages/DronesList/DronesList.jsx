@@ -12,6 +12,7 @@ import {
 } from '@mui/material';
 import DroneCard from '../../components/DronesList/DroneCard';
 import DronesFilter from '../../components/DronesList/DronesFilter';
+import drones from '../../services/mock/drones';
 
 function DronesList() {
   return (
@@ -35,7 +36,7 @@ function DronesList() {
         </Box>
         <Box display="flex" gap={5}>
           <DronesFilter />
-          <DroneCard />
+          <DroneCard dronesList={drones} />
         </Box>
         <Stack spacing={2} mt={3}>
           <Pagination
