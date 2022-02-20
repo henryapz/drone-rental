@@ -17,11 +17,14 @@ const cartSlice = createSlice({
     updateTotal(state, action) {
       state.total += action.payload;
     },
+    resetCart() {
+      return initialState;
+    },
   },
 });
 
 const { actions, reducer } = cartSlice;
 
-export const { addElements, updateTotal } = actions;
+export const { addElements, updateTotal, resetCart } = actions;
 
 export default reducer;

@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { nanoid } from '@reduxjs/toolkit';
 import {
   TableContainer,
   Table,
@@ -29,7 +30,7 @@ function Productstable() {
         <TableBody>
           {cart.products.map(element => (
             <TableRow
-              key={element.ref}
+              key={nanoid()}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
               <TableCell component="th" scope="row">

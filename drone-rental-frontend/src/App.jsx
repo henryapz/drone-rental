@@ -12,6 +12,7 @@ import AdminLayout from './components/Shared/Layout/AdminLayout';
 import Drones from './pages/admin/Drones/Drones';
 import Dashboard from './pages/admin/Dashboard/Dashboard';
 import UserProfile from './pages/UserProfile/UserProfile';
+import Checkout from './pages/Checkout/Checkout';
 import Orders from './pages/admin/Orders/Orders';
 
 function App() {
@@ -33,6 +34,7 @@ function App() {
         <Route path="faqs" element={<FAQs />} />
         <Route path="drones" element={<DronesList />} />
         <Route path="drones/:reference" element={<DroneDetail />} />
+        <Route path="checkout" element={<Checkout />} />
       </Route>
     </Routes>
   );

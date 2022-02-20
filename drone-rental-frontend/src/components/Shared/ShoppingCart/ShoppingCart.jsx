@@ -1,12 +1,26 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { Box, Button, Typography, Modal } from '@mui/material';
 import { PropTypes } from 'prop-types';
 import styles from './ShoppingCart.module.scss';
 import Productstable from './Productstable';
+import { resetCart } from '../../../app/slices/cartSlice';
 
 function ShoppingCart({ open, handleClose }) {
   const cartTotal = useSelector(state => state.cart.total);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleDelete = () => {
+    dispatch(resetCart());
+  };
+
+  const handleCheckout = () => {
+    handleClose();
+    navigate('../checkout');
+  };
+
   return (
     <Modal
       open={open}
@@ -31,10 +45,10 @@ function ShoppingCart({ open, handleClose }) {
         </Box>
 
         <Box className={styles.modal__checkoutBtnsContainer}>
-          <Button variant="contained" color="primary">
+          <Button variant="contained" color="primary" onClick={handleCheckout}>
             Comprar
           </Button>
-          <Button variant="contained" color="secondary">
+          <Button variant="contained" color="secondary" onClick={handleDelete}>
             Eliminar
           </Button>
         </Box>

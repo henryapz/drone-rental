@@ -9,6 +9,8 @@ import {
   CardMedia,
   Stack,
   TextField,
+  Alert,
+  Snackbar,
 } from '@mui/material';
 import { PropTypes } from 'prop-types';
 import DatePicker from '../../Shared/DatePicker/DatePicker';
@@ -18,26 +20,31 @@ import { addElements, updateTotal } from '../../../app/slices/cartSlice';
 function DroneInfo({ data }) {
   const [inputValue, setInputValue] = useState('');
   const [inputHasError, setInputHasError] = useState(false);
+  const [succes, setSucces] = useState(false);
   const [rentDates, setRentDates] = useState([]);
   const dispatch = useDispatch();
 
   const handleSend = () => {
-    const initialDate = moment(rentDates[0]);
-    const finalDate = moment(rentDates[1]);
-    const days = finalDate.diff(initialDate, 'days');
+    if (inputValue && rentDates.length > 0 && !rentDates.includes(null)) {
+      const initialDate = moment(rentDates[0]);
+      const finalDate = moment(rentDates[1]);
+      const days = finalDate.diff(initialDate, 'days');
 
-    const payload = {
-      ref: data.reference,
-      quantity: inputValue,
-      price: data.price,
-      subtotal: inputValue * data.price * days,
-      initialDate: initialDate.format('DD/MM/YYYY'),
-      finalDate: finalDate.format('DD/MM/YYYY'),
-      days,
-    };
-    dispatch(addElements(payload));
-    dispatch(updateTotal(inputValue * data.price * days));
-    setInputValue('');
+      const payload = {
+        ref: data.reference,
+        quantity: inputValue,
+        price: data.price,
+        subtotal: inputValue * data.price * days,
+        initialDate: initialDate.format('DD/MM/YYYY'),
+        finalDate: finalDate.format('DD/MM/YYYY'),
+        days,
+      };
+
+      dispatch(addElements(payload));
+      dispatch(updateTotal(inputValue * data.price * days));
+      setSucces(true);
+      setInputValue('');
+    }
   };
 
   const handleChange = e => {
@@ -49,6 +56,7 @@ function DroneInfo({ data }) {
     }
     setInputValue(value);
   };
+
   return (
     <Stack
       direction={{ xs: 'column', sm: 'row' }}
@@ -96,8 +104,20 @@ function DroneInfo({ data }) {
             className={styles.droneInfoBooking__quantity}
           />
           <DatePicker setDates={setRentDates} />
+          {succes && (
+            <Snackbar
+              open={succes}
+              anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+              autoHideDuration={1000}
+              onClose={() => setSucces(false)}
+            >
+              <Alert severity="success">
+                <strong>Producto agregado al carrito</strong>
+              </Alert>
+            </Snackbar>
+          )}
           <Button color="primary" variant="contained" onClick={handleSend}>
-            Enviar
+            Agregar
           </Button>
         </Stack>
         <Typography>{data.description}</Typography>
