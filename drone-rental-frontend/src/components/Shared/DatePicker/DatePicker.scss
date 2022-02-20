@@ -2,11 +2,15 @@
   display: inline-flex;
   position: relative;
   font-family: 'Montserrat', 'Roboto', 'sans-serif';
-  width: 80%;
+  width: 100%;
   margin: 1.5rem auto;
 
   &__clear-button{
    display: none;
+  }
+
+  &__calendar-button{
+    display:none;
   }
 }
 
@@ -27,15 +31,18 @@
   flex-grow: 1;
   flex-shrink: 0;
   align-items: center;
+  width: 100%;
   // border: thin solid gray;
   // padding: 0.5rem;
 
   & div {
     border: thin solid lightgray;
     border-radius: 6px;
-    width: 10rem;
-    padding: 0.425rem 1rem;
-    margin: 0 0.5rem;
+    padding: 0.425rem 0.235rem;
+    margin: auto 0.175rem;
+    // width: 10rem;
+    // padding: 0.425rem 1rem;
+    // margin: 0 0.5rem;
   }
 }
 

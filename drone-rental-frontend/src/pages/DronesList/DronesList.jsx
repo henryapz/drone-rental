@@ -1,6 +1,7 @@
 import React from 'react';
 import { Typography, Container, Box } from '@mui/material';
-import DroneCard from '../../components/DroneDetail/DroneCard/DroneCard';
+import DroneCard from '../../components/DronesList/DroneCard/DroneCard';
+import drones from '../../services/mock/drones';
 
 function DronesList() {
   return (
@@ -9,7 +10,7 @@ function DronesList() {
         <Typography gutterBottom variant="h3" component="div" textAlign="center">
           Drones
         </Typography>
-        <DroneCard />
+        <DroneCard dronesList={drones} />
       </Container>
     </Box>
   );
