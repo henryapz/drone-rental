@@ -1,7 +1,7 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
 import { Container, Box, Typography } from '@mui/material';
-import DroneCard from '../../DronesList/DroneCard/DroneCard';
+import DroneCard from '../../DronesList/DroneCard';
 import drones from '../../../services/mock/drones';
 import Hero from '../../Shared/Hero/Hero';
 
