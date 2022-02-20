@@ -29,6 +29,7 @@ function DronesFilter() {
         {categories.map(category => (
           <FormControlLabel
             label={category.name}
+            key={category.name}
             control={<Checkbox checked={checked[0]} onChange={handleChange2} />}
           />
         ))}
