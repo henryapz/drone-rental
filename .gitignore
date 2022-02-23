@@ -2,6 +2,7 @@
 
 # dependencies
 /drone-rental-backend/node_modules
+/drone-rental-backend/.env
 /.pnp
 .pnp.js
 
