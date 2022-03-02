@@ -32,7 +32,7 @@ async function deleteDrone(req, res) {
 
 async function getAllDrones(req, res) {
   try {
-    const allDrones = await Drone.find().populate('productImage');
+    const allDrones = await Drone.find().populate('productImage category_id');
     res.status(200).json(allDrones);
   } catch (error) {
     res.status(400).json({ error });
