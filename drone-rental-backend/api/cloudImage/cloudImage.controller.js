@@ -2,11 +2,11 @@ const cloudinary = require('cloudinary').v2;
 const CloudImage = require('./cloudImage.model');
 
 async function loadImage(req, res) {
-  const { imagePath } = req.body;
+  const { imagePath, fileName, tags } = req.body;
   try {
     const response = await cloudinary.uploader.upload(
       imagePath,
-      { tags: 'drones', use_filename: true },
+      { tags, public_id: fileName },
       (err, image) => {
         if (err) {
           console.warn(err);
@@ -26,6 +26,16 @@ async function loadImage(req, res) {
   }
 }
 
+async function getAllImages(req, res) {
+  try {
+    const images = await CloudImage.find();
+    res.status(200).json(images);
+  } catch (error) {
+    res.status(400).json({ error });
+  }
+}
+
 module.exports = {
   loadImage,
+  getAllImages,
 };

@@ -1,9 +1,10 @@
 const { Router } = require('express');
-const { loadImage } = require('./cloudImage.controller');
+const { loadImage, getAllImages } = require('./cloudImage.controller');
 
 const router = Router();
 
 // CRUD
 router.post('/', loadImage);
+router.get('/', getAllImages);
 
 module.exports = router;
