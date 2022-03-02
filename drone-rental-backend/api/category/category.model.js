@@ -9,6 +9,19 @@ const CategorySchema = new mongoose.Schema(
       lowercase: true,
       unique: true,
     },
+    animationUrl: {
+      type: String,
+      required: true,
+    },
+    image_id: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'CloudImage',
+      required: true,
+    },
+    abstract: {
+      type: String,
+      required: true,
+    },
   },
   {
     timestamps: true,

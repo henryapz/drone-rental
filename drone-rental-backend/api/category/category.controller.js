@@ -19,6 +19,15 @@ async function deleteCategory(req, res) {
     res.status(400).json({ error });
   }
 }
+async function updateCategory(req, res) {
+  const data = req.body;
+  try {
+    const drone = await Category.findByIdAndUpdate(data.id, { ...data });
+    res.status(200).json(drone);
+  } catch (error) {
+    res.status(400).json({ error });
+  }
+}
 
 async function getAllCategories(req, res) {
   try {
@@ -33,4 +42,5 @@ module.exports = {
   createCategory,
   deleteCategory,
   getAllCategories,
+  updateCategory,
 };
