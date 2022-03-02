@@ -42,6 +42,7 @@ const UserSchema = new mongoose.Schema(
       enum: ['User', 'Admin'],
       required: true,
     },
+    token: { type: String },
   },
   {
     timestamps: true,
