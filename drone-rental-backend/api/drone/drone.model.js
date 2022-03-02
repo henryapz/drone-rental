@@ -2,16 +2,16 @@ const mongoose = require('mongoose');
 
 const DroneSchema = new mongoose.Schema(
   {
-    name: {
+    model: {
       type: String,
       required: true,
+      uppercase: true,
+      unique: true,
     },
     brand: {
       type: String,
       required: true,
-    },
-    model: {
-      type: String,
+      uppercase: true,
     },
     description: {
       type: String,
@@ -34,12 +34,17 @@ const DroneSchema = new mongoose.Schema(
     productImage: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'CloudImage',
+      required: true,
     },
     presentationImages: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'CloudImage',
     },
-    // category_id:{},
+    category_id: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Category',
+      required: true,
+    },
   },
   {
     timestamps: true,
