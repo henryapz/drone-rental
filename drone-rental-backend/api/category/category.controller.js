@@ -31,7 +31,7 @@ async function updateCategory(req, res) {
 
 async function getAllCategories(req, res) {
   try {
-    const categories = await Category.find();
+    const categories = await Category.find().populate('image_id');
     res.status(200).json(categories);
   } catch (error) {
     res.status(400).json({ error });
