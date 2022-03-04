@@ -14,7 +14,7 @@ function CategoryInfo({ data }) {
       <Typography variant="h2" component="h1" textAlign="center" margin="2rem auto">
         {data.name}
       </Typography>
-      <Hero url={data.hero_url} alt={`imagen de dron ${data.name}`} />
+      <Hero url={data.image_id.secure_url} alt={`imagen de dron ${data.name}`} />
       <Box margin="1rem auto">
         <Typography variant="subtitle1" component="p">
           {data.abstract}
@@ -34,7 +34,9 @@ CategoryInfo.propTypes = {
   data: PropTypes.shape({
     name: PropTypes.string,
     url: PropTypes.string,
-    hero_url: PropTypes.string,
+    image_id:{
+      secure_url: PropTypes.string,
+    },
     abstract: PropTypes.string,
   }),
 };
