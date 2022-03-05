@@ -24,19 +24,19 @@ function DroneCard({ dronesList }) {
   return (
     <Grid container spacing={2} justifyContent="space-evenly" alignItems="stretch">
       {dronesList.map(drone => (
-        <Grid key={drone.reference} item xs={6} sm={3}>
-          <Card sx={{ height: '100%' }} onClick={() => handleClick(drone.reference)}>
+        <Grid key={drone._id} item xs={6} sm={3}>
+          <Card sx={{ height: '100%' }} onClick={() => handleClick(drone.model)}>
             <CardActionArea sx={{ height: '100%' }}>
               <CardMedia
                 component="img"
                 height="200"
                 sx={{ objectFit: 'contain' }}
-                image={drone.image}
-                alt={drone.reference}
+                image={drone.productImage.secure_url}
+                alt={drone.model}
               />
               <CardContent sx={{ textAlign: 'center' }}>
                 <Typography gutterBottom variant="h6">
-                  {drone.reference}
+                  {drone.model}
                 </Typography>
                 <Typography gutterBottom fontWeight="light" variant="subtitle1">
                   {drone.brand}

@@ -1,35 +1,18 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React from 'react';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { Card, Typography, CardActionArea, Grid } from '@mui/material';
-// import categories from '../../../services/mock/categories';
 import LandingCardLayout from '../../Shared/Layout/LandingCardLayout';
 import styles from './CategoryCard.module.scss';
 import LottieComponent from '../../Shared/LottieComponent/LottieComponent';
-// import getAllCategories from '../../../services/api/categories';
 
 function CategoryCard() {
-  const [categories, setCategories] = useState([]);
+  const categories = useSelector(state => state.categories.data);
   const navigate = useNavigate();
 
   const handleClick = route => {
     navigate(`/categoria/${route.toLowerCase()}`);
   };
-
-  // TODO: Pasar esto a Reduxthunk
-  useEffect(() => {
-    async function getAllCategories() {
-      try {
-        const response = await axios.get('http://localhost:8080/api/categories');
-        // TODO: Crear estado en redux
-        setCategories(response.data);
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    getAllCategories();
-    // setCategories(data);
-  }, []);
 
   return (
     <LandingCardLayout

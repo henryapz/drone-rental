@@ -21,6 +21,8 @@ module.exports = {
   rules: {
     'prettier/prettier': 'warn',
     'no-unused-vars': 'warn',
+    'no-param-reassign': 'off',
+    'no-underscore-dangle': 'off',
     'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx'] }],
   },
   settings: {

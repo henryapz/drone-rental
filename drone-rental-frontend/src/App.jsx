@@ -1,5 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { Routes, Route } from 'react-router-dom';
+import { getAllCategories } from './app/slices/categoriesSlice';
+import { getAllDrones } from './app/slices/dronesSlice';
 import Layout from './components/Shared/Layout/Layout';
 import LandingPage from './pages/LandingPage/LandingPage';
 import LoginPage from './pages/Login/LoginPage';
@@ -18,6 +21,16 @@ import CategoryDetail from './pages/CategoryDetail/CategoryDetail';
 import NotFound from './components/Shared/NotFound/NotFound';
 
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getAllCategories());
+  }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(getAllDrones());
+  }, [dispatch]);
+
   return (
     <Routes>
       <Route path="admin" element={<AdminLayout />}>
