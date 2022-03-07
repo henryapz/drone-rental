@@ -63,7 +63,7 @@ function DroneInfo({ data }) {
       spacing={2}
       className={styles.droneInfo}
     >
-      <Card className={styles.droneInfo__card}>
+      <Card raised className={styles.droneInfo__card}>
         <CardMedia
           component="img"
           image={data?.productImage.secure_url}
