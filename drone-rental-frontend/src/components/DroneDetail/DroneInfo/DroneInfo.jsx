@@ -13,9 +13,9 @@ import {
   Snackbar,
 } from '@mui/material';
 import { PropTypes } from 'prop-types';
+import { addElements, updateTotal } from '../../../app/slices/cartSlice';
 import DatePicker from '../../Shared/DatePicker/DatePicker';
 import styles from './DroneInfo.module.scss';
-import { addElements, updateTotal } from '../../../app/slices/cartSlice';
 
 function DroneInfo({ data }) {
   const [inputValue, setInputValue] = useState('');
@@ -31,17 +31,17 @@ function DroneInfo({ data }) {
       const days = finalDate.diff(initialDate, 'days');
 
       const payload = {
-        ref: data.reference,
+        ref: data.model,
         quantity: inputValue,
-        price: data.price,
-        subtotal: inputValue * data.price * days,
+        price: data.pricePerDay,
+        subtotal: inputValue * data.pricePerDay * days,
         initialDate: initialDate.format('DD/MM/YYYY'),
         finalDate: finalDate.format('DD/MM/YYYY'),
         days,
       };
 
       dispatch(addElements(payload));
-      dispatch(updateTotal(inputValue * data.price * days));
+      dispatch(updateTotal(inputValue * data.pricePerDay * days));
       setSucces(true);
       setInputValue('');
     }
@@ -63,13 +63,17 @@ function DroneInfo({ data }) {
       spacing={2}
       className={styles.droneInfo}
     >
-      <Card className={styles.droneInfo__card}>
-        <CardMedia component="img" image={data.image} alt={`Drone ${data.reference}`} />
+      <Card raised className={styles.droneInfo__card}>
+        <CardMedia
+          component="img"
+          image={data?.productImage.secure_url}
+          alt={`Drone ${data.model}`}
+        />
       </Card>
       <Stack spacing={2} className={styles.droneInfo__content}>
         <Box>
           <Typography variant="h2" component="h1">
-            {data.reference}
+            {data.model}
           </Typography>
           <Typography variant="h5" component="h2">
             {data.brand}
@@ -80,7 +84,7 @@ function DroneInfo({ data }) {
             <Box component="span" className={styles.droneInfo__textContainer}>
               Precio x día:
             </Box>
-            <Box component="span">${data.price}</Box>
+            <Box component="span">${data.pricePerDay}</Box>
           </Typography>
           <Typography>
             <Box component="span" className={styles.droneInfo__textContainer}>
@@ -128,12 +132,19 @@ function DroneInfo({ data }) {
 
 DroneInfo.propTypes = {
   data: PropTypes.shape({
-    reference: PropTypes.string,
+    model: PropTypes.string,
     brand: PropTypes.string,
     description: PropTypes.string,
-    image: PropTypes.string,
+    productImage: PropTypes.shape({
+      secure_url: PropTypes.string,
+    }),
     quantity: PropTypes.number,
-    price: PropTypes.number,
+    pricePerDay: PropTypes.number,
+    pricePerWeek: PropTypes.number,
+    pricePerMonth: PropTypes.number,
+    category_id: PropTypes.shape({
+      name: PropTypes.string,
+    }),
   }),
 };
 
