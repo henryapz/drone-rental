@@ -19,7 +19,7 @@ import styles from './DroneInfo.module.scss';
 
 function DroneInfo({ data }) {
   const [inputValue, setInputValue] = useState('');
-  const [inputHasError, setInputHasError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(null);
   const [succes, setSucces] = useState(false);
   const [rentDates, setRentDates] = useState([]);
   const dispatch = useDispatch();
@@ -50,9 +50,13 @@ function DroneInfo({ data }) {
   const handleChange = e => {
     const { value } = e.target;
     if (Number(value) <= 0) {
-      setInputHasError(true);
+      setErrorMessage('cantidad debe ser mayor a 0');
+    } else if (Number(value) > data.quantity) {
+      setErrorMessage(
+        `cantidad debe ser igual o menor al inventario disponible (${data.quantity})`,
+      );
     } else {
-      setInputHasError(false);
+      setErrorMessage(null);
     }
     setInputValue(value);
   };
@@ -98,8 +102,8 @@ function DroneInfo({ data }) {
             Seleccione el rango de fechas y cantidad
           </Typography>
           <TextField
-            error={inputHasError}
-            helperText={inputHasError ? 'cantidad debe ser mayor a 0' : null}
+            error={errorMessage}
+            helperText={errorMessage}
             id="quantity"
             label="Cantidad"
             variant="standard"
