@@ -12,8 +12,6 @@ function CategoryDetail() {
     category => category.name.toLowerCase() === name,
   )[0];
 
-  console.log(categoryData)
-
   if (!categories.status || categories.status === 'loading') return <Loader />;
 
   return (

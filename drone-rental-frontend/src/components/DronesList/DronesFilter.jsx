@@ -1,14 +1,35 @@
 import { Box, Checkbox, FormControlLabel, Typography } from '@mui/material';
 import React, { useState } from 'react';
-import categories from '../../services/mock/categories';
+import { useSelector, useDispatch } from 'react-redux';
+import {
+  checkField,
+  checkAllFields,
+  unCheckAllFields,
+  addFilter,
+  removeFilter,
+} from '../../app/slices/categoriesSlice';
 
 function DronesFilter() {
-  const [checked, setChecked] = useState([true, false]);
-  const handleChange1 = event => {
-    setChecked([event.target.checked, event.target.checked]);
+  const [allCategoriesCheck, setAllCategoriesCheck] = useState(false);
+  const categories = useSelector(state => state.categories.data);
+  const dispatch = useDispatch();
+
+  const handleChange1 = () => {
+    setAllCategoriesCheck(!allCategoriesCheck);
+    if (allCategoriesCheck) {
+      dispatch(unCheckAllFields());
+    } else {
+      dispatch(checkAllFields());
+    }
   };
-  const handleChange2 = event => {
-    setChecked([event.target.checked, checked[1]]);
+  const handleCheck = category => {
+    const { name, checked } = category;
+    dispatch(checkField(name));
+    if (checked) {
+      dispatch(removeFilter(name));
+    } else {
+      dispatch(addFilter(name));
+    }
   };
   return (
     <Box>
@@ -19,8 +40,8 @@ function DronesFilter() {
         label="Categorías"
         control={
           <Checkbox
-            checked={checked[0] && checked[1]}
-            indeterminate={checked[0] !== checked[1]}
+            checked={allCategoriesCheck}
+            indeterminate={allCategoriesCheck}
             onChange={handleChange1}
           />
         }
@@ -30,7 +51,12 @@ function DronesFilter() {
           <FormControlLabel
             label={category.name}
             key={category.name}
-            control={<Checkbox checked={checked[0]} onChange={handleChange2} />}
+            control={
+              <Checkbox
+                checked={category.checked}
+                onChange={() => handleCheck(category)}
+              />
+            }
           />
         ))}
       </Box>

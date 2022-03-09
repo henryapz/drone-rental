@@ -9,6 +9,7 @@ import {
   MenuItem,
   Stack,
   Pagination,
+  Grid,
 } from '@mui/material';
 import { useSelector } from 'react-redux';
 import DroneCard from '../../components/DronesList/DroneCard';
@@ -18,6 +19,8 @@ import Loader from '../../components/Shared/Loader/Loader';
 function DronesList() {
   const [selectOption, setSelectOption] = useState(1);
   const drones = useSelector(state => state.drones);
+  const dronesFilteredList = useSelector(state => state.drones.filteredData);
+  const dronesToRender = dronesFilteredList.length ? dronesFilteredList : drones.data;
 
   const handleChange = e => {
     setSelectOption(e.target.value);
@@ -52,7 +55,17 @@ function DronesList() {
           {!drones.status || drones.status === 'loading' ? (
             <Loader />
           ) : (
-            <DroneCard dronesList={drones.data} />
+            dronesToRender.map(element => (
+              <Grid
+                key={element._id}
+                container
+                spacing={2}
+                justifyContent="space-evenly"
+                alignItems="stretch"
+              >
+                <DroneCard drone={element} />
+              </Grid>
+            ))
           )}
         </Box>
         <Stack spacing={2} mt={3}>

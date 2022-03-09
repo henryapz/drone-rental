@@ -4,6 +4,7 @@ import axios from 'axios';
 const initialState = {
   status: '',
   data: [],
+  filteredData: [],
 };
 
 export const getAllDrones = createAsyncThunk('drones/getAll', async () => {
@@ -18,7 +19,14 @@ export const getAllDrones = createAsyncThunk('drones/getAll', async () => {
 const dronesSlice = createSlice({
   name: 'drones',
   initialState,
-  reducers: {},
+  reducers: {
+    filterByCategory(state, action) {
+      const category = action.payload;
+      state.filteredData = state.data.filter(
+        element => element.category_id.name === category,
+      );
+    },
+  },
   extraReducers: builder => {
     builder
       .addCase(getAllDrones.pending, state => {
@@ -34,5 +42,5 @@ const dronesSlice = createSlice({
   },
 });
 
-export const { extraReducers } = dronesSlice.actions;
+export const { filterByCategory, extraReducers } = dronesSlice.actions;
 export default dronesSlice.reducer;
