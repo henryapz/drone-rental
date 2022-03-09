@@ -1,7 +1,6 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { PropTypes } from 'prop-types';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
 import {
   Card,
   CardMedia,
@@ -10,13 +9,10 @@ import {
   CardActionArea,
   Grid,
 } from '@mui/material';
-import { filterByCategory } from '../../app/slices/dronesSlice';
 
 function DroneCard({ drone }) {
-  const filteredCategories = useSelector(state => state.categories.selectedFilters);
   const navigate = useNavigate();
   const currentUrl = useLocation();
-  const dispatch = useDispatch();
 
   function handleClick(reference) {
     if (currentUrl.pathname === '/drones') {
@@ -25,12 +21,6 @@ function DroneCard({ drone }) {
       navigate(`../drones/${reference}`, { options: { replace: true } });
     }
   }
-
-  useEffect(() => {
-    if (filteredCategories.length) {
-      dispatch(filterByCategory(drone.category_id.name));
-    }
-  }, [filteredCategories, dispatch]);
 
   return (
     <Grid item xs={6} sm={3}>

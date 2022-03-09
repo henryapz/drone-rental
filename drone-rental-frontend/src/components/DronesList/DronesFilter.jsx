@@ -1,17 +1,16 @@
 import { Box, Checkbox, FormControlLabel, Typography } from '@mui/material';
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { filterData, addFilter, removeFilter } from '../../app/slices/dronesSlice';
 import {
   checkField,
   checkAllFields,
   unCheckAllFields,
-  addFilter,
-  removeFilter,
 } from '../../app/slices/categoriesSlice';
 
 function DronesFilter() {
   const [allCategoriesCheck, setAllCategoriesCheck] = useState(false);
-  const categories = useSelector(state => state.categories.data);
+  const categories = useSelector(state => state.categories);
   const dispatch = useDispatch();
 
   const handleChange1 = () => {
@@ -29,6 +28,7 @@ function DronesFilter() {
       dispatch(removeFilter(name));
     } else {
       dispatch(addFilter(name));
+      dispatch(filterData());
     }
   };
   return (
@@ -47,13 +47,14 @@ function DronesFilter() {
         }
       />
       <Box sx={{ display: 'flex', flexDirection: 'column', ml: 3 }}>
-        {categories.map(category => (
+        {categories.data.map(category => (
           <FormControlLabel
             label={category.name}
             key={category.name}
             control={
               <Checkbox
                 checked={category.checked}
+                disabled={category.disabled}
                 onChange={() => handleCheck(category)}
               />
             }

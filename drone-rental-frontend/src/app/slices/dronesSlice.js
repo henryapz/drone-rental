@@ -5,6 +5,7 @@ const initialState = {
   status: '',
   data: [],
   filteredData: [],
+  selectedFilters: [],
 };
 
 export const getAllDrones = createAsyncThunk('drones/getAll', async () => {
@@ -20,11 +21,19 @@ const dronesSlice = createSlice({
   name: 'drones',
   initialState,
   reducers: {
-    filterByCategory(state, action) {
-      const category = action.payload;
-      state.filteredData = state.data.filter(
-        element => element.category_id.name === category,
+    filterData(state) {
+      state.filteredData = state.data.filter(element =>
+        state.selectedFilters.includes(element.category_id.name),
       );
+    },
+    addFilter(state, action) {
+      const name = action.payload;
+      state.selectedFilters.push(name);
+    },
+    removeFilter(state, action) {
+      const name = action.payload;
+      const index = state.selectedFilters.indexOf(name);
+      state.selectedFilters.splice(index, 1);
     },
   },
   extraReducers: builder => {
@@ -42,5 +51,5 @@ const dronesSlice = createSlice({
   },
 });
 
-export const { filterByCategory, extraReducers } = dronesSlice.actions;
+export const { filterData, addFilter, removeFilter, extraReducers } = dronesSlice.actions;
 export default dronesSlice.reducer;
