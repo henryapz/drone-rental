@@ -55,17 +55,16 @@ function DronesList() {
           {!drones.status || drones.status === 'loading' ? (
             <Loader />
           ) : (
-            dronesToRender.map(element => (
-              <Grid
-                key={element._id}
-                container
-                spacing={2}
-                justifyContent="space-evenly"
-                alignItems="stretch"
-              >
-                <DroneCard drone={element} />
-              </Grid>
-            ))
+            <Grid
+              container
+              spacing={2}
+              justifyContent="space-evenly"
+              alignItems="stretch"
+            >
+              {dronesToRender.map(element => (
+                <DroneCard key={element._id} drone={element} />
+              ))}
+            </Grid>
           )}
         </Box>
         <Stack spacing={2} mt={3}>
