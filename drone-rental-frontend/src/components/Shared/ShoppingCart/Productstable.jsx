@@ -19,12 +19,12 @@ function Productstable() {
         <TableHead>
           <TableRow>
             <TableCell>Modelo/Ref</TableCell>
-            <TableCell align="right">Unidades</TableCell>
-            <TableCell align="right">Dias</TableCell>
-            <TableCell align="right">Precio</TableCell>
-            <TableCell align="right">Subtotal</TableCell>
             <TableCell align="right">Fecha inicio</TableCell>
             <TableCell align="right">Fecha fin</TableCell>
+            <TableCell align="right">Dias</TableCell>
+            <TableCell align="right">Unidades</TableCell>
+            <TableCell align="right">Precio</TableCell>
+            <TableCell align="right">Subtotal</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -36,12 +36,12 @@ function Productstable() {
               <TableCell component="th" scope="row">
                 {element.ref}
               </TableCell>
-              <TableCell align="right">{element.quantity}</TableCell>
-              <TableCell align="right">{element.days}</TableCell>
-              <TableCell align="right">{element.price}</TableCell>
-              <TableCell align="right">{element.subtotal}</TableCell>
               <TableCell align="right">{element.initialDate}</TableCell>
               <TableCell align="right">{element.finalDate}</TableCell>
+              <TableCell align="right">{element.days}</TableCell>
+              <TableCell align="right">{element.quantity}</TableCell>
+              <TableCell align="right">{`$${element.price}`}</TableCell>
+              <TableCell align="right">{`$${element.subtotal}`}</TableCell>
             </TableRow>
           ))}
         </TableBody>

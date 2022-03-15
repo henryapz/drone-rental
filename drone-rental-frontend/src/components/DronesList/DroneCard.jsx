@@ -40,6 +40,9 @@ function DroneCard({ drone }) {
             <Typography gutterBottom fontWeight="light" variant="subtitle1">
               {drone.brand}
             </Typography>
+            <Typography gutterBottom fontWeight="500" fontStyle="italic" variant="body2">
+              {`$${drone.pricePerDay}`}
+            </Typography>
           </CardContent>
         </CardActionArea>
       </Card>
@@ -66,7 +69,21 @@ DroneCard.propTypes = {
 };
 
 DroneCard.defaultProps = {
-  drone: {},
+  drone: {
+    model: '',
+    brand: '',
+    description: '',
+    productImage: {
+      secure_url: '',
+    },
+    quantity: 0,
+    pricePerDay: 0,
+    pricePerWeek: 0,
+    pricePerMonth: 0,
+    category_id: {
+      name: '',
+    },
+  },
 };
 
 export default DroneCard;

@@ -47,7 +47,7 @@ function App() {
         <Route path="registrar" element={<SigninPage />} />
         <Route path="iniciar-sesion" element={<LoginPage />} />
         <Route path="faqs" element={<FAQs />} />
-        <Route path="drones" element={<DronesList />} />
+        <Route path="drones/" element={<DronesList />} />
         <Route path="drones/:reference" element={<DroneDetail />} />
         <Route path="checkout" element={<Checkout />} />
         <Route path="categoria/:name" element={<CategoryDetail />} />

@@ -1,7 +1,12 @@
 import { Box, Checkbox, FormControlLabel, Typography } from '@mui/material';
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { filterData, addFilter, removeFilter } from '../../app/slices/dronesSlice';
+import {
+  filterData,
+  addFilter,
+  removeFilter,
+  addAllToFilter,
+} from '../../app/slices/dronesSlice';
 import {
   checkField,
   checkAllFields,
@@ -19,7 +24,9 @@ function DronesFilter() {
       dispatch(unCheckAllFields());
     } else {
       dispatch(checkAllFields());
+      dispatch(addAllToFilter(categories.data));
     }
+    dispatch(filterData());
   };
   const handleCheck = category => {
     const { name, checked } = category;
@@ -28,8 +35,8 @@ function DronesFilter() {
       dispatch(removeFilter(name));
     } else {
       dispatch(addFilter(name));
-      dispatch(filterData());
     }
+    dispatch(filterData());
   };
   return (
     <Box>
