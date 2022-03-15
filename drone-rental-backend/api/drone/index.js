@@ -5,6 +5,7 @@ const {
   deleteDrone,
   getAllDrones,
   getDroneById,
+  getDronesPerPage,
 } = require('./drone.controller');
 
 const router = Router();
@@ -15,5 +16,6 @@ router.put('/', updateDrone);
 router.delete('/', deleteDrone);
 router.get('/', getAllDrones);
 router.get('/:id', getDroneById);
+router.post('/:page', getDronesPerPage);
 
 module.exports = router;
