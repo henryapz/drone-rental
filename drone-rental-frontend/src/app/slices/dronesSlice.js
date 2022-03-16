@@ -12,21 +12,23 @@ const initialState = {
 
 export const getAllDrones = createAsyncThunk('drones/getAll', async () => {
   try {
-    const drones = await axios.get(`http://localhost:8080/api/drones/`);
+    const drones = await axios.get('http://localhost:8080/api/drones/');
     return drones.data;
   } catch (error) {
     throw new Error(error);
   }
 });
 
-// export const getDronesByPage = createAsyncThunk('drones/getAll', async (page) => {
-//   try {
-//     const drones = await axios.get(`http://localhost:8080/api/drones/${page}`);
-//     return drones.data;
-//   } catch (error) {
-//     throw new Error(error);
-//   }
-// });
+export const getDronesByPage = createAsyncThunk('drones/getByPage', async payload => {
+  try {
+    const drones = await axios.post(`http://localhost:8080/api/drones/${payload.page}`, {
+      perPage: payload.perPage,
+    });
+    return drones.data;
+  } catch (error) {
+    throw new Error(error);
+  }
+});
 
 const dronesSlice = createSlice({
   name: 'drones',
@@ -109,9 +111,18 @@ const dronesSlice = createSlice({
       })
       .addCase(getAllDrones.fulfilled, (state, action) => {
         state.status = 'fulfilled';
-        state.data = [...action.payload];
         state.info = { ...state.info, totalCount: action.payload.length };
         state.pages = Math.ceil(action.payload.length / state.info.perPage);
+      })
+      .addCase(getDronesByPage.pending, state => {
+        state.status = 'loading';
+      })
+      .addCase(getDronesByPage.rejected, state => {
+        state.status = 'rejected';
+      })
+      .addCase(getDronesByPage.fulfilled, (state, action) => {
+        state.status = 'fulfilled';
+        state.data = [...action.payload];
       });
   },
 });

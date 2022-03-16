@@ -12,7 +12,7 @@ import {
   Grid,
 } from '@mui/material';
 import { useSelector, useDispatch } from 'react-redux';
-import { sortDrones } from '../../app/slices/dronesSlice';
+import { sortDrones, getDronesByPage } from '../../app/slices/dronesSlice';
 import DroneCard from '../../components/DronesList/DroneCard';
 import DronesFilter from '../../components/DronesList/DronesFilter';
 import Loader from '../../components/Shared/Loader/Loader';
@@ -20,6 +20,7 @@ import Loader from '../../components/Shared/Loader/Loader';
 function DronesList() {
   const [isLoading, setIsLoading] = useState(true);
   const [selectOption, setSelectOption] = useState(1);
+  const [pageOptions, setPageOptions] = useState({ page: 1, perPage: 8 });
   const drones = useSelector(state => state.drones);
   const dronesFilteredList = useSelector(state => state.drones.filteredData);
   const dronesToRender = dronesFilteredList.length ? dronesFilteredList : drones.data;
@@ -31,9 +32,13 @@ function DronesList() {
     dispatch(sortDrones({ value }));
   };
 
-  // useEffect(() => {
-  //   getDronesByPage(2);
-  // }, []);
+  const handlePageChange = (e, value) => {
+    setPageOptions({ ...pageOptions, page: value });
+  };
+
+  useEffect(() => {
+    dispatch(getDronesByPage(pageOptions));
+  }, [pageOptions, dispatch]);
 
   useEffect(() => {
     if (drones.status === 'fulfilled') setIsLoading(false);
@@ -41,7 +46,7 @@ function DronesList() {
 
   useEffect(() => {
     dispatch(sortDrones({ value: 1 }));
-  }, [isLoading]);
+  }, [isLoading, dispatch]);
   return (
     <Box sx={{ pt: '50px', pb: '50px' }}>
       <Container maxWidth="xl">
@@ -85,10 +90,12 @@ function DronesList() {
         </Box>
         <Stack spacing={2} mt={3}>
           <Pagination
-            count={10}
+            count={drones.pages}
+            page={pageOptions.page}
             variant="outlined"
             shape="rounded"
             sx={{ margin: 'auto' }}
+            onChange={handlePageChange}
           />
         </Stack>
       </Container>
