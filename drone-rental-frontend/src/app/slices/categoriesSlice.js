@@ -9,7 +9,11 @@ const initialState = {
 export const getAllCategories = createAsyncThunk('categories/getAll', async () => {
   try {
     const response = await axios.get('http://localhost:8080/api/categories');
-    return response.data;
+    return response.data.map(element => ({
+      ...element,
+      checked: false,
+      disabled: false,
+    }));
   } catch (error) {
     throw new Error(error);
   }
@@ -19,9 +23,24 @@ const categoriesSlice = createSlice({
   name: 'categories',
   initialState,
   reducers: {
-    load() {
-      return initialState;
+    checkField(state, action) {
+      const name = action.payload;
+      state.data = state.data.map(category => {
+        if (category.name === name) {
+          return { ...category, checked: !category.checked };
+        }
+        return category;
+      });
     },
+    checkAllFields(state) {
+      state.data = state.data.map(category => ({ ...category, checked: true }));
+    },
+    unCheckAllFields(state) {
+      state.data = state.data.map(category => ({ ...category, checked: false }));
+    },
+    // disableCheckbox(state, action){
+
+    // },
   },
   extraReducers: builder => {
     builder
@@ -38,5 +57,11 @@ const categoriesSlice = createSlice({
   },
 });
 
-export const { load, extraReducers } = categoriesSlice.actions;
+export const {
+  checkField,
+  checkAllFields,
+  unCheckAllFields,
+
+  extraReducers,
+} = categoriesSlice.actions;
 export default categoriesSlice.reducer;

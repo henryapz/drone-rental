@@ -1,15 +1,20 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
-import { Container, Box, Typography } from '@mui/material';
+import { Container, Box, Typography, Stack } from '@mui/material';
 import { useSelector } from 'react-redux';
 import DroneCard from '../../DronesList/DroneCard';
 import Hero from '../../Shared/Hero/Hero';
+import Loader from '../../Shared/Loader/Loader';
 
 function CategoryInfo({ data }) {
   const drones = useSelector(state => state.drones);
   const categoryDrones = drones.data.filter(
     drone => drone.category_id.name === data.name.toLowerCase(),
   );
+
+  if (!drones.data) {
+    return <Loader />;
+  }
 
   return (
     <Container>
@@ -26,7 +31,11 @@ function CategoryInfo({ data }) {
         <Typography variant="h5" component="h2" margin="2rem auto">
           Drones relacionados
         </Typography>
-        <DroneCard dronesList={categoryDrones} />
+        <Stack direction="row" spacing={2} width="100%">
+          {categoryDrones.map(drone => (
+            <DroneCard key={drone} drone={drone} />
+          ))}
+        </Stack>
       </Box>
     </Container>
   );

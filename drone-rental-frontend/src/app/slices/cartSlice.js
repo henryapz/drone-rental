@@ -28,4 +28,3 @@ const { actions, reducer } = cartSlice;
 export const { addElements, updateTotal, resetCart } = actions;
 
 export default reducer;
-

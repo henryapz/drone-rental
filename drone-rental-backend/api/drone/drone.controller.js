@@ -39,6 +39,21 @@ async function getAllDrones(req, res) {
   }
 }
 
+async function getDronesPerPage(req, res) {
+  const { perPage } = req.body;
+  const page = Number(req.params.page);
+  const start = perPage * (page - 1);
+  const end = start + perPage;
+
+  try {
+    const drones = await Drone.find().populate('productImage category_id');
+    const filteredDrones = drones.slice(start, end);
+    res.status(200).json(filteredDrones);
+  } catch (error) {
+    res.status(400).json({ error });
+  }
+}
+
 async function getDroneById(req, res) {
   const { id } = req.params;
   try {
@@ -55,4 +70,5 @@ module.exports = {
   deleteDrone,
   getAllDrones,
   getDroneById,
+  getDronesPerPage,
 };

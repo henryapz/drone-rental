@@ -21,6 +21,7 @@ function DroneDetail() {
     'https://dji-official-fe.djicdn.com/dps/1307827ee381a1211a93e8f988b5143b.jpg',
     'https://dji-official-fe.djicdn.com/dps/21f8464c304b94c4421280aaa39f726d.jpg',
     'https://dji-official-fe.djicdn.com/dps/edd37896183da3917fa90f6f49ac19a1.jpg',
+    'https://www.parrot.com/assets/s3fs-public/styles/lglossless/public/2022-01/header_desktop.jpg',
   ];
   const randInt = Math.floor(Math.random() * urls.length);
   return (
