@@ -16,6 +16,8 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import PersonIcon from '@mui/icons-material/Person';
 import MenuIcon from '@mui/icons-material/Menu';
 import { Link, NavLink } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { logoutUser } from '../../../app/slices/userSlice';
 import DroneIcon from '../../../assets/images/drone-icon.png';
 import ShoppingCart from '../ShoppingCart/ShoppingCart';
 import styles from './Header.module.scss';
@@ -26,14 +28,11 @@ const navPages = [
   { name: 'FAQs', url: '/faqs' },
 ];
 
-const userPages = [
-  { name: 'Inicio de sesión', url: '/iniciar-sesion' },
-  { name: 'Registro', url: '/registrar' },
-];
-
 function Header({ onMenuButtonClick }) {
+  const dispatch = useDispatch();
   const [anchorElUser, setAnchorElUser] = useState(null);
   const [openCart, setOpenCart] = useState(false);
+  const user = useSelector(state => state.user);
   const handleOpenCart = () => setOpenCart(true);
   const handleCloseCart = () => setOpenCart(false);
 
@@ -45,6 +44,22 @@ function Header({ onMenuButtonClick }) {
     setAnchorElUser(null);
   };
 
+  const publicPages = [
+    { name: 'Inicio de sesión', url: '/iniciar-sesion', onClick: handleCloseUserMenu },
+    { name: 'Registro', url: '/registrar', onClick: handleCloseUserMenu },
+  ];
+
+  const privatePages = [
+    { name: 'Perfil', url: '/profile', onClick: handleCloseUserMenu },
+    {
+      name: 'Cerrar Sesión',
+      url: '/',
+      onClick: () => {
+        dispatch(logoutUser());
+      },
+    },
+  ];
+  const userPages = user.userData ? privatePages : publicPages;
   return (
     <AppBar position="static">
       <Container>
@@ -90,6 +105,11 @@ function Header({ onMenuButtonClick }) {
             <ShoppingCart open={openCart} handleClose={handleCloseCart} />
 
             <IconButton onClick={handleOpenUserMenu} color="inherit">
+              {user.userData && (
+                <Typography variant="subtitle2" component="div">
+                  {user.userData.email}
+                </Typography>
+              )}
               <PersonIcon />
             </IconButton>
             <Menu
@@ -112,7 +132,7 @@ function Header({ onMenuButtonClick }) {
                   component={Link}
                   to={page.url}
                   key={page.name}
-                  onClick={handleCloseUserMenu}
+                  onClick={page.onClick}
                 >
                   {page.name}
                 </MenuItem>
