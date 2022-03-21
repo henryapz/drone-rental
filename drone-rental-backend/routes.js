@@ -3,6 +3,7 @@ const drone = require('./api/drone');
 const cloudImage = require('./api/cloudImage');
 const category = require('./api/category');
 const order = require('./api/order');
+const payment = require('./api/payment');
 
 function routes(app) {
   app.use('/api/users', user);
@@ -10,6 +11,7 @@ function routes(app) {
   app.use('/api/orders', order);
   app.use('/api/images', cloudImage);
   app.use('/api/categories', category);
+  app.use('/api/payments', payment);
   // app.use('/api/products', product);
 }
 

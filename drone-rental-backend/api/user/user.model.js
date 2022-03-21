@@ -1,6 +1,7 @@
 const mongoose = require('mongoose'),
   bcrypt = require('bcrypt'),
   SALT_WORK_FACTOR = 10;
+const { CreditCardSchema } = require('./card.model');
 
 const UserSchema = new mongoose.Schema(
   {
@@ -43,6 +44,7 @@ const UserSchema = new mongoose.Schema(
       required: true,
     },
     token: { type: String },
+    billing: [CreditCardSchema],
   },
   {
     timestamps: true,
