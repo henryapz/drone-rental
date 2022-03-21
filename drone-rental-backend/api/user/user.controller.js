@@ -47,14 +47,15 @@ async function loginUser(req, res) {
 
       // save user token
       user.token = token;
-
+      // eslint-disable-next-line no-underscore-dangle
+      const { password: pass, ...userData } = user._doc;
       // user
-      res.status(200).json(user);
+      res.status(200).json(userData);
     } else {
-      res.status(400).send('Invalid Credentials');
+      res.status(401).send('Invalid Credentials');
     }
   } catch (error) {
-    res.status(400).json({ error });
+    res.status(500).json({ error });
   }
 }
 
