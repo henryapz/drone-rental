@@ -1,5 +1,5 @@
 const { addCreditCards, updateBilling } = require('../user/user.service');
-const { createCardToken, createCustomer } = require('./payment.service');
+const { createCardToken, createCustomer, createPayment } = require('./payment.service');
 
 async function createtTokenHandler(req, res) {
   const {
@@ -44,7 +44,20 @@ async function createCustomerHandler(req, res) {
   }
 }
 
+async function makePaymentHandler(req, res) {
+  const { user, body: payment } = req;
+  try {
+    const { data, success } = await createPayment(user, payment);
+    console.log(data, success);
+    return res.status(200).json({ status: 'success' });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ status: 'failed' });
+  }
+}
+
 module.exports = {
   createtTokenHandler,
   createCustomerHandler,
+  makePaymentHandler,
 };
