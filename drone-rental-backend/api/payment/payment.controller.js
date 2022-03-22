@@ -1,3 +1,4 @@
+const { addCreditCards, updateBilling } = require('../user/user.service');
 const { createCardToken, createCustomer } = require('./payment.service');
 
 async function createtTokenHandler(req, res) {
@@ -14,9 +15,18 @@ async function createtTokenHandler(req, res) {
   try {
     const result = await createCardToken(creditCardInfo);
     console.log('resuuult: ', result);
+    const { user } = req;
+    const creditCard = {
+      expMonth: result.card.exp_month,
+      expYear: result.card.exp_year,
+      name: result.card.name,
+      mask: result.card.mask,
+      tokenId: result.id,
+    };
+
+    await updateBilling(user, creditCard, 'card');
     return res.status(200).json({ status: 'success' });
   } catch (x) {
-    console.log(x);
     return res.status(500).json({ status: 'failed' });
   }
 }
@@ -24,9 +34,13 @@ async function createtTokenHandler(req, res) {
 async function createCustomerHandler(req, res) {
   const { user } = req;
   try {
-    const result = await createCustomer(user);
+    const { data } = await createCustomer(user);
+    console.log(data);
+    await updateBilling(user, data.customerId, 'customer');
+    return res.status(200).json({ status: 'success' });
   } catch (err) {
     console.log(err);
+    return res.status(500).json({ status: 'failed' });
   }
 }
 

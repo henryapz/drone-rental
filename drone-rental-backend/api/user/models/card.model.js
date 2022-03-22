@@ -21,6 +21,11 @@ const CreditCardSchema = new mongoose.Schema({
     required: true,
     trim: true,
   },
+  tokenId: {
+    type: String,
+    required: true,
+    trim: true,
+  },
 });
 
 module.exports = {

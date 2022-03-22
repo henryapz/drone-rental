@@ -11,7 +11,7 @@ async function createCardToken(creditCardInfo) {
 
 async function createCustomer(user) {
   const customerInfo = {
-    token_card: user.creditCards[0].tokenId,
+    token_card: user.billing.creditCards[0].tokenId,
     name: user.firstName,
     last_name: user.lastName,
     email: user.email,
