@@ -8,6 +8,11 @@ const initialState = {
   pages: 1,
   filteredData: [],
   selectedFilters: [],
+  newDrone: {
+    status: '',
+    imageId: '',
+    imageUrl: '',
+  },
 };
 
 export const getAllDrones = createAsyncThunk('drones/getAll', async () => {
@@ -29,6 +34,34 @@ export const getDronesByPage = createAsyncThunk('drones/getByPage', async payloa
     throw new Error(error);
   }
 });
+
+export const createDrone = createAsyncThunk('drones/create', async payload => {
+  // const body = JSON.stringify(payload);
+  try {
+    const drones = await axios.post('http://localhost:8080/api/drones/', {
+      ...payload,
+    });
+    return drones.data;
+  } catch (error) {
+    throw new Error(error);
+  }
+});
+
+export const uploadDroneImage = createAsyncThunk(
+  'drones/uploadImage',
+  async ({ model, base64EncodedImage }) => {
+    try {
+      const image = await axios.post('http://localhost:8080/api/images', {
+        imagePath: base64EncodedImage,
+        fileName: model,
+        tags: 'drones',
+      });
+      return image.data;
+    } catch (error) {
+      throw new Error(error);
+    }
+  },
+);
 
 const dronesSlice = createSlice({
   name: 'drones',
@@ -123,6 +156,17 @@ const dronesSlice = createSlice({
       .addCase(getDronesByPage.fulfilled, (state, action) => {
         state.status = 'fulfilled';
         state.data = [...action.payload];
+      })
+      .addCase(createDrone.fulfilled, state => {
+        state.status = 'fulfilled';
+      })
+      .addCase(uploadDroneImage.pending, state => {
+        state.newDrone.status = 'loading';
+      })
+      .addCase(uploadDroneImage.fulfilled, (state, action) => {
+        state.newDrone.status = 'fulfilled';
+        state.newDrone.imageId = action.payload._id;
+        state.newDrone.imageUrl = action.payload.secure_url;
       });
   },
 });
