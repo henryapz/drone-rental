@@ -30,23 +30,33 @@ export default function AdminDrones() {
 
   const handleSelect = (event, name, id) => {
     const selectedIndex = selected.indexOf(name);
+    const idsIndex = selectedIds.indexOf(id);
     let newSelected = [];
+    let newSelectedIds = [];
 
     if (selectedIndex === -1) {
       newSelected = newSelected.concat(selected, name);
+      newSelectedIds = newSelectedIds.concat(selectedIds, id);
     } else if (selectedIndex === 0) {
       newSelected = newSelected.concat(selected.slice(1));
+      newSelectedIds = newSelectedIds.concat(selectedIds.slice(1));
     } else if (selectedIndex === selected.length - 1) {
       newSelected = newSelected.concat(selected.slice(0, -1));
+      newSelectedIds = newSelectedIds.concat(selectedIds.slice(0, -1));
     } else if (selectedIndex > 0) {
       newSelected = newSelected.concat(
         selected.slice(0, selectedIndex),
         selected.slice(selectedIndex + 1),
       );
+      newSelectedIds = newSelectedIds.concat(
+        newSelectedIds.slice(0, idsIndex),
+        newSelectedIds.slice(idsIndex + 1),
+      );
     }
 
     setSelected(newSelected);
-    setSelectedIds([...selectedIds, id]);
+    setSelectedIds(newSelectedIds);
+    // setSelectedIds([...selectedIds, id]);
   };
 
   const handleChangePage = (event, newPage) => {

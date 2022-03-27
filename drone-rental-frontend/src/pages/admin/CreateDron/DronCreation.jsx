@@ -9,6 +9,9 @@ import {
   Typography,
   Input,
   InputLabel,
+  FormHelperText,
+  Snackbar,
+  Alert,
 } from '@mui/material';
 import React, { useEffect, useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -32,6 +35,15 @@ function CreateDron() {
     productImage: '',
     category_id: '',
   };
+  const [inputError, setInputError] = useState({});
+  const [numericError, setNumericError] = useState({
+    quantity: false,
+    pricePerDay: false,
+    pricePerWeek: false,
+    pricePerMonth: false,
+  });
+  const [successOnCreate, setSuccessOnCreate] = useState(false);
+  const [errorMsg] = useState('Ingrese un valor numerico');
   const [category, setCategory] = useState('');
   const [displayImg, setDisplayImg] = useState(UploadImage);
   const [isLoading, setIsLoading] = useState(false);
@@ -39,11 +51,19 @@ function CreateDron() {
   const categories = useSelector(state => state.categories.data);
   const newDrone = useSelector(state => state.drones.newDrone);
   const dispatch = useDispatch();
+
   const handleChange = (e, field) => {
     const numericFields = ['quantity', 'pricePerDay', 'pricePerWeek', 'pricePerMonth'];
     let value;
     if (numericFields.includes(field)) {
-      value = Number(e.target.value);
+      const numericVal = Number(e.target.value);
+      if (Number.isNaN(numericVal)) {
+        setNumericError({ ...numericError, [field]: true });
+        return;
+      }
+      setNumericError({ ...numericError, [field]: false });
+
+      value = numericVal;
     } else {
       value = e.target.value;
     }
@@ -57,7 +77,20 @@ function CreateDron() {
   };
 
   const handleSubmit = () => {
-    dispatch(createDrone(payload));
+    const keys = Object.keys(payload);
+    const errObj = {};
+    keys.forEach(key => {
+      if (!payload[key]) {
+        errObj[key] = true;
+      }
+    });
+    setInputError(errObj);
+
+    const errors = Object.values(errObj);
+    if (!errors.length) {
+      dispatch(createDrone(payload));
+      setSuccessOnCreate(true);
+    }
   };
 
   const handleImageLoad = e => {
@@ -126,7 +159,12 @@ function CreateDron() {
           </Grid>
           <Grid container direction="row" justifyContent="flex-start" alignItems="center">
             <Grid item xs={12} style={{ display: 'flex' }} justifyContent="center">
-              <Input ref={fileInput} type="file" onChange={handleImageLoad} />
+              <FormControl error={!!inputError.productImage}>
+                <Input ref={fileInput} type="file" onChange={handleImageLoad} />
+                {inputError.productImage && (
+                  <FormHelperText>campo requerido</FormHelperText>
+                )}
+              </FormControl>
             </Grid>
           </Grid>
         </Grid>
@@ -134,6 +172,9 @@ function CreateDron() {
           <FormControl fullWidth>
             <Typography variant="h4">Crear Drone</Typography>
             <TextField
+              required
+              error={!!inputError.model}
+              helperText={!!inputError.model && 'campo requerido'}
               id="outlined-basic"
               label="Modelo"
               variant="outlined"
@@ -142,6 +183,9 @@ function CreateDron() {
               onChange={e => handleChange(e, 'model')}
             />
             <TextField
+              required
+              error={!!inputError.brand}
+              helperText={!!inputError.brand && 'campo requerido'}
               id="outlined-basic"
               label="Marca"
               variant="outlined"
@@ -150,6 +194,13 @@ function CreateDron() {
               onChange={e => handleChange(e, 'brand')}
             />
             <TextField
+              required
+              error={!!inputError.quantity || numericError.quantity}
+              helperText={
+                (!!inputError.quantity && 'campo requerido') ||
+                (numericError.quantity && errorMsg) ||
+                '* numerico'
+              }
               id="outlined-basic"
               label="Cantidad"
               variant="outlined"
@@ -157,7 +208,7 @@ function CreateDron() {
               value={payload.quantity}
               onChange={e => handleChange(e, 'quantity')}
             />
-            <FormControl sx={{ marginTop: '0.5rem' }}>
+            <FormControl sx={{ marginTop: '0.5rem' }} error={!!inputError.category_id}>
               <InputLabel id="categoria">Categoria</InputLabel>
               <Select labelId="categoría" value={category} onChange={handleSelect}>
                 {categories.map(elem => (
@@ -166,8 +217,12 @@ function CreateDron() {
                   </MenuItem>
                 ))}
               </Select>
+              {inputError.category_id && <FormHelperText>campo requerido</FormHelperText>}
             </FormControl>
             <TextField
+              required
+              error={!!inputError.description}
+              helperText={!!inputError.description && 'campo requerido'}
               id="outlined-basic"
               label="Descripción"
               multiline
@@ -178,6 +233,13 @@ function CreateDron() {
             />
             <Typography variant="h5">Costo</Typography>
             <TextField
+              required
+              error={!!inputError.pricePerDay || numericError.pricePerDay}
+              helperText={
+                (!!inputError.pricePerDay && 'campo requerido') ||
+                (numericError.pricePerDay && errorMsg) ||
+                '* numerico'
+              }
               id="outlined-basic"
               label="Diario"
               variant="outlined"
@@ -186,6 +248,13 @@ function CreateDron() {
               onChange={e => handleChange(e, 'pricePerDay')}
             />
             <TextField
+              required
+              error={!!inputError.pricePerWeek || numericError.pricePerWeek}
+              helperText={
+                (!!inputError.pricePerWeek && 'campo requerido') ||
+                (numericError.pricePerWeek && errorMsg) ||
+                '* numerico'
+              }
               id="outlined-basic"
               label="Semanal"
               variant="outlined"
@@ -195,6 +264,13 @@ function CreateDron() {
               onChange={e => handleChange(e, 'pricePerWeek')}
             />
             <TextField
+              required
+              error={!!inputError.pricePerMonth || numericError.pricePerMonth}
+              helperText={
+                (!!inputError.pricePerMonth && 'campo requerido') ||
+                (numericError.pricePerMonth && errorMsg) ||
+                '* numerico'
+              }
               id="outlined-basic"
               label="Mensual"
               variant="outlined"
@@ -207,6 +283,18 @@ function CreateDron() {
               Crear
             </Button>
           </FormControl>
+          {successOnCreate && (
+            <Snackbar
+              open={successOnCreate}
+              anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+              autoHideDuration={1000}
+              onClose={() => setSuccessOnCreate(false)}
+            >
+              <Alert severity="success">
+                <strong>Drone creado</strong>
+              </Alert>
+            </Snackbar>
+          )}
         </Grid>
       </Grid>
     </Container>
