@@ -8,6 +8,14 @@ const initialState = {
   pages: 1,
   filteredData: [],
   selectedFilters: [],
+  newDrone: {
+    status: '',
+    imageId: '',
+    imageUrl: '',
+  },
+  deletedDrones: {
+    status: '',
+  },
 };
 
 export const getAllDrones = createAsyncThunk('drones/getAll', async () => {
@@ -25,6 +33,44 @@ export const getDronesByPage = createAsyncThunk('drones/getByPage', async payloa
       perPage: payload.perPage,
     });
     return drones.data;
+  } catch (error) {
+    throw new Error(error);
+  }
+});
+
+export const createDrone = createAsyncThunk('drones/create', async payload => {
+  try {
+    const drones = await axios.post('http://localhost:8080/api/drones/', {
+      ...payload,
+    });
+    return drones.data;
+  } catch (error) {
+    throw new Error(error);
+  }
+});
+
+export const uploadDroneImage = createAsyncThunk(
+  'drones/uploadImage',
+  async ({ model, base64EncodedImage }) => {
+    try {
+      const image = await axios.post('http://localhost:8080/api/images', {
+        imagePath: base64EncodedImage,
+        fileName: model,
+        tags: 'drones',
+      });
+      return image.data;
+    } catch (error) {
+      throw new Error(error);
+    }
+  },
+);
+
+export const deleteDrones = createAsyncThunk('drones/delete', async ids => {
+  try {
+    const deletedDrones = await axios.delete('http://localhost:8080/api/drones', {
+      data: { ids },
+    });
+    return deletedDrones.data;
   } catch (error) {
     throw new Error(error);
   }
@@ -99,6 +145,12 @@ const dronesSlice = createSlice({
       }
       state.data = state.data.sort(customSort);
     },
+    resetDeletedDrones: state => {
+      state.deletedDrones = { status: '' };
+    },
+    resetNewDrone: state => {
+      state.newDrone = initialState.newDrone;
+    },
   },
 
   extraReducers: builder => {
@@ -113,6 +165,7 @@ const dronesSlice = createSlice({
         state.status = 'fulfilled';
         state.info = { ...state.info, totalCount: action.payload.length };
         state.pages = Math.ceil(action.payload.length / state.info.perPage);
+        state.allDrones = action.payload;
       })
       .addCase(getDronesByPage.pending, state => {
         state.status = 'loading';
@@ -123,6 +176,20 @@ const dronesSlice = createSlice({
       .addCase(getDronesByPage.fulfilled, (state, action) => {
         state.status = 'fulfilled';
         state.data = [...action.payload];
+      })
+      .addCase(createDrone.fulfilled, state => {
+        state.newDrone.status = 'fulfilled';
+      })
+      .addCase(uploadDroneImage.pending, state => {
+        state.newDrone.status = 'loading';
+      })
+      .addCase(uploadDroneImage.fulfilled, (state, action) => {
+        state.newDrone.status = '';
+        state.newDrone.imageId = action.payload._id;
+        state.newDrone.imageUrl = action.payload.secure_url;
+      })
+      .addCase(deleteDrones.fulfilled, state => {
+        state.deletedDrones.status = 'fulfilled';
       });
   },
 });
@@ -133,6 +200,8 @@ export const {
   removeFilter,
   addAllToFilter,
   sortDrones,
+  resetDeletedDrones,
+  resetNewDrone,
   extraReducers,
 } = dronesSlice.actions;
 export default dronesSlice.reducer;

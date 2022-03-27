@@ -11,6 +11,7 @@ const store = configureStore({
     drones: dronesReducer,
     user: userReducer,
   },
+  middleware: getDefaultMiddleware => getDefaultMiddleware(),
 });
 
 export default store;

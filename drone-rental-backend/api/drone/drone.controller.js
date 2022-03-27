@@ -1,9 +1,13 @@
+/* eslint-disable no-underscore-dangle */
 const Drone = require('./drone.model');
+const Category = require('../category/category.model');
 
 async function createDrone(req, res) {
   const data = req.body;
+  const categoryId = await Category.findOne({ name: data.category_id }).exec();
+  const payload = { ...data, category_id: categoryId._id };
   try {
-    const drone = await Drone.create(data);
+    const drone = await Drone.create(payload);
     res.status(200).json(drone);
   } catch (error) {
     res.status(400).json({ error });
@@ -21,9 +25,9 @@ async function updateDrone(req, res) {
 }
 
 async function deleteDrone(req, res) {
-  const { id } = req.body;
+  const { ids } = req.body;
   try {
-    const drone = await Drone.findByIdAndDelete(id);
+    const drone = await Drone.deleteMany({ _id: { $in: ids } });
     res.status(200).json(drone);
   } catch (error) {
     res.status(400).json({ error });
