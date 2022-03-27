@@ -5,7 +5,7 @@ import TablePagination from '@mui/material/TablePagination';
 import Paper from '@mui/material/Paper';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
-import { getAllDrones, resetDeletedDronesStatus } from '../../../app/slices/dronesSlice';
+import { getAllDrones, resetDeletedDrones } from '../../../app/slices/dronesSlice';
 import DronesTableToolbar from '../../../components/admin/Drones/DronesTableToolbar/DronesTableToolbar';
 import DronesTable from '../../../components/admin/Drones/DronesTable/DronesTable';
 
@@ -64,7 +64,7 @@ export default function AdminDrones() {
       setSelected([]);
       setSelectedIds([]);
     }
-    dispatch(resetDeletedDronesStatus());
+    dispatch(resetDeletedDrones());
     dispatch(getAllDrones());
   }, [deletedDrones.status, dispatch]);
 

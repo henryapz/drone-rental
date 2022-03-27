@@ -145,8 +145,11 @@ const dronesSlice = createSlice({
       }
       state.data = state.data.sort(customSort);
     },
-    resetDeletedDronesStatus: state => {
+    resetDeletedDrones: state => {
       state.deletedDrones = { status: '' };
+    },
+    resetNewDrone: state => {
+      state.newDrone = initialState.newDrone;
     },
   },
 
@@ -175,13 +178,13 @@ const dronesSlice = createSlice({
         state.data = [...action.payload];
       })
       .addCase(createDrone.fulfilled, state => {
-        state.status = 'fulfilled';
+        state.newDrone.status = 'fulfilled';
       })
       .addCase(uploadDroneImage.pending, state => {
         state.newDrone.status = 'loading';
       })
       .addCase(uploadDroneImage.fulfilled, (state, action) => {
-        state.newDrone.status = 'fulfilled';
+        state.newDrone.status = '';
         state.newDrone.imageId = action.payload._id;
         state.newDrone.imageUrl = action.payload.secure_url;
       })
@@ -197,7 +200,8 @@ export const {
   removeFilter,
   addAllToFilter,
   sortDrones,
-  resetDeletedDronesStatus,
+  resetDeletedDrones,
+  resetNewDrone,
   extraReducers,
 } = dronesSlice.actions;
 export default dronesSlice.reducer;

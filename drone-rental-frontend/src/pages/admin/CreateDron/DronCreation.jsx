@@ -8,31 +8,37 @@ import {
   TextField,
   Typography,
   Input,
+  InputLabel,
 } from '@mui/material';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { createDrone, uploadDroneImage } from '../../../app/slices/dronesSlice';
+import {
+  createDrone,
+  uploadDroneImage,
+  resetNewDrone,
+} from '../../../app/slices/dronesSlice';
 import UploadImage from '../../../assets/images/img_ph.svg';
 
 function CreateDron() {
-  const [category, setCategory] = useState('aventura');
-  const [displayImg, setDisplayImg] = useState(UploadImage);
-  const [isLoading, setIsLoading] = useState(false);
-  const [payload, setPayload] = useState({
+  const fileInput = useRef(null);
+  const initialState = {
     model: '',
     brand: '',
     description: '',
-    quantity: 0,
-    pricePerDay: 0,
-    pricePerWeek: 0,
-    pricePerMonth: 0,
+    quantity: '',
+    pricePerDay: '',
+    pricePerWeek: '',
+    pricePerMonth: '',
     productImage: '',
     category_id: '',
-  });
+  };
+  const [category, setCategory] = useState('');
+  const [displayImg, setDisplayImg] = useState(UploadImage);
+  const [isLoading, setIsLoading] = useState(false);
+  const [payload, setPayload] = useState(initialState);
   const categories = useSelector(state => state.categories.data);
   const newDrone = useSelector(state => state.drones.newDrone);
   const dispatch = useDispatch();
-
   const handleChange = (e, field) => {
     const numericFields = ['quantity', 'pricePerDay', 'pricePerWeek', 'pricePerMonth'];
     let value;
@@ -71,10 +77,14 @@ function CreateDron() {
   useEffect(() => {
     if (newDrone.status === 'loading') {
       setIsLoading(true);
+    } else if (newDrone.status === 'fulfilled') {
+      dispatch(resetNewDrone());
+      setPayload(initialState);
+      setDisplayImg(UploadImage);
     } else {
       setIsLoading(false);
     }
-  }, [newDrone.status]);
+  }, [newDrone.status, dispatch]);
 
   useEffect(() => {
     if (newDrone.imageUrl) {
@@ -85,6 +95,7 @@ function CreateDron() {
   useEffect(() => {
     setPayload({ ...payload, productImage: newDrone.imageId });
   }, [newDrone.imageId]);
+
   const styles = {
     mainContainer: {
       margin: '2rem 0',
@@ -115,7 +126,7 @@ function CreateDron() {
           </Grid>
           <Grid container direction="row" justifyContent="flex-start" alignItems="center">
             <Grid item xs={12} style={{ display: 'flex' }} justifyContent="center">
-              <Input type="file" onChange={handleImageLoad} />
+              <Input ref={fileInput} type="file" onChange={handleImageLoad} />
             </Grid>
           </Grid>
         </Grid>
@@ -127,6 +138,7 @@ function CreateDron() {
               label="Modelo"
               variant="outlined"
               margin="dense"
+              value={payload.model}
               onChange={e => handleChange(e, 'model')}
             />
             <TextField
@@ -134,6 +146,7 @@ function CreateDron() {
               label="Marca"
               variant="outlined"
               margin="dense"
+              value={payload.brand}
               onChange={e => handleChange(e, 'brand')}
             />
             <TextField
@@ -141,21 +154,26 @@ function CreateDron() {
               label="Cantidad"
               variant="outlined"
               margin="dense"
+              value={payload.quantity}
               onChange={e => handleChange(e, 'quantity')}
             />
-            <Select label="Categoría" value={category} onChange={handleSelect}>
-              {categories.map(elem => (
-                <MenuItem value={elem.name} key={elem.name}>
-                  {elem.name}
-                </MenuItem>
-              ))}
-            </Select>
+            <FormControl sx={{ marginTop: '0.5rem' }}>
+              <InputLabel id="categoria">Categoria</InputLabel>
+              <Select labelId="categoría" value={category} onChange={handleSelect}>
+                {categories.map(elem => (
+                  <MenuItem value={elem.name} key={elem.name}>
+                    {elem.name}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
             <TextField
               id="outlined-basic"
               label="Descripción"
               multiline
               rows={4}
               margin="dense"
+              value={payload.description}
               onChange={e => handleChange(e, 'description')}
             />
             <Typography variant="h5">Costo</Typography>
@@ -164,6 +182,7 @@ function CreateDron() {
               label="Diario"
               variant="outlined"
               margin="dense"
+              value={payload.pricePerDay}
               onChange={e => handleChange(e, 'pricePerDay')}
             />
             <TextField
@@ -172,6 +191,7 @@ function CreateDron() {
               variant="outlined"
               margin="dense"
               fullWidth={false}
+              value={payload.pricePerWeek}
               onChange={e => handleChange(e, 'pricePerWeek')}
             />
             <TextField
@@ -180,6 +200,7 @@ function CreateDron() {
               variant="outlined"
               margin="dense"
               fullWidth={false}
+              value={payload.pricePerMonth}
               onChange={e => handleChange(e, 'pricePerMonth')}
             />
             <Button variant="contained" onClick={handleSubmit}>
