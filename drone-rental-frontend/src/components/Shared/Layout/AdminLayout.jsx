@@ -11,9 +11,9 @@ const drawerWidth = 240;
 function AdminLayout({ isAllowed }) {
   const [openSideBar, setOpenSideBar] = React.useState(false);
 
-  // if (!isAllowed) {
-  //   return <LoginPage admin />;
-  // }
+  if (!isAllowed) {
+    return <LoginPage admin />;
+  }
 
   return (
     <Box display="flex">
