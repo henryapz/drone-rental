@@ -21,7 +21,7 @@ const validationSchema = yup.object({
     .required('La contraseña es requida'),
 });
 
-function SignForm({ register }) {
+function SignForm({ register, admin }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const formik = useFormik({
@@ -33,7 +33,7 @@ function SignForm({ register }) {
     onSubmit: async values => {
       // eslint-disable-next-line no-console
       await axios.post('http://localhost:8080/api/users/login', values).then(resp => {
-        navigate('/');
+        navigate(admin ? '/admin/dashboard' : '/');
         const payload = {
           ...resp.data,
         };
@@ -104,10 +104,12 @@ function SignForm({ register }) {
 
 SignForm.propTypes = {
   register: PropTypes.bool,
+  admin: PropTypes.bool,
 };
 
 SignForm.defaultProps = {
   register: false,
+  admin: false,
 };
 
 export default SignForm;
