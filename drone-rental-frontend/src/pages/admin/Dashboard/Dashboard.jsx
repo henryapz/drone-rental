@@ -19,7 +19,6 @@ function AdminDashboard() {
   };
   const [stats, setStats] = useState(data);
 
-  // BUG: Memory leak on component unmonunt
   useEffect(() => {
     try {
       getAdminDashboarStats().then(resp => {
@@ -29,6 +28,9 @@ function AdminDashboard() {
       /* eslint no-console: ["error", { allow: ["warn", "error"] }] */
       console.error(error);
     }
+    return () => {
+      setStats(data);
+    };
   }, []);
 
   return (
