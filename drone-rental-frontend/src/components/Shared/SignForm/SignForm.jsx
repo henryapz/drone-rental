@@ -33,7 +33,7 @@ function SignForm({ register, admin }) {
     onSubmit: async values => {
       // eslint-disable-next-line no-console
       await axios.post('http://localhost:8080/api/users/login', values).then(resp => {
-        navigate(admin ? '/admin/dashboard' : '/');
+        navigate(admin ? '/admin/drones' : '/');
         const payload = {
           ...resp.data,
         };

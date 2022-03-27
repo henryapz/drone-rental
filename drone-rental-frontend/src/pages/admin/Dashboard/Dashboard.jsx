@@ -19,6 +19,7 @@ function AdminDashboard() {
   };
   const [stats, setStats] = useState(data);
 
+  // BUG: Memory leak on component unmonunt
   useEffect(() => {
     try {
       getAdminDashboarStats().then(resp => {
