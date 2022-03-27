@@ -13,6 +13,9 @@ const initialState = {
     imageId: '',
     imageUrl: '',
   },
+  deletedDrones: {
+    status: '',
+  },
 };
 
 export const getAllDrones = createAsyncThunk('drones/getAll', async () => {
@@ -36,7 +39,6 @@ export const getDronesByPage = createAsyncThunk('drones/getByPage', async payloa
 });
 
 export const createDrone = createAsyncThunk('drones/create', async payload => {
-  // const body = JSON.stringify(payload);
   try {
     const drones = await axios.post('http://localhost:8080/api/drones/', {
       ...payload,
@@ -62,6 +64,17 @@ export const uploadDroneImage = createAsyncThunk(
     }
   },
 );
+
+export const deleteDrones = createAsyncThunk('drones/delete', async ids => {
+  try {
+    const deletedDrones = await axios.delete('http://localhost:8080/api/drones', {
+      data: { ids },
+    });
+    return deletedDrones.data;
+  } catch (error) {
+    throw new Error(error);
+  }
+});
 
 const dronesSlice = createSlice({
   name: 'drones',
@@ -132,6 +145,9 @@ const dronesSlice = createSlice({
       }
       state.data = state.data.sort(customSort);
     },
+    resetDeletedDronesStatus: state => {
+      state.deletedDrones = { status: '' };
+    },
   },
 
   extraReducers: builder => {
@@ -146,6 +162,7 @@ const dronesSlice = createSlice({
         state.status = 'fulfilled';
         state.info = { ...state.info, totalCount: action.payload.length };
         state.pages = Math.ceil(action.payload.length / state.info.perPage);
+        state.allDrones = action.payload;
       })
       .addCase(getDronesByPage.pending, state => {
         state.status = 'loading';
@@ -167,6 +184,9 @@ const dronesSlice = createSlice({
         state.newDrone.status = 'fulfilled';
         state.newDrone.imageId = action.payload._id;
         state.newDrone.imageUrl = action.payload.secure_url;
+      })
+      .addCase(deleteDrones.fulfilled, state => {
+        state.deletedDrones.status = 'fulfilled';
       });
   },
 });
@@ -177,6 +197,7 @@ export const {
   removeFilter,
   addAllToFilter,
   sortDrones,
+  resetDeletedDronesStatus,
   extraReducers,
 } = dronesSlice.actions;
 export default dronesSlice.reducer;
