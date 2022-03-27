@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Typography,
   Container,
@@ -9,12 +9,44 @@ import {
   MenuItem,
   Stack,
   Pagination,
+  Grid,
 } from '@mui/material';
+import { useSelector, useDispatch } from 'react-redux';
+import { sortDrones, getDronesByPage } from '../../app/slices/dronesSlice';
 import DroneCard from '../../components/DronesList/DroneCard';
 import DronesFilter from '../../components/DronesList/DronesFilter';
-import drones from '../../services/mock/drones';
+import Loader from '../../components/Shared/Loader/Loader';
 
 function DronesList() {
+  const [isLoading, setIsLoading] = useState(true);
+  const [selectOption, setSelectOption] = useState(1);
+  const [pageOptions, setPageOptions] = useState({ page: 1, perPage: 8 });
+  const drones = useSelector(state => state.drones);
+  const dronesFilteredList = useSelector(state => state.drones.filteredData);
+  const dronesToRender = dronesFilteredList.length ? dronesFilteredList : drones.data;
+  const dispatch = useDispatch();
+
+  const handleChange = e => {
+    const { value } = e.target;
+    setSelectOption(value);
+    dispatch(sortDrones({ value }));
+  };
+
+  const handlePageChange = (e, value) => {
+    setPageOptions({ ...pageOptions, page: value });
+  };
+
+  useEffect(() => {
+    dispatch(getDronesByPage(pageOptions));
+  }, [pageOptions, dispatch]);
+
+  useEffect(() => {
+    if (drones.status === 'fulfilled') setIsLoading(false);
+  }, [drones]);
+
+  useEffect(() => {
+    dispatch(sortDrones({ value: 1 }));
+  }, [isLoading, dispatch]);
   return (
     <Box sx={{ pt: '50px', pb: '50px' }}>
       <Container maxWidth="xl">
@@ -25,25 +57,45 @@ function DronesList() {
           <Box>
             <FormControl sx={{ minWidth: 150 }}>
               <InputLabel>Ordenar por</InputLabel>
-              <Select label="Ordenar por" autoWidth>
-                <MenuItem value={1}>Precio mayor a menor</MenuItem>
-                <MenuItem value={2}>Precio menor a mayor</MenuItem>
-                <MenuItem value={3}>Modelo - cambiar a A a Z</MenuItem>
-                <MenuItem value={4}>Modelo - cambiar a Z a A</MenuItem>
+              <Select
+                label="Ordenar por"
+                value={selectOption}
+                onChange={handleChange}
+                autoWidth
+              >
+                <MenuItem value={1}>Modelo - cambiar a A a Z</MenuItem>
+                <MenuItem value={2}>Modelo - cambiar a Z a A</MenuItem>
+                <MenuItem value={3}>Precio mayor a menor</MenuItem>
+                <MenuItem value={4}>Precio menor a mayor</MenuItem>
               </Select>
             </FormControl>
           </Box>
         </Box>
         <Box display="flex" gap={5}>
           <DronesFilter />
-          <DroneCard dronesList={drones} />
+          {isLoading ? (
+            <Loader />
+          ) : (
+            <Grid
+              container
+              spacing={2}
+              justifyContent="space-evenly"
+              alignItems="stretch"
+            >
+              {dronesToRender.map(element => (
+                <DroneCard key={element._id} drone={element} />
+              ))}
+            </Grid>
+          )}
         </Box>
         <Stack spacing={2} mt={3}>
           <Pagination
-            count={10}
+            count={drones.pages}
+            page={pageOptions.page}
             variant="outlined"
             shape="rounded"
             sx={{ margin: 'auto' }}
+            onChange={handlePageChange}
           />
         </Stack>
       </Container>

@@ -41,7 +41,10 @@ function ShoppingCart({ open, handleClose }) {
           <Productstable />
         </Box>
         <Box width="100%" display="flex" justifyContent="flex-end">
-          <Typography variant="h6" component="p">{`Total: ${cartTotal}`}</Typography>
+          <Typography variant="h6" component="span" letterSpacing="0.1rem">
+            {' '}
+            {`Total: $${cartTotal}`}
+          </Typography>
         </Box>
 
         <Box className={styles.modal__checkoutBtnsContainer}>

@@ -26,7 +26,7 @@ const drones = [
   {
     reference: 'Matrice 300 RTK',
     brand: 'DJI',
-    category: 'agricola',
+    category: 'agricultura',
     quantity: 3,
     price: 200,
     categoryId: 2,

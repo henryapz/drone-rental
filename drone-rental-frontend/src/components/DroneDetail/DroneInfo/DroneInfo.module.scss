@@ -4,6 +4,9 @@
 
   &__card {
     width: 320px;
+    height: 400px;
+    display: flex;
+    align-items: center;
   }
   &__content {
     max-width: 600px;

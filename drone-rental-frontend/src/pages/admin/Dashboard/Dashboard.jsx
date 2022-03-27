@@ -28,6 +28,9 @@ function AdminDashboard() {
       /* eslint no-console: ["error", { allow: ["warn", "error"] }] */
       console.error(error);
     }
+    return () => {
+      setStats(data);
+    };
   }, []);
 
   return (

@@ -79,7 +79,7 @@ OrdersRow.propTypes = {
     lastName: PropTypes.string.isRequired,
     quantity: PropTypes.number.isRequired,
     address: PropTypes.string.isRequired,
-    total: PropTypes.string.isRequired,
+    total: PropTypes.number.isRequired,
     products: PropTypes.instanceOf(Array).isRequired,
   }).isRequired,
 };

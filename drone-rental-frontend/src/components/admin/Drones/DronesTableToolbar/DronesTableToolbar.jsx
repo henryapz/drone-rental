@@ -9,8 +9,14 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import { Button } from '@mui/material';
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { deleteDrones } from '../../../../app/slices/dronesSlice';
 
-function DronesTableToolbar({ numSelected }) {
+function DronesTableToolbar({ numSelected, selectedIds }) {
+  const dispatch = useDispatch();
+  const handleDelete = () => {
+    dispatch(deleteDrones(selectedIds));
+  };
   return (
     <Toolbar
       sx={{
@@ -35,7 +41,7 @@ function DronesTableToolbar({ numSelected }) {
       {numSelected ? (
         <Tooltip title="Eliminar">
           <IconButton>
-            <DeleteIcon />
+            <DeleteIcon onClick={handleDelete} />
           </IconButton>
         </Tooltip>
       ) : (
@@ -61,6 +67,7 @@ function DronesTableToolbar({ numSelected }) {
 
 DronesTableToolbar.propTypes = {
   numSelected: PropTypes.number.isRequired,
+  selectedIds: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 export default DronesTableToolbar;

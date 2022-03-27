@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -8,7 +9,6 @@ import TableRow from '@mui/material/TableRow';
 import Checkbox from '@mui/material/Checkbox';
 import IconButton from '@mui/material/IconButton';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
-import dronesList from '../../../../services/mock/dronesList';
 import DronesTableHead from '../DronesTableHead/DronesTableHead';
 
 function descendingComparator(a, b, orderBy) {
@@ -30,6 +30,8 @@ function getComparator(order, orderBy) {
 function DronesTable({ page, rowsPerPage, selected, onSelect, onSelectAll }) {
   const [order, setOrder] = useState('asc');
   const [orderBy, setOrderBy] = useState('model');
+  const drones = useSelector(state => state.drones.allDrones);
+  const dronesList = drones ?? [];
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -39,19 +41,19 @@ function DronesTable({ page, rowsPerPage, selected, onSelect, onSelectAll }) {
 
   const isSelected = name => selected.indexOf(name) !== -1;
 
-  const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - dronesList.length) : 0;
+  const dataLength = dronesList?.length ?? 1;
+  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - dataLength) : 0;
 
   return (
     <TableContainer>
       <Table sx={{ minWidth: 750 }}>
         <DronesTableHead
-          numSelected={selected.length}
+          numSelected={selected?.length ?? 1}
           order={order}
           orderBy={orderBy}
           onSelectAll={onSelectAll}
           onRequestSort={handleRequestSort}
-          rowCount={dronesList.length}
+          rowCount={dronesList?.length ?? 1}
         />
         <TableBody>
           {dronesList
@@ -72,7 +74,7 @@ function DronesTable({ page, rowsPerPage, selected, onSelect, onSelectAll }) {
                     <Checkbox
                       color="primary"
                       checked={isItemSelected}
-                      onChange={event => onSelect(event, drone.model)}
+                      onChange={event => onSelect(event, drone.model, drone._id)}
                     />
                   </TableCell>
                   <TableCell component="th" scope="row" padding="none">
