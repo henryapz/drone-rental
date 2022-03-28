@@ -15,7 +15,7 @@
     "@testing-library/user-event": "^12.8.3",
     "@wojtekmaj/react-daterange-picker": "^3.3.2",
     "apexcharts": "^3.32.1",
-    "axios": "^0.24.0",
+    "axios": "^0.26.1",
     "formik": "^2.2.9",
     "moment": "^2.29.1",
     "prop-types": "^15.8.0",

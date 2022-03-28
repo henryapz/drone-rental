@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Routes, Route } from 'react-router-dom';
 import { getAllCategories } from './app/slices/categoriesSlice';
 import { getAllDrones } from './app/slices/dronesSlice';
@@ -22,6 +22,7 @@ import NotFound from './components/Shared/NotFound/NotFound';
 
 function App() {
   const dispatch = useDispatch();
+  const user = useSelector(state => state.user.userData);
 
   useEffect(() => {
     dispatch(getAllCategories());
@@ -33,7 +34,11 @@ function App() {
 
   return (
     <Routes>
-      <Route path="admin" element={<AdminLayout />}>
+      <Route
+        path="admin"
+        element={<AdminLayout isAllowed={!!user && user.role === 'Admin'} />}
+      >
+        <Route path="login" element={<LoginPage />} />
         <Route path="crear-dron" element={<DronCreation />} />
         <Route path="drones" element={<Drones />} />
         <Route path="dashboard" element={<Dashboard />} />
@@ -41,8 +46,6 @@ function App() {
       </Route>
       <Route element={<Layout />}>
         <Route path="/" element={<LandingPage />} />
-        <Route path="signin" element={<SigninPage />} />
-        <Route path="login" element={<LoginPage />} />
         <Route path="profile" element={<UserProfile />} />
         <Route path="registrar" element={<SigninPage />} />
         <Route path="iniciar-sesion" element={<LoginPage />} />
