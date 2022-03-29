@@ -21,6 +21,7 @@ import { logoutUser } from '../../../app/slices/userSlice';
 import DroneIcon from '../../../assets/images/drone-icon.png';
 import ShoppingCart from '../ShoppingCart/ShoppingCart';
 import styles from './Header.module.scss';
+import CartDrawer from '../ShoppingCart/CartDrawer';
 
 const navPages = [
   { name: 'Home', url: '/' },
@@ -102,7 +103,8 @@ function Header({ onMenuButtonClick }) {
             <IconButton onClick={handleOpenCart} color="inherit" aria-label="delete">
               <ShoppingCartIcon />
             </IconButton>
-            <ShoppingCart open={openCart} handleClose={handleCloseCart} />
+            {/* <ShoppingCart open={openCart} handleClose={handleCloseCart} /> */}
+            <CartDrawer open={openCart} handleClose={handleCloseCart} />
 
             <IconButton onClick={handleOpenUserMenu} color="inherit">
               {user.userData && (

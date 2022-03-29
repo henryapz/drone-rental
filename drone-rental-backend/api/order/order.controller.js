@@ -1,8 +1,15 @@
+const { createCardToken, createCustomer, createPayment } = require('../payment/payment.service');
 const Order = require('./order.model');
 
 async function createOrder(req, res) {
-  const data = req.body;
+  const { user, body: payment } = req;
   try {
+    if (!payment.hasCard) {
+      const cardData = payment.cardInfo;
+      const card = await createCardToken(cardData);
+      const customer = await createCustomer(user);
+    }
+    const { data, success } = await createPayment(user, payment);
     const order = await Order.create(data);
     res.status(200).json(order);
   } catch (error) {

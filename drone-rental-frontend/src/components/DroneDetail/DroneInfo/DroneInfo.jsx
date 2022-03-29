@@ -32,6 +32,7 @@ function DroneInfo({ data }) {
 
       const payload = {
         ref: data.model,
+        image: data?.productImage.secure_url,
         quantity: inputValue,
         price: data.pricePerDay,
         subtotal: inputValue * data.pricePerDay * days,
