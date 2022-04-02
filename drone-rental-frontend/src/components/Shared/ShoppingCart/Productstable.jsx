@@ -27,7 +27,7 @@ function Productstable() {
             <TableCell align="right">Subtotal</TableCell>
           </TableRow>
         </TableHead>
-        <TableBody>
+        <TableBody id="cart-content">
           {cart.products.map(element => (
             <TableRow
               key={nanoid()}
