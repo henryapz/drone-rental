@@ -99,7 +99,12 @@ function Header({ onMenuButtonClick }) {
             ))}
           </Box>
           <Box className={styles.actions__container}>
-            <IconButton onClick={handleOpenCart} color="inherit" aria-label="delete">
+            <IconButton
+              id="cart-icon"
+              onClick={handleOpenCart}
+              color="inherit"
+              aria-label="delete"
+            >
               <ShoppingCartIcon />
             </IconButton>
             <ShoppingCart open={openCart} handleClose={handleCloseCart} />
