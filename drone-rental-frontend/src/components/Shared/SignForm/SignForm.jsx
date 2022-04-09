@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button, TextField, Stack, FormControlLabel, Checkbox, Box } from '@mui/material';
 import { PropTypes } from 'prop-types';
 import { useFormik } from 'formik';
@@ -24,6 +24,7 @@ const validationSchema = yup.object({
 function SignForm({ register, admin }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [msg, setMsg] = useState('');
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -32,13 +33,18 @@ function SignForm({ register, admin }) {
     validationSchema,
     onSubmit: async values => {
       // eslint-disable-next-line no-console
-      await axios.post('http://localhost:8080/api/users/login', values).then(resp => {
-        navigate(admin ? '/admin/drones' : '/');
-        const payload = {
-          ...resp.data,
-        };
-        dispatch(loginUser(payload));
-      });
+      await axios
+        .post('http://localhost:8080/api/users/login', values)
+        .then(resp => {
+          navigate(admin ? '/admin/drones' : '/');
+          const payload = {
+            ...resp.data,
+          };
+          dispatch(loginUser(payload));
+        })
+        .catch(() => {
+          setMsg('Credenciales invalidas');
+        });
     },
   });
   return (
@@ -98,6 +104,10 @@ function SignForm({ register, admin }) {
       <Button className={styles.signForm__btn} variant="contained" type="submit">
         Enviar{' '}
       </Button>
+
+      <span style={{ color: 'red' }} id="error-message">
+        {msg}
+      </span>
     </Stack>
   );
 }
