@@ -1,61 +1,39 @@
-import { Box, Button, TextField, Typography } from '@mui/material';
 import React from 'react';
+import PropTypes from 'prop-types';
+import UserDataForm from './UserDataForm/UserDataForm';
+import UserPassChangeForm from './UserPassChangeForm/UserPassChangeForm';
 
-function UserProfileForm() {
-  const styles = {
-    container: {
-      padding: '1rem 2rem',
-    },
-    container_fields: {
-      display: 'flex',
-    },
-  };
+function UserProfileForm({ user }) {
+  const { userData } = user;
   return (
     <>
-      <Box
-        component="form"
-        sx={{
-          '& .MuiTextField-root': { margin: '8px 8px 8px 0', width: '50%' },
-        }}
-        noValidate
-        autoComplete="off"
-      >
-        <div style={styles.container}>
-          <Typography variant="h5">Datos Personales</Typography>
-          <div style={styles.container_fields}>
-            <TextField label="Nombres" variant="outlined" />
-            <TextField label="Apellidos" variant="outlined" />
-          </div>
-          <div style={styles.container_fields}>
-            <TextField label="Celular" variant="outlined" />
-            <TextField label="Dirección" variant="outlined" />
-          </div>
-          <div style={styles.container_fields}>
-            <Button variant="contained">Guardar</Button>
-          </div>
-        </div>
-      </Box>
-      <Box
-        component="form"
-        sx={{
-          '& .MuiTextField-root': { margin: '8px 8px 8px 0', width: '50%' },
-        }}
-        noValidate
-        autoComplete="off"
-      >
-        <div style={styles.container}>
-          <Typography variant="h5">Cambiar Contraseña</Typography>
-          <div style={styles.container_fields}>
-            <TextField label="Contraseña Actual" variant="outlined" type="password" />
-            <TextField label="Nueva Contraseña" variant="outlined" type="password" />
-          </div>
-          <div style={styles.container_fields}>
-            <Button variant="contained">Guardar</Button>
-          </div>
-        </div>
-      </Box>
+      <UserDataForm userData={userData} />
+      <UserPassChangeForm userData={userData} />
     </>
   );
 }
+
+UserProfileForm.propTypes = {
+  user: PropTypes.shape({
+    userData: PropTypes.shape({
+      address: PropTypes.string,
+      createdAt: PropTypes.string,
+      email: PropTypes.string,
+      firstName: PropTypes.string,
+      lastName: PropTypes.string,
+      password: PropTypes.string,
+      phone: PropTypes.string,
+      role: PropTypes.string,
+      status: PropTypes.string,
+      token: PropTypes.string,
+      updatedAt: PropTypes.string,
+      __v: PropTypes.number,
+      _id: PropTypes.string,
+    }),
+  }),
+};
+UserProfileForm.defaultProps = {
+  user: {},
+};
 
 export default UserProfileForm;
