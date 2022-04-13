@@ -9,6 +9,7 @@ import {
   Menu,
   MenuItem,
   Avatar,
+  Badge,
 } from '@mui/material';
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
@@ -19,7 +20,6 @@ import { Link, NavLink } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { logoutUser } from '../../../app/slices/userSlice';
 import DroneIcon from '../../../assets/images/drone-icon.png';
-import ShoppingCart from '../ShoppingCart/ShoppingCart';
 import styles from './Header.module.scss';
 import CartDrawer from '../ShoppingCart/CartDrawer';
 
@@ -31,6 +31,7 @@ const navPages = [
 
 function Header({ onMenuButtonClick }) {
   const dispatch = useDispatch();
+  const cart = useSelector(state => state.cart);
   const [anchorElUser, setAnchorElUser] = useState(null);
   const [openCart, setOpenCart] = useState(false);
   const user = useSelector(state => state.user);
@@ -101,9 +102,10 @@ function Header({ onMenuButtonClick }) {
           </Box>
           <Box className={styles.actions__container}>
             <IconButton onClick={handleOpenCart} color="inherit" aria-label="delete">
-              <ShoppingCartIcon />
+              <Badge badgeContent={cart.products.length} color="error">
+                <ShoppingCartIcon />
+              </Badge>
             </IconButton>
-            {/* <ShoppingCart open={openCart} handleClose={handleCloseCart} /> */}
             <CartDrawer open={openCart} handleClose={handleCloseCart} />
 
             <IconButton onClick={handleOpenUserMenu} color="inherit">

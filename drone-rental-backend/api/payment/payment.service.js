@@ -11,9 +11,9 @@ async function createCardToken(creditCardInfo) {
   return epayco.token.create(creditCardInfo);
 }
 
-async function createCustomer(user) {
+async function createCustomer(user, card) {
   const customerInfo = {
-    token_card: user.billing.creditCards[0].tokenId,
+    token_card: card.id,
     name: user.firstName,
     last_name: user.lastName,
     email: user.email,
@@ -50,8 +50,35 @@ async function createPayment(user, payment) {
   return epayco.charge.create(paymentInfo);
 }
 
+async function createPayment2(customer, card, payment) {
+  const paymentInfo = {
+    token_card: get(payment, 'tokenId', card.id),
+    customer_id: get(payment, 'customerId', customer.customerId),
+    doc_type: get(payment, 'docType'),
+    doc_number: get(payment, 'docNumber'),
+    name: get(payment, 'firstName', customer.firstName),
+    last_name: get(payment, 'lastName', customer.lastName),
+    email: get(payment, 'email', customer.email),
+    city: get(payment, 'city'),
+    address: get(payment, 'address'),
+    phone: get(payment, 'phone'),
+    cell_phone: get(payment, 'cellPhone'),
+    bill: get(payment, 'bill'),
+    description: get(payment, 'description'),
+    value: get(payment, 'value'),
+    tax: get(payment, 'tax'),
+    tax_base: get(payment, 'taxBase'),
+    currency: get(payment, 'currency'),
+    dues: get(payment, 'dues'),
+    ip: get(payment, 'ip'),
+    use_default_card_customer: true,
+  };
+  return epayco.charge.create(paymentInfo);
+}
+
 module.exports = {
   createCardToken,
   createCustomer,
   createPayment,
+  createPayment2,
 };

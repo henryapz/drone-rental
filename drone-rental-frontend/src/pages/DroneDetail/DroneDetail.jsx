@@ -9,7 +9,7 @@ import Loader from '../../components/Shared/Loader/Loader';
 function DroneDetail() {
   const drones = useSelector(state => state.drones);
   const { reference } = useParams();
-  const droneData = drones.data?.filter(drone => drone.model === reference)[0];
+  const droneData = drones.allDrones?.filter(drone => drone.model === reference)[0];
   const urls = [
     'https://www1.djicdn.com/dps/9b1b9b9cf00c94ff1ad673de052c669a.png',
     'https://dji-official-fe.djicdn.com/dps/50c6f0b5a78022bc1bac25bf24379b4d.jpg',
@@ -28,7 +28,7 @@ function DroneDetail() {
     <>
       <Hero url={urls[randInt]} alt="Drone volando" />
       <Container>
-        {!drones.status || drones.status === 'loading' ? (
+        {!drones || !drones.status || drones.status === 'loading' ? (
           <Loader />
         ) : (
           <DroneInfo data={droneData} />
