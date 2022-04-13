@@ -16,11 +16,16 @@ const userSlice = createSlice({
     logoutUser() {
       return initialState;
     },
+    updateUserInfo(state, action) {
+      const { payload } = action;
+      const { token } = state.userData;
+      state.userData = { token, ...payload };
+    },
   },
 });
 
 const { actions, reducer } = userSlice;
 
-export const { loginUser, logoutUser } = actions;
+export const { loginUser, logoutUser, updateUserInfo } = actions;
 
 export default reducer;
