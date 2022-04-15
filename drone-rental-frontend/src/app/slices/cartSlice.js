@@ -1,27 +1,11 @@
 /* eslint-disable no-param-reassign */
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import axios from 'axios';
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   total: 0,
   delivery: 5.5,
   products: [],
-  order: {
-    status: '',
-    data: {},
-  },
 };
-
-export const createOrder = createAsyncThunk('orders', async payload => {
-  try {
-    const orders = await axios.post('http://localhost:8080/api/orders/', {
-      ...payload,
-    });
-    return orders.data;
-  } catch (error) {
-    throw new Error(error);
-  }
-});
 
 const cartSlice = createSlice({
   name: 'cart',
@@ -74,11 +58,6 @@ const cartSlice = createSlice({
     resetCart() {
       return initialState;
     },
-  },
-  extraReducers: builder => {
-    builder.addCase(createOrder.fulfilled, state => {
-      state.newDrone.status = 'fulfilled';
-    });
   },
 });
 

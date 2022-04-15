@@ -30,7 +30,7 @@ function CheckoutProducts() {
       </Typography>
       <Box sx={{ marginBottom: 2 }}>
         {cart.products.map(product => (
-          <Accordion>
+          <Accordion key={product.ref}>
             <AccordionSummary expandIcon={<ExpandMoreIcon />}>
               <Box
                 sx={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}
@@ -46,7 +46,7 @@ function CheckoutProducts() {
                 image={product.image}
                 alt="Item"
               />
-              <Box>
+              <Box textAlign="left">
                 <Typography variant="body2" color="text.secondary">
                   {product.initialDate} - {product.finalDate}
                 </Typography>

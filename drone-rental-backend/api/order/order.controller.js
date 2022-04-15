@@ -2,37 +2,35 @@ const {
   createCardToken,
   createCustomer,
   createPayment2,
+  createPayment,
 } = require('../payment/payment.service');
 const Order = require('./order.model');
+const { createTokenToPay } = require('./order.service');
 
 async function createOrder(req, res) {
   const { user, body: orderRequest } = req;
-  console.log('user: ', user.id);
-  let card = null;
-  let customer = null;
+  let paymentResponse = null;
   try {
-    if (!orderRequest.hasCard) {
-      const cardData = orderRequest.cardInfo;
-      const creditCardInfo = {
-        'card[number]': cardData.cardNumber,
-        'card[exp_year]': cardData.cardExpYear,
-        'card[exp_month]': cardData.cardExpMonth,
-        'card[cvc]': cardData.cardCvc,
-      };
-      card = await createCardToken(creditCardInfo);
-      customer = await createCustomer(user, card);
+    if (!orderRequest.cardToken) {
+      const { customer, card } = await createTokenToPay(user, orderRequest.card);
+      if (!customer || !card) {
+        res.status(400).json(customer || card);
+        return;
+      }
+      paymentResponse = await createPayment(customer, orderRequest.payment, card);
+    } else {
+      paymentResponse = await createPayment(user, orderRequest.payment);
     }
-    const { data, success } = await createPayment2(customer.data, card, orderRequest.payment);
-    console.log('data', data);
-    const order = {
-      ...orderRequest.order,
-      transactionStatus: success ? 'Success' : 'Failed',
-      userId: user.id,
-    };
-    const orderCreated = await Order.create(order);
-    res.status(200).json(orderCreated);
+    res.status(200).json({ status: 'success' });
   } catch (error) {
     res.status(400).json({ error });
+  } finally {
+    const order = {
+      ...orderRequest.order,
+      transactionStatus: paymentResponse ? paymentResponse.success : 'Failed',
+      userId: user.id,
+    };
+    await Order.create(order);
   }
 }
 

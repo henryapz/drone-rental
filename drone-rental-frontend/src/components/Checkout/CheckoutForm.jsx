@@ -1,99 +1,133 @@
 import React, { useState } from 'react';
 import * as yup from 'yup';
+import 'yup-phone';
 import {
   TextField,
   Stack,
   Paper,
   Typography,
-  FormControl,
-  Select,
-  OutlinedInput,
-  MenuItem,
-  InputLabel,
-  InputAdornment,
   Button,
+  CardMedia,
+  Box,
+  FormControlLabel,
+  Checkbox,
   FormHelperText,
+  FormControl,
 } from '@mui/material';
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import { useFormik } from 'formik';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { DatePicker, LocalizationProvider } from '@mui/lab';
+import { cartTotalSelector } from '../../app/selectors/cartSelector';
+import CreditCards from '../../assets/images/credit-cards.png';
+import { createOrder } from '../../app/slices/orderSlice';
+import CheckoutModal from './CheckoutModal';
 
-const paymentMethods = [
-  {
-    id: 1,
-    name: 'Efectivo',
-  },
-  {
-    id: 2,
-    name: 'Tarjeta (Epayco)',
-  },
-];
-
-const validationSchema2 = yup.object({
+const validationSchema = yup.object({
   firstName: yup.string('firstName').required('Por favor, ingrese su nombre'),
   lastName: yup.string('lastName').required('Por favor, ingrese su apellido'),
-  telephone: yup.string('telephone').required('Por favor, ingrese su número de teléfono'),
+  telephone: yup
+    .string('telephone')
+    .required('Por favor, ingrese su número de teléfono')
+    .phone('IN', false, 'Ingresa un teléfono válido'),
   address: yup.string('address').required('Por favor, ingrese su dirección de envío'),
   email: yup
     .string('email')
     .email('Ingresa un email válido')
-    .required('Por favor, ingrese su correo electrónico'),
-  cardNumber: yup.string('cardNumber').required('Esta no es un número de tarjeta válido'),
+    .required('Por favor, ingrese su email'),
+  cardNumber: yup
+    .string('cardNumber')
+    .required('Por favor, ingrese su número de tarjeta')
+    .test('test-card', 'El número de tarjeta es inválido', value => {
+      const visaRegEx = /^(?:4[0-9]{12}(?:[0-9]{3})?)$/;
+      const mastercardRegEx = /^(?:5[1-5][0-9]{14})$/;
+      const amexpRegEx = /^(?:3[47][0-9]{13})$/;
+      return (
+        visaRegEx.test(value) || mastercardRegEx.test(value) || amexpRegEx.test(value)
+      );
+    }),
   cardName: yup
     .string('cardName')
     .required('Por favor, ingrese el nombre asociado a la tarjeta'),
   cardExpiringDate: yup
     .string('cardExpiringDate')
-    .required('Por favor, ingrese la fecha de expiración'),
-  cardCci: yup.string('cardCci').required('Por favor, ingrese el CCI'),
+    .required('Por favor, ingrese la fecha de expiración')
+    .nullable(),
+  cardCci: yup
+    .string('cardCci')
+    .required('Por favor, ingrese el CCI')
+    .matches(/^[0-9]+$/, 'Solo se admiten dígitos')
+    .min(3, 'Deben ser 3 dígitos')
+    .max(3, 'Deben ser 3 dígitos'),
   document: yup
     .string('document')
-    .required('Por favor, ingrese un documento de identidad'),
-  cash: yup.string('cash').required('Por favor, ingrese el monto con el que pagará'),
+    .required('Por favor, ingrese un documento de identidad')
+    .matches(/^[0-9]+$/, 'Solo se admiten dígitos')
+    .min(8, 'Deben ser mínimo 7 dígitos (Perú)')
+    .max(10, 'Deben ser máximo 10 dígitos (Colombia)'),
+  acceptedPrivacy: yup
+    .bool()
+    .oneOf([true], 'Por favor, aceptar los términos y condiciones'),
 });
 
 function CheckoutForm() {
+  const [open, setOpen] = React.useState(false);
   const cart = useSelector(state => state.cart);
-  const [paymentMethod, setPaymentMethod] = useState(1);
+  const total = useSelector(cartTotalSelector);
+  const user = useSelector(state => state.user.userData);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const handlePaymentMethodChange = event => {
-    setPaymentMethod(event.target.value);
-  };
-
-  const handleOnSubmit = (values) => {
+  const handleOnSubmit = values => {
     const payload = {
       order: {
-        subTotal: 495,
+        subTotal: total,
+        tax: 0.18 * total,
         delivery: 5.5,
-        total: 500,
-        items: cart.products,
-        paymentMethod: 'Tarjeta',
-        cardInfo: {
-          cardNumber: values.cardNumber,
-          cardExpYear: values.cardExpYear,
-          cardExpMonth: values.cardExpMonth,
-          cardCvc: values.cardCvc,
-        },
-        paymentInfo: {
-          docType: 'DNI',
-          docNumber: values.document,
-          firstName: values.firstName,
-          lastName: values.lastName,
-          email: values.email,
-          city: values.city,
-          address: values.address,
-          phone: values.telephone,
-          cellPhone: values.telephone,
-          bill: '',
-          description: 'Drone rental',
-          value: '',
-          tax: '',
-          taxBase: '',
-          currency: '',
-          dues: '',
-          ip: '',
-        },
+        total: total + 5.5,
+        items: cart.products.map(item => ({
+          amount: item.price,
+          quantity: item.quantity,
+          startDate: item.initialDate,
+          endDate: item.finalDate,
+          droneId: item.droneId,
+        })),
+      },
+      has_card: false,
+      card: {
+        cardNumber: values.cardNumber,
+        cardExpYear: values.cardExpiringDate.getYear().toString(),
+        cardExpMonth: (values.cardExpiringDate.getMonth() + 1).toString(),
+        cardCvc: values.cardCci,
+      },
+      payment: {
+        docType: values.document.length === 8 ? 'DNI' : 'C.C.',
+        docNumber: values.document,
+        firstName: values.firstName,
+        lastName: values.lastName,
+        email: values.email,
+        city: values.city,
+        address: values.address,
+        phone: values.telephone,
+        cellPhone: values.telephone,
+        bill: '',
+        description: 'Drone rental',
+        value: total,
+        tax: 0.18 * total,
+        taxBase: total - 0.18 * total,
+        currency: 'USD',
+        dues: '12',
+        ip: '',
       },
     };
+    setOpen(true);
+    dispatch(createOrder({ body: payload, token: user.token }));
+  };
+
+  const handleRedirect = () => {
+    setOpen(false);
+    navigate('/');
   };
 
   const formik = useFormik({
@@ -109,9 +143,8 @@ function CheckoutForm() {
       cardCci: '',
       document: '',
       acceptedPrivacy: false,
-      cash: 0,
     },
-    validationSchema: validationSchema2,
+    validationSchema,
     onSubmit: values => {
       handleOnSubmit(values);
     },
@@ -119,6 +152,7 @@ function CheckoutForm() {
 
   return (
     <Paper sx={{ flex: '1 1 0', padding: 3, textAlign: 'center' }} component="form">
+      <CheckoutModal open={open} handleRedirect={handleRedirect} />
       <Typography variant="h5" gutterBottom paddingBottom={2}>
         Información de Contacto
       </Typography>
@@ -181,15 +215,38 @@ function CheckoutForm() {
           name="email"
           label="Email"
         />
-        {/* <FormControlLabel
-          control={<Checkbox checked={formValues.acceptedPrivacy} />}
-          label="Políticas de privacidad"
-          // className={styles.signForm__checkBtn}
-        /> */}
+        <FormControl
+          error={formik.touched.acceptedPrivacy && Boolean(formik.errors.acceptedPrivacy)}
+        >
+          <FormControlLabel
+            control={<Checkbox checked={formik.values.acceptedPrivacy} />}
+            onChange={formik.handleChange}
+            label="Políticas de privacidad"
+            name="acceptedPrivacy"
+          />
+        </FormControl>
+        {formik.touched.acceptedPrivacy && formik.errors.acceptedPrivacy && (
+          <FormHelperText error>{formik.errors.acceptedPrivacy}</FormHelperText>
+        )}
       </Stack>
-      <Typography variant="h5" gutterBottom paddingBottom={2}>
-        Método de pago
-      </Typography>
+      <Box display="flex" paddingY={2} justifyContent="center">
+        <Typography
+          variant="h5"
+          gutterBottom
+          paddingBottom={2}
+          margin={0}
+          paddingY={0}
+          paddingRight={3}
+        >
+          Método de pago
+        </Typography>
+        <CardMedia
+          component="img"
+          sx={{ width: '20%', objectFit: 'contain', paddingRight: 2 }}
+          image={CreditCards}
+          alt="Item"
+        />
+      </Box>
       <Stack
         spacing={2}
         justifyContent="center"
@@ -197,111 +254,78 @@ function CheckoutForm() {
         autoComplete="off"
         paddingBottom={2}
       >
-        <FormControl fullWidth>
-          <InputLabel id="payment-method">Medio de pago</InputLabel>
-          <Select
-            labelId="payment-method"
-            label="Medio de pago"
-            onChange={handlePaymentMethodChange}
-            value={paymentMethod}
-          >
-            {paymentMethods.map(method => (
-              <MenuItem key={method.id} value={method.id}>
-                {method.name}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-        {paymentMethod === 1 && (
-          <FormControl fullWidth>
-            <InputLabel
-              error={formik.touched.cash && Boolean(formik.errors.cash)}
-              htmlFor="outlined-adornment-amount"
-            >
-              Con cuánto pagará
-            </InputLabel>
-            <OutlinedInput
-              value={formik.values.cash}
-              onChange={formik.handleChange}
-              error={formik.touched.cash && Boolean(formik.errors.cash)}
-              name="cash"
-              startAdornment={<InputAdornment position="start">$</InputAdornment>}
-              label="Con cuánto pagará"
+        <TextField
+          value={formik.values.cardNumber}
+          onChange={formik.handleChange}
+          error={formik.touched.cardNumber && Boolean(formik.errors.cardNumber)}
+          helperText={formik.touched.cardNumber && formik.errors.cardNumber}
+          type="text"
+          name="cardNumber"
+          label="Número de tarjeta"
+          sx={{ flex: 3 }}
+        />
+        <TextField
+          value={formik.values.cardName}
+          onChange={formik.handleChange}
+          error={formik.touched.cardName && Boolean(formik.errors.cardName)}
+          helperText={formik.touched.cardName && formik.errors.cardName}
+          flex="1"
+          type="text"
+          name="cardName"
+          label="Nombres y apellidos"
+        />
+        <Stack direction="row" display="flex" spacing={2}>
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <DatePicker
+              inputFormat="MM/yy"
+              views={['year', 'month']}
+              label="Fecha de vencimiento"
+              minDate={new Date('2022-03')}
+              maxDate={new Date('2030-12')}
+              value={formik.values.cardExpiringDate}
+              onChange={value => {
+                formik.setFieldValue('cardExpiringDate', value);
+              }}
+              inputProps={{
+                readOnly: true,
+              }}
+              renderInput={params => (
+                <TextField
+                  // eslint-disable-next-line react/jsx-props-no-spreading
+                  {...params}
+                  error={
+                    formik.touched.cardExpiringDate &&
+                    Boolean(formik.errors.cardExpiringDate)
+                  }
+                  helperText={
+                    formik.touched.cardExpiringDate && formik.errors.cardExpiringDate
+                  }
+                />
+              )}
             />
-            {formik.touched.cash && Boolean(formik.errors.cash) && (
-              <FormHelperText error={formik.touched.cash && Boolean(formik.errors.cash)}>
-                {formik.touched.cash && formik.errors.cash}
-              </FormHelperText>
-            )}
-          </FormControl>
-        )}
-        {paymentMethod === 2 && (
-          <Stack
-            spacing={2}
-            justifyContent="center"
-            noValidate
-            autoComplete="off"
-            paddingBottom={2}
-          >
-            <TextField
-              value={formik.values.cardNumber}
-              onChange={formik.handleChange}
-              error={formik.touched.cardNumber && Boolean(formik.errors.cardNumber)}
-              helperText={formik.touched.cardNumber && formik.errors.cardNumber}
-              type="text"
-              name="cardNumber"
-              label="Número de tarjeta"
-            />
-            <TextField
-              value={formik.values.cardName}
-              onChange={formik.handleChange}
-              error={formik.touched.cardName && Boolean(formik.errors.cardName)}
-              helperText={formik.touched.cardName && formik.errors.cardName}
-              flex="1"
-              type="text"
-              name="cardName"
-              label="Nombres y apellidos"
-            />
-            <Stack direction="row" display="flex" spacing={2}>
-              <TextField
-                value={formik.values.cardExpiringDate}
-                onChange={formik.handleChange}
-                error={
-                  formik.touched.cardExpiringDate &&
-                  Boolean(formik.errors.cardExpiringDate)
-                }
-                helperText={
-                  formik.touched.cardExpiringDate && formik.errors.cardExpiringDate
-                }
-                sx={{ flex: 1 }}
-                type="text"
-                name="cardExpiringDate"
-                label="Fecha de vencimiento"
-              />
-              <TextField
-                value={formik.values.cardCci}
-                onChange={formik.handleChange}
-                error={formik.touched.cardCci && Boolean(formik.errors.cardCci)}
-                helperText={formik.touched.cardCci && formik.errors.cardCci}
-                sx={{ flex: 1 }}
-                flex="1"
-                type="text"
-                name="cardCci"
-                label="CCI"
-              />
-            </Stack>
-            <TextField
-              value={formik.values.document}
-              onChange={formik.handleChange}
-              error={formik.touched.document && Boolean(formik.errors.document)}
-              helperText={formik.touched.document && formik.errors.document}
-              flex="1"
-              type="text"
-              name="document"
-              label="Documento"
-            />
-          </Stack>
-        )}
+          </LocalizationProvider>
+          <TextField
+            value={formik.values.cardCci}
+            onChange={formik.handleChange}
+            error={formik.touched.cardCci && Boolean(formik.errors.cardCci)}
+            helperText={formik.touched.cardCci && formik.errors.cardCci}
+            sx={{ flex: 1 }}
+            flex="1"
+            type="text"
+            name="cardCci"
+            label="CCI"
+          />
+        </Stack>
+        <TextField
+          value={formik.values.document}
+          onChange={formik.handleChange}
+          error={formik.touched.document && Boolean(formik.errors.document)}
+          helperText={formik.touched.document && formik.errors.document}
+          flex="1"
+          type="text"
+          name="document"
+          label="Documento"
+        />
       </Stack>
       <Button onClick={formik.handleSubmit} variant="contained">
         Alquilar

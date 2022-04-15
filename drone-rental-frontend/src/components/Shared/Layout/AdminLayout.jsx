@@ -5,6 +5,7 @@ import { Outlet } from 'react-router-dom';
 import AdminSideBar from '../AdminSideBar/AdminSideBar';
 import AdminHeader from '../AdminHeader/AdminHeader';
 import LoginPage from '../../../pages/Login/LoginPage';
+import LoginModal from '../LoginModal/LoginModal';
 
 const drawerWidth = 240;
 
@@ -17,6 +18,7 @@ function AdminLayout({ isAllowed }) {
 
   return (
     <Box display="flex">
+      <LoginModal />
       <AdminHeader drawerWidth={drawerWidth} onOpen={setOpenSideBar} />
       <AdminSideBar open={openSideBar} onClose={setOpenSideBar} />
       <Box component="main" sx={{ flexGrow: 1, p: 3, width: '100%' }}>

@@ -7,7 +7,13 @@ const epayco = require('epayco-sdk-node')({
   test: true,
 });
 
-async function createCardToken(creditCardInfo) {
+async function createCardToken(card) {
+  const creditCardInfo = {
+    'card[number]': card.cardNumber,
+    'card[exp_year]': card.cardExpYear,
+    'card[exp_month]': card.cardExpMonth,
+    'card[cvc]': card.cardCvc,
+  };
   return epayco.token.create(creditCardInfo);
 }
 
@@ -22,9 +28,9 @@ async function createCustomer(user, card) {
   return epayco.customers.create(customerInfo);
 }
 
-async function createPayment(user, payment) {
-  const defaultCardToken = get(user, 'billing.creditCards[0].tokenId');
-  const customerId = get(user, 'billing.customerId');
+async function createPayment(user, payment, card = null) {
+  const defaultCardToken = card ? card.id : get(user, 'billing.creditCards[0].tokenId');
+  const customerId = card ? user.customerId : get(user, 'billing.customerId');
   const paymentInfo = {
     token_card: get(payment, 'tokenId', defaultCardToken),
     customer_id: get(payment, 'customerId', customerId),

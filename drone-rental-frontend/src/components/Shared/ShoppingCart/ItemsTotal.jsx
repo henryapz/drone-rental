@@ -5,10 +5,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { resetCart } from '../../../app/slices/cartSlice';
 import { cartTotalSelector } from '../../../app/selectors/cartSelector';
+import { openLogInModal } from '../../../app/slices/userSlice';
 
 function CartTotal({ isCart, handleClose }) {
   const total = useSelector(cartTotalSelector);
   const delivery = useSelector(state => state.cart.delivery);
+  const user = useSelector(state => state.user.userData);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -17,6 +19,10 @@ function CartTotal({ isCart, handleClose }) {
   };
 
   const handleCheckout = () => {
+    if (!user || !user.token) {
+      dispatch(openLogInModal(true));
+      return;
+    }
     handleClose();
     navigate('../checkout');
   };
@@ -70,7 +76,7 @@ function CartTotal({ isCart, handleClose }) {
           boxSizing="border-box"
         >
           <Button variant="contained" color="primary" onClick={handleCheckout}>
-            Comprar
+            Alquilar
           </Button>
           <Button variant="contained" color="secondary" onClick={handleDelete}>
             Eliminar

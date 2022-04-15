@@ -3,7 +3,19 @@ const { OrderDetailSchema } = require('./orderDetail.model');
 
 const OrderSchema = mongoose.Schema(
   {
-    totalAmount: {
+    total: {
+      type: Number,
+      required: true,
+    },
+    subTotal: {
+      type: Number,
+      required: true,
+    },
+    tax: {
+      type: Number,
+      required: true,
+    },
+    delivery: {
       type: Number,
       required: true,
     },
@@ -12,9 +24,9 @@ const OrderSchema = mongoose.Schema(
       ref: 'User',
       required: true,
     },
-    orderDetail: {
+    items: {
       type: [OrderDetailSchema],
-      validate: v => Array.isArray(v) && v.length > 0,
+      validate: (v) => Array.isArray(v) && v.length > 0,
     },
     transactionId: {
       type: mongoose.Schema.Types.ObjectId,
@@ -24,7 +36,7 @@ const OrderSchema = mongoose.Schema(
     },
     transactionStatus: {
       type: String,
-      enum: ['Success', 'Warning', 'Error'],
+      enum: ['Success', 'Warning', 'Failed'],
       required: true,
     },
   },

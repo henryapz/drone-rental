@@ -1,20 +1,10 @@
 const { addCreditCards, updateBilling } = require('../user/user.service');
 const { createCardToken, createCustomer, createPayment } = require('./payment.service');
 
-async function createtTokenHandler(req, res) {
-  const {
-    cardNumber, cardExpYear, cardExpMonth, cardCvc,
-  } = req.body;
-  const creditCardInfo = {
-    'card[number]': cardNumber,
-    'card[exp_year]': cardExpYear,
-    'card[exp_month]': cardExpMonth,
-    'card[cvc]': cardCvc,
-  };
-
+async function createTokenHandler(req, res) {
+  const { body: card } = req;
   try {
-    const result = await createCardToken(creditCardInfo);
-    console.log('resuuult: ', result);
+    const result = await createCardToken(card);
     const { user } = req;
     const creditCard = {
       expMonth: result.card.exp_month,
@@ -57,7 +47,7 @@ async function makePaymentHandler(req, res) {
 }
 
 module.exports = {
-  createtTokenHandler,
+  createTokenHandler,
   createCustomerHandler,
   makePaymentHandler,
 };

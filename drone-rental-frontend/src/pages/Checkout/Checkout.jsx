@@ -9,29 +9,13 @@ function Checkout() {
   const cartTotal = useSelector(state => state.cart.total);
   return (
     <Container sx={{ margin: '2rem auto' }}>
-      {/* <ProductsTable /> */}
-      {/* <Box
-        width="100%"
-        display="flex"
-        flexDirection="column"
-        margin="2rem auto"
-        alignItems="flex-end"
-      >
-        <Typography variant="h6" component="p">{`Impuestos: `}</Typography>
-        <Typography variant="h6" component="p">{`Total: $${cartTotal}`}</Typography>
-      </Box> */}
       <Typography variant="h4" align="center" paddingBottom={3}>
         Checkout
       </Typography>
-      <Box sx={{ display: 'flex', gap: '10px' }}>
+      <Box sx={{ display: { xs: 'block', sm: 'block', md: 'flex' }, gap: '10px' }}>
         <CheckoutForm />
         <CheckoutProducts />
       </Box>
-      {/* <Box width="25%" margin="2rem auto">
-        <Button variant="contained" color="primary">
-          Pagar
-        </Button>
-      </Box> */}
     </Container>
   );
 }
