@@ -1,4 +1,3 @@
-const { indexOf } = require('lodash');
 const get = require('lodash/get');
 const User = require('./models/user.model');
 
@@ -7,13 +6,11 @@ async function getUserByEmail(email) {
   return user;
 }
 
-async function updateBilling(user, info, type) {
+async function updateCardsBilling(user, card) {
   const creditCards = get(user, 'billing.creditCards', []);
-  const customerId = get(user, 'billing.customerId', null);
   const customer = {
     billing: {
-      creditCards: type === 'card' ? creditCards.concat(info) : creditCards,
-      customerId: type === 'customer' ? info : customerId,
+      creditCards: creditCards.concat(card),
     },
   };
   // eslint-disable-next-line no-underscore-dangle
@@ -23,7 +20,20 @@ async function updateBilling(user, info, type) {
   return updatedUser;
 }
 
+async function createCustomerBilling(userId, customerId) {
+  const customer = {
+    billing: {
+      customerId,
+    },
+  };
+  const updatedUser = await User.findByIdAndUpdate(userId, customer, {
+    new: true,
+  });
+  return updatedUser.billing.customerId;
+}
+
 module.exports = {
   getUserByEmail,
-  updateBilling,
+  updateCardsBilling,
+  createCustomerBilling,
 };

@@ -1,36 +1,28 @@
-const {
-  createCardToken,
-  createCustomer,
-  createPayment2,
-  createPayment,
-} = require('../payment/payment.service');
-const Order = require('./order.model');
-const { createTokenToPay } = require('./order.service');
+const { createPayment } = require('../payment/payment.service');
+const Order = require('./models/order.model');
+const { createTokenToPay, createOrderInDB } = require('./order.service');
 
 async function createOrder(req, res) {
   const { user, body: orderRequest } = req;
   let paymentResponse = null;
   try {
-    if (!orderRequest.cardToken) {
-      const { customer, card } = await createTokenToPay(user, orderRequest.card);
-      if (!customer || !card) {
-        res.status(400).json(customer || card);
-        return;
-      }
-      paymentResponse = await createPayment(customer, orderRequest.payment, card);
-    } else {
-      paymentResponse = await createPayment(user, orderRequest.payment);
+    const order = await createOrderInDB(orderRequest, user);
+    const subscription = await createTokenToPay(user, orderRequest.card, orderRequest.payment);
+    if (!subscription) {
+      await Order.findByIdAndUpdate(order.id, { transactionStatus: 'Failed' });
+      res.status(400).json({ success: false, validCard: false });
+      return;
     }
-    res.status(200).json({ status: 'success' });
+    paymentResponse = await createPayment(
+      subscription.customerId,
+      subscription.tokenId,
+      orderRequest.payment,
+    );
+    const status = paymentResponse && paymentResponse.status ? 'Success' : 'Failed';
+    await Order.findByIdAndUpdate(order.id, { transactionStatus: status });
+    res.status(201).json({ success: status });
   } catch (error) {
     res.status(400).json({ error });
-  } finally {
-    const order = {
-      ...orderRequest.order,
-      transactionStatus: paymentResponse ? paymentResponse.success : 'Failed',
-      userId: user.id,
-    };
-    await Order.create(order);
   }
 }
 

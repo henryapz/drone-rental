@@ -36,8 +36,7 @@ const OrderSchema = mongoose.Schema(
     },
     transactionStatus: {
       type: String,
-      enum: ['Success', 'Warning', 'Failed'],
-      required: true,
+      enum: ['Success', 'Warning', 'Failed', 'Pending'],
     },
   },
   {

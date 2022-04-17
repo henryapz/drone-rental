@@ -15,7 +15,7 @@ import { PropTypes } from 'prop-types';
 import React from 'react';
 import { useSelector } from 'react-redux';
 
-function CheckoutModal({ open, handleRedirect }) {
+function CheckoutModal({ open, setOpen, handleRedirect }) {
   const order = useSelector(state => state.order);
 
   return (
@@ -24,20 +24,35 @@ function CheckoutModal({ open, handleRedirect }) {
       <DialogContent>
         <Box textAlign="center">
           {order.status === 'loading' && <CircularProgress color="secondary" />}
-          {order.status === 'rejected' && <CancelIcon color="error" />}
-          {order.status === 'fulfilled' && <CheckCircleIcon color="success" />}
+          {(order.status === 'rejected' ||
+            (order.status === 'fulfilled' && !order.data.success)) && (
+            <CancelIcon color="error" />
+          )}
+          {order.status === 'fulfilled' && order.data.success && (
+            <CheckCircleIcon color="success" />
+          )}
           <DialogContentText textAlign="center">
             {order.status === 'loading' && 'Procesando pago'}
-            {order.status === 'rejected' && 'Pago rechazado, inténtelo más tarde'}
-            {order.status === 'fulfilled' && 'Pago exitoso'}
+            {order.status === 'rejected' && 'Pago rechazado, error en la validación de tarjeta'}
+            {order.status === 'fulfilled' &&
+              !order.data.success &&
+              'Pago rechazado, inténtelo más tarde'}
+            {order.status === 'fulfilled' &&
+              order.data.success &&
+              'Orden generada exitosamente'}
           </DialogContentText>
         </Box>
       </DialogContent>
       <DialogActions>
         {order.status === 'rejected' || order.status === 'fulfilled' ? (
-          <Button onClick={handleRedirect} color="secondary">
-            Ver mis órdenes
-          </Button>
+          <div>
+            <Button onClick={setOpen} color="secondary">
+              Volver
+            </Button>
+            <Button onClick={handleRedirect} color="secondary">
+              Ver mis órdenes
+            </Button>
+          </div>
         ) : (
           ''
         )}
@@ -48,6 +63,7 @@ function CheckoutModal({ open, handleRedirect }) {
 
 CheckoutModal.propTypes = {
   open: PropTypes.bool.isRequired,
+  setOpen: PropTypes.func.isRequired,
   handleRedirect: PropTypes.func.isRequired,
 };
 

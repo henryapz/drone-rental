@@ -1,5 +1,4 @@
 const { get } = require('lodash');
-
 const epayco = require('epayco-sdk-node')({
   apiKey: process.env.EPAYCO_PUBLIC_KEY,
   privateKey: process.env.EPAYCO_PRIVATE_KEY,
@@ -17,54 +16,26 @@ async function createCardToken(card) {
   return epayco.token.create(creditCardInfo);
 }
 
-async function createCustomer(user, card) {
+async function createCustomer(tokenId, payment) {
   const customerInfo = {
-    token_card: card.id,
-    name: user.firstName,
-    last_name: user.lastName,
-    email: user.email,
+    token_card: tokenId,
+    name: payment.firstName,
+    last_name: payment.lastName,
+    email: payment.email,
     default: true,
   };
   return epayco.customers.create(customerInfo);
 }
 
-async function createPayment(user, payment, card = null) {
-  const defaultCardToken = card ? card.id : get(user, 'billing.creditCards[0].tokenId');
-  const customerId = card ? user.customerId : get(user, 'billing.customerId');
+async function createPayment(customerId, tokenId, payment) {
   const paymentInfo = {
-    token_card: get(payment, 'tokenId', defaultCardToken),
+    token_card: get(payment, 'tokenId', tokenId),
     customer_id: get(payment, 'customerId', customerId),
     doc_type: get(payment, 'docType'),
     doc_number: get(payment, 'docNumber'),
-    name: get(payment, 'firstName', user.firstName),
-    last_name: get(payment, 'lastName', user.lastName),
-    email: get(payment, 'email', user.email),
-    city: get(payment, 'city'),
-    address: get(payment, 'address'),
-    phone: get(payment, 'phone'),
-    cell_phone: get(payment, 'cellPhone'),
-    bill: get(payment, 'bill'),
-    description: get(payment, 'description'),
-    value: get(payment, 'value'),
-    tax: get(payment, 'tax'),
-    tax_base: get(payment, 'taxBase'),
-    currency: get(payment, 'currency'),
-    dues: get(payment, 'dues'),
-    ip: get(payment, 'ip'),
-    use_default_card_customer: true,
-  };
-  return epayco.charge.create(paymentInfo);
-}
-
-async function createPayment2(customer, card, payment) {
-  const paymentInfo = {
-    token_card: get(payment, 'tokenId', card.id),
-    customer_id: get(payment, 'customerId', customer.customerId),
-    doc_type: get(payment, 'docType'),
-    doc_number: get(payment, 'docNumber'),
-    name: get(payment, 'firstName', customer.firstName),
-    last_name: get(payment, 'lastName', customer.lastName),
-    email: get(payment, 'email', customer.email),
+    name: get(payment, 'firstName', payment.firstName),
+    last_name: get(payment, 'lastName', payment.lastName),
+    email: get(payment, 'email', payment.email),
     city: get(payment, 'city'),
     address: get(payment, 'address'),
     phone: get(payment, 'phone'),
@@ -86,5 +57,4 @@ module.exports = {
   createCardToken,
   createCustomer,
   createPayment,
-  createPayment2,
 };

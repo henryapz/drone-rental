@@ -97,7 +97,7 @@ function CheckoutForm() {
       has_card: false,
       card: {
         cardNumber: values.cardNumber,
-        cardExpYear: values.cardExpiringDate.getYear().toString(),
+        cardExpYear: values.cardExpiringDate.getFullYear().toString(),
         cardExpMonth: (values.cardExpiringDate.getMonth() + 1).toString(),
         cardCvc: values.cardCci,
       },
@@ -152,7 +152,11 @@ function CheckoutForm() {
 
   return (
     <Paper sx={{ flex: '1 1 0', padding: 3, textAlign: 'center' }} component="form">
-      <CheckoutModal open={open} handleRedirect={handleRedirect} />
+      <CheckoutModal
+        open={open}
+        setOpen={() => setOpen(false)}
+        handleRedirect={handleRedirect}
+      />
       <Typography variant="h5" gutterBottom paddingBottom={2}>
         Información de Contacto
       </Typography>
