@@ -20,7 +20,7 @@ async function createOrder(req, res) {
     );
     const status = paymentResponse && paymentResponse.status ? 'Success' : 'Failed';
     await Order.findByIdAndUpdate(order.id, { transactionStatus: status });
-    res.status(201).json({ success: status });
+    res.status(201).json({ success: paymentResponse && paymentResponse.status });
   } catch (error) {
     res.status(400).json({ error });
   }

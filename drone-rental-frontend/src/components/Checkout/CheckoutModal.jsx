@@ -33,7 +33,8 @@ function CheckoutModal({ open, setOpen, handleRedirect }) {
           )}
           <DialogContentText textAlign="center">
             {order.status === 'loading' && 'Procesando pago'}
-            {order.status === 'rejected' && 'Pago rechazado, error en la validación de tarjeta'}
+            {order.status === 'rejected' &&
+              'Pago rechazado, error en la validación de tarjeta'}
             {order.status === 'fulfilled' &&
               !order.data.success &&
               'Pago rechazado, inténtelo más tarde'}
@@ -44,15 +45,15 @@ function CheckoutModal({ open, setOpen, handleRedirect }) {
         </Box>
       </DialogContent>
       <DialogActions>
+        {order.status === 'rejected' && (
+          <Button onClick={setOpen} color="secondary">
+            Volver
+          </Button>
+        )}
         {order.status === 'rejected' || order.status === 'fulfilled' ? (
-          <div>
-            <Button onClick={setOpen} color="secondary">
-              Volver
-            </Button>
-            <Button onClick={handleRedirect} color="secondary">
-              Ver mis órdenes
-            </Button>
-          </div>
+          <Button onClick={() => handleRedirect(order.data.success)} color="secondary">
+            Ver mis órdenes
+          </Button>
         ) : (
           ''
         )}

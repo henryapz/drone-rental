@@ -33,14 +33,12 @@ async function getCardToken(card, user) {
     mask: cardResponse.mask,
     tokenId,
   };
-  await updateCardsBilling(user, creditCard);
+  // eslint-disable-next-line no-underscore-dangle
+  await updateCardsBilling(user._id, cards, creditCard);
   return creditCard.tokenId;
 }
 
 async function getCustomerId(tokenId, user, payment) {
-  const customerId = get(user, 'billing.customerId');
-  if (customerId) return customerId;
-
   const { success, data } = await createCustomer(tokenId, payment);
   if (!success) return null;
 

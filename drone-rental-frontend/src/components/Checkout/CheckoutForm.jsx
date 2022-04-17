@@ -21,8 +21,9 @@ import { useNavigate } from 'react-router-dom';
 import { DatePicker, LocalizationProvider } from '@mui/lab';
 import { cartTotalSelector } from '../../app/selectors/cartSelector';
 import CreditCards from '../../assets/images/credit-cards.png';
-import { createOrder } from '../../app/slices/orderSlice';
+import { createOrder, resetOrder } from '../../app/slices/orderSlice';
 import CheckoutModal from './CheckoutModal';
+import { resetCart } from '../../app/slices/cartSlice';
 
 const validationSchema = yup.object({
   firstName: yup.string('firstName').required('Por favor, ingrese su nombre'),
@@ -125,7 +126,11 @@ function CheckoutForm() {
     dispatch(createOrder({ body: payload, token: user.token }));
   };
 
-  const handleRedirect = () => {
+  const handleRedirect = isSuccess => {
+    dispatch(resetOrder());
+    if (isSuccess) {
+      dispatch(resetCart());
+    }
     setOpen(false);
     navigate('/');
   };

@@ -18,7 +18,7 @@ export const createOrder = createAsyncThunk(
         payload.body,
         config,
       );
-      return res;
+      return res.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
     }
@@ -28,6 +28,11 @@ export const createOrder = createAsyncThunk(
 const orderSlice = createSlice({
   name: 'order',
   initialState,
+  reducers: {
+    resetOrder() {
+      return initialState;
+    },
+  },
   extraReducers: builder => {
     builder
       .addCase(createOrder.pending, state => {
@@ -43,6 +48,8 @@ const orderSlice = createSlice({
   },
 });
 
-const { reducer } = orderSlice;
+const { actions, reducer } = orderSlice;
+
+export const { resetOrder } = actions;
 
 export default reducer;
