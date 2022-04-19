@@ -1,7 +1,8 @@
 require('dotenv').config();
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
-const User = require('./user.model');
+const User = require('./models/user.model');
+const { signToken } = require('../../auth/auth.service');
 const sendMail = require('../../utils/sengrid');
 
 async function createUser(req, res) {
@@ -43,10 +44,7 @@ async function loginUser(req, res) {
     if (user && (await bcrypt.compare(password, user.password))) {
       // Create token
       // eslint-disable-next-line no-underscore-dangle
-      const token = jwt.sign({ user_id: user._id, email }, process.env.TOKEN_KEY, {
-        expiresIn: '2h',
-      });
-
+      const token = signToken({ user_id: user._id, email });
       // save user token
       user.token = token;
 

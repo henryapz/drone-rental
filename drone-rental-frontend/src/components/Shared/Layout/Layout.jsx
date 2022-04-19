@@ -4,6 +4,7 @@ import { Outlet } from 'react-router-dom';
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
 import SideBar from '../SideBar/SideBar';
+import LoginModal from '../LoginModal/LoginModal';
 
 const navPages = [
   { name: 'Home', url: '/' },
@@ -16,6 +17,7 @@ function Layout() {
 
   return (
     <Box>
+      <LoginModal />
       <Header onMenuButtonClick={setOpenSideBar} />
       <SideBar navPages={navPages} open={openSideBar} setOpen={setOpenSideBar} />
       <main>

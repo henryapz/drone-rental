@@ -5,6 +5,10 @@ const OrderDetailSchema = mongoose.Schema({
     type: Number,
     required: true,
   },
+  quantity: {
+    type: Number,
+    required: true,
+  },
   startDate: {
     type: Date,
     required: true,
@@ -13,7 +17,7 @@ const OrderDetailSchema = mongoose.Schema({
     type: Date,
     required: true,
   },
-  drone_id: {
+  droneId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Drone',
     required: true,

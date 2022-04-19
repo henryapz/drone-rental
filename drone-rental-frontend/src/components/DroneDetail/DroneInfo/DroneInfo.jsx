@@ -13,7 +13,7 @@ import {
   Snackbar,
 } from '@mui/material';
 import { PropTypes } from 'prop-types';
-import { addElements, updateTotal } from '../../../app/slices/cartSlice';
+import { addElements } from '../../../app/slices/cartSlice';
 import DatePicker from '../../Shared/DatePicker/DatePicker';
 import styles from './DroneInfo.module.scss';
 
@@ -31,17 +31,19 @@ function DroneInfo({ data }) {
       const days = finalDate.diff(initialDate, 'days');
 
       const payload = {
+        droneId: data._id,
         ref: data.model,
-        quantity: inputValue,
+        image: data?.productImage.secure_url,
+        quantity: parseInt(inputValue, 10),
         price: data.pricePerDay,
         subtotal: inputValue * data.pricePerDay * days,
-        initialDate: initialDate.format('DD/MM/YYYY'),
-        finalDate: finalDate.format('DD/MM/YYYY'),
+        initialDate: initialDate.format('MM/DD/YYYY'),
+        finalDate: finalDate.format('MM/DD/YYYY'),
+        maxQuantity: data.quantity,
         days,
       };
 
       dispatch(addElements(payload));
-      dispatch(updateTotal(inputValue * data.pricePerDay * days));
       setSucces(true);
       setInputValue('');
     }
@@ -136,6 +138,7 @@ function DroneInfo({ data }) {
 
 DroneInfo.propTypes = {
   data: PropTypes.shape({
+    _id: PropTypes.string,
     model: PropTypes.string,
     brand: PropTypes.string,
     description: PropTypes.string,
