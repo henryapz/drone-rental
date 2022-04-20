@@ -2,7 +2,13 @@ const { Router } = require('express');
 const verifyToken = require('../../middleware/auth');
 const verifyAdminRole = require('../../middleware/isAdmin');
 const {
-  createUser, loginUser, updateUser, updatePassword, countUsers, countTotalEarnings,
+  createUser,
+  loginUser,
+  updateUser,
+  updatePassword,
+  countUsers,
+  countTotalEarnings,
+  countOrdersByMonths,
 } = require('./user.controller');
 
 const router = Router();
@@ -16,5 +22,6 @@ router.patch('/updatePassword', verifyToken, updatePassword);
 // Admin
 router.get('/countUsers', verifyToken, verifyAdminRole, countUsers);
 router.get('/totalEarnings', verifyToken, verifyAdminRole, countTotalEarnings);
+router.get('/totalEarningsByMonths', verifyToken, verifyAdminRole, countOrdersByMonths);
 
 module.exports = router;
