@@ -8,7 +8,7 @@ import RecentActivity from '../../../components/admin/Dashboard/RecentActivity/R
 import TotalProfit from '../../../components/admin/Dashboard/TotalProfit/TotalProfit';
 import ApexBarchar from '../../../components/Shared/ApexBarchar/ApexBarchar';
 import ApexLineChar from '../../../components/Shared/ApexLineChar/ApexLineChar';
-import { getUserCount } from '../../../services/api/adminStats';
+import { getUserCount, getTotalEarning } from '../../../services/api/adminStats';
 
 function AdminDashboard() {
   const user = useSelector(state => state.user);
@@ -18,20 +18,21 @@ function AdminDashboard() {
     nonCompletedOrders: 0,
   };
   const [stats, setStats] = useState(data);
+  const [profit, setProfit] = useState(0);
 
   useEffect(() => {
     try {
       getUserCount(user.userData.token).then(resp => {
         setStats(resp.data);
       });
+      getTotalEarning(user.userData.token).then(resp => {
+        setProfit(resp.data.totalEarnings[0].amount);
+      });
     } catch (error) {
       /* eslint no-console: ["error", { allow: ["warn", "error"] }] */
       console.error(error);
     }
-    return () => {
-      setStats(data);
-    };
-  }, []);
+  }, [user.userData.token]);
 
   return (
     <Box>
@@ -43,7 +44,7 @@ function AdminDashboard() {
         justifyContent="center"
       >
         <Grid item xs={12}>
-          <TotalProfit />
+          <TotalProfit profit={profit} />
         </Grid>
       </Grid>
       <Grid container spacing={2} pb="20px">

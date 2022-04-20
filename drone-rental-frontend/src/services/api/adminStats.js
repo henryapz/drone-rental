@@ -1,28 +1,23 @@
 import axios from 'axios';
-import adminData from '../mock/adminDashboard';
 
-function getFakeData() {
-  return new Promise(resolve => {
-    setTimeout(() => {
-      resolve(adminData);
-    }, 3000);
-  });
-}
-
-function getAdminDashboarStats() {
-  return getFakeData();
-}
-
-function getUserCount(token) {
+function getRequest(url, token) {
   try {
     const config = {
       headers: { 'Access-token': token },
     };
-    const res = axios.get('http://localhost:8080/api/users/countUsers', config);
+    const res = axios.get(url, config);
     return res;
   } catch (error) {
     throw new Error(error);
   }
 }
 
-export { getAdminDashboarStats, getUserCount };
+function getUserCount(token) {
+  return getRequest('http://localhost:8080/api/users/countUsers', token);
+}
+
+function getTotalEarning(token) {
+  return getRequest('http://localhost:8080/api/users/totalEarnings', token);
+}
+
+export { getTotalEarning, getUserCount };

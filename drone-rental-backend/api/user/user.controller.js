@@ -101,11 +101,28 @@ async function countUsers(req, res) {
   try {
     const totalUsers = await User.countDocuments();
     const ordersCompleted = await Order.countDocuments({ transactionStatus: 'Success' });
-    const nonCompletedOrders = await Order.countDocuments({ transactionStatus: 'Pending' });
+    const nonCompletedOrders = await Order.countDocuments({
+      transactionStatus: 'Pending',
+    });
     res.status(200).json({
       totalUsers,
       ordersCompleted,
       nonCompletedOrders,
+    });
+  } catch (error) {
+    res.status(400).json({ error });
+  }
+}
+
+async function countTotalEarnings(req, res) {
+  try {
+    // const totalEarnings = await Order.aggregate({ transactionStatus: 'Success' });
+    const totalEarnings = await Order.aggregate([
+      { $match: { transactionStatus: 'Success' } },
+      { $group: { _id: null, amount: { $sum: '$total' } } },
+    ]);
+    res.status(200).json({
+      totalEarnings,
     });
   } catch (error) {
     res.status(400).json({ error });
@@ -118,4 +135,5 @@ module.exports = {
   updateUser,
   updatePassword,
   countUsers,
+  countTotalEarnings,
 };
