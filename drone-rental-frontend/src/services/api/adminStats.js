@@ -1,3 +1,4 @@
+import axios from 'axios';
 import adminData from '../mock/adminDashboard';
 
 function getFakeData() {
@@ -8,6 +9,20 @@ function getFakeData() {
   });
 }
 
-export default function getAdminDashboarStats() {
+function getAdminDashboarStats() {
   return getFakeData();
 }
+
+function getUserCount(token) {
+  try {
+    const config = {
+      headers: { 'Access-token': token },
+    };
+    const res = axios.get('http://localhost:8080/api/users/countUsers', config);
+    return res;
+  } catch (error) {
+    throw new Error(error);
+  }
+}
+
+export { getAdminDashboarStats, getUserCount };

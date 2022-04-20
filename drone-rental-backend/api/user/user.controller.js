@@ -1,7 +1,7 @@
 require('dotenv').config();
-const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const User = require('./models/user.model');
+const Order = require('../order/models/order.model');
 const { signToken } = require('../../auth/auth.service');
 const sendMail = require('../../utils/sengrid');
 
@@ -44,7 +44,7 @@ async function loginUser(req, res) {
     if (user && (await bcrypt.compare(password, user.password))) {
       // Create token
       // eslint-disable-next-line no-underscore-dangle
-      const token = signToken({ user_id: user._id, email });
+      const token = signToken({ user_id: user._id, email, role: user.role });
       // save user token
       user.token = token;
 
@@ -97,9 +97,25 @@ async function updatePassword(req, res) {
   }
 }
 
+async function countUsers(req, res) {
+  try {
+    const totalUsers = await User.countDocuments();
+    const ordersCompleted = await Order.countDocuments({ transactionStatus: 'Success' });
+    const nonCompletedOrders = await Order.countDocuments({ transactionStatus: 'Pending' });
+    res.status(200).json({
+      totalUsers,
+      ordersCompleted,
+      nonCompletedOrders,
+    });
+  } catch (error) {
+    res.status(400).json({ error });
+  }
+}
+
 module.exports = {
   createUser,
   loginUser,
   updateUser,
   updatePassword,
+  countUsers,
 };
