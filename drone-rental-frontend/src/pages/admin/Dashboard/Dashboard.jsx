@@ -8,7 +8,11 @@ import RecentActivity from '../../../components/admin/Dashboard/RecentActivity/R
 import TotalProfit from '../../../components/admin/Dashboard/TotalProfit/TotalProfit';
 import ApexBarchar from '../../../components/Shared/ApexBarchar/ApexBarchar';
 import ApexLineChar from '../../../components/Shared/ApexLineChar/ApexLineChar';
-import { getUserCount, getTotalEarning } from '../../../services/api/adminStats';
+import {
+  getUserCount,
+  getTotalEarning,
+  getTotalMontlyStats,
+} from '../../../services/api/adminStats';
 
 function AdminDashboard() {
   const user = useSelector(state => state.user);
@@ -19,6 +23,7 @@ function AdminDashboard() {
   };
   const [stats, setStats] = useState(data);
   const [profit, setProfit] = useState(0);
+  const [monthlyStats, setMonthlyStats] = useState({ totalEarningsByMonths: [] });
 
   useEffect(() => {
     try {
@@ -27,6 +32,9 @@ function AdminDashboard() {
       });
       getTotalEarning(user.userData.token).then(resp => {
         setProfit(resp.data.totalEarnings[0].amount);
+      });
+      getTotalMontlyStats(user.userData.token).then(resp => {
+        setMonthlyStats(resp.data);
       });
     } catch (error) {
       /* eslint no-console: ["error", { allow: ["warn", "error"] }] */
@@ -66,8 +74,8 @@ function AdminDashboard() {
       </Grid>
       <Grid container spacing={2}>
         <Grid item xs={12} md={6}>
-          <ApexBarchar />
-          <ApexLineChar />
+          <ApexBarchar totalEarningsByMonths={monthlyStats.totalEarningsByMonths} />
+          <ApexLineChar totalEarningsByMonths={monthlyStats.totalEarningsByMonths} />
         </Grid>
         <Grid item xs={12} md={6}>
           <RecentActivity />

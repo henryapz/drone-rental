@@ -20,4 +20,8 @@ function getTotalEarning(token) {
   return getRequest('http://localhost:8080/api/users/totalEarnings', token);
 }
 
-export { getTotalEarning, getUserCount };
+function getTotalMontlyStats(token) {
+  return getRequest('http://localhost:8080/api/users/totalEarningsByMonths', token);
+}
+
+export { getTotalEarning, getUserCount, getTotalMontlyStats };

@@ -1,7 +1,48 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
+import PropTypes from 'prop-types';
 
-function ApexBarchar() {
+const months = [
+  'Ene',
+  'Feb',
+  'Mar',
+  'Abr',
+  'May',
+  'Jun',
+  'Jul',
+  'Ago',
+  'Sep',
+  'Ago',
+  'Oct',
+  'Nov',
+  'Dic',
+];
+
+function orderDataFromServer(totalEarnings) {
+  if (totalEarnings.length > 0) {
+    const categories = [];
+    const seriesAux = [];
+    for (let i = 0; i < totalEarnings.length; i += 1) {
+      const element = totalEarnings[i];
+      categories.push(`${months[element._id.month - 1]}-${element._id.year}`);
+      seriesAux.push(element.amount);
+    }
+    // options.xaxis.categories = categories;
+    // series.data = seriesAux;
+    return [categories, seriesAux];
+  }
+  return [['No hubo ganancias'], [0]];
+}
+
+function ApexBarchar({ totalEarningsByMonths }) {
+  const [dataSerie, setDataSerie] = useState([0]);
+  const [category, setCategory] = useState(['No hubo ganancias']);
+  useEffect(() => {
+    const [categories, seriesAux] = orderDataFromServer(totalEarningsByMonths);
+    setDataSerie(seriesAux);
+    setCategory(categories);
+  }, [totalEarningsByMonths]);
+
   const options = {
     chart: {
       height: 350,
@@ -27,20 +68,7 @@ function ApexBarchar() {
       },
     },
     xaxis: {
-      categories: [
-        'Jan',
-        'Feb',
-        'Mar',
-        'Apr',
-        'May',
-        'Jun',
-        'Jul',
-        'Aug',
-        'Sep',
-        'Oct',
-        'Nov',
-        'Dec',
-      ],
+      categories: category,
       position: 'top',
       axisBorder: {
         show: false,
@@ -92,14 +120,28 @@ function ApexBarchar() {
   const series = [
     {
       name: 'Ganancia',
-      data: [600, 715, 791, 836, 991, 1245, 1564, 1347, 1489, 1707, 1981, 2368],
+      data: dataSerie,
     },
   ];
+
   return (
     <div id="chart">
       <ReactApexChart options={options} series={series} type="bar" height={350} />
     </div>
   );
 }
+
+ApexBarchar.propTypes = {
+  totalEarningsByMonths: PropTypes.arrayOf(
+    PropTypes.shape({
+      _id: PropTypes.shape({ month: PropTypes.number, year: PropTypes.number }),
+      amount: PropTypes.number,
+      count: PropTypes.number,
+    }),
+  ),
+};
+ApexBarchar.defaultProps = {
+  totalEarningsByMonths: [],
+};
 
 export default ApexBarchar;
