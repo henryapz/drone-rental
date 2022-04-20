@@ -7,7 +7,11 @@ async function createOrder(req, res) {
   let paymentResponse = null;
   try {
     const order = await createOrderInDB(orderRequest, user);
-    const subscription = await createTokenToPay(user, orderRequest.card, orderRequest.payment);
+    const subscription = await createTokenToPay(
+      user,
+      orderRequest.card,
+      orderRequest.payment,
+    );
     if (!subscription) {
       await Order.findByIdAndUpdate(order.id, { transactionStatus: 'Failed' });
       res.status(400).json({ success: false, validCard: false });

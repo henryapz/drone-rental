@@ -1,21 +1,18 @@
 require('dotenv').config();
-const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const User = require('./models/user.model');
+const Order = require('../order/models/order.model');
 const { signToken } = require('../../auth/auth.service');
 const sendMail = require('../../utils/sengrid');
 
 async function createUser(req, res) {
   try {
-    // Getting user input data
     const { email, password } = req.body;
 
-    // Checking if all params were send
     if (!(email && password)) {
       res.status(400).json('All input are required');
     }
 
-    // Checking if user already exists
     const oldUser = await User.findOne({ email });
     if (oldUser) {
       res.status(409).json('User Already Exist. Please Login');
@@ -30,22 +27,17 @@ async function createUser(req, res) {
 
 async function loginUser(req, res) {
   try {
-    // Getting user input data
     const { email, password } = req.body;
 
-    // Checking if all params were send
     if (!(email && password)) {
       res.status(400).json('All input are required');
     }
 
-    // Validate if user exist in our database
     const user = await User.findOne({ email });
 
     if (user && (await bcrypt.compare(password, user.password))) {
-      // Create token
       // eslint-disable-next-line no-underscore-dangle
-      const token = signToken({ user_id: user._id, email });
-      // save user token
+      const token = signToken({ user_id: user._id, email, role: user.role });
       user.token = token;
 
       res.status(200).json(user);
@@ -91,9 +83,63 @@ async function updatePassword(req, res) {
     } else {
       res.status(400).json('Invalid current password');
     }
-    // res.status(200).json(body);
   } catch (error) {
     res.status(500).json({ error });
+  }
+}
+
+async function countUsers(req, res) {
+  try {
+    const totalUsers = await User.countDocuments();
+    const ordersCompleted = await Order.countDocuments({ transactionStatus: 'Success' });
+    const nonCompletedOrders = await Order.countDocuments({
+      transactionStatus: 'Pending',
+    });
+    res.status(200).json({
+      totalUsers,
+      ordersCompleted,
+      nonCompletedOrders,
+    });
+  } catch (error) {
+    res.status(400).json({ error });
+  }
+}
+
+async function countTotalEarnings(req, res) {
+  try {
+    const totalEarnings = await Order.aggregate([
+      { $match: { transactionStatus: 'Success' } },
+      { $group: { _id: null, amount: { $sum: '$total' } } },
+    ]);
+    res.status(200).json({
+      totalEarnings,
+    });
+  } catch (error) {
+    res.status(400).json({ error });
+  }
+}
+
+async function countOrdersByMonths(req, res) {
+  try {
+    const totalEarningsByMonths = await Order.aggregate([
+      { $match: { transactionStatus: 'Success' } },
+      {
+        $group: {
+          _id: {
+            month: { $month: '$createdAt' },
+            year: { $year: '$createdAt' },
+          },
+          amount: { $sum: '$total' },
+          count: { $sum: 1 },
+        },
+      },
+      { $sort: { '_id.year': 1, '_id.month': 1 } },
+    ]);
+    res.status(200).json({
+      totalEarningsByMonths,
+    });
+  } catch (error) {
+    res.status(400).json({ error });
   }
 }
 
@@ -102,4 +148,7 @@ module.exports = {
   loginUser,
   updateUser,
   updatePassword,
+  countUsers,
+  countTotalEarnings,
+  countOrdersByMonths,
 };
