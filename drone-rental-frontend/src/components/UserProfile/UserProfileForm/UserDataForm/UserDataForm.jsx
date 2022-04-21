@@ -2,6 +2,7 @@ import React from 'react';
 import { Box, Button, TextField, Typography } from '@mui/material';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
+import 'yup-phone';
 import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import { updateUserInfo } from '../../../../app/slices/userSlice';
@@ -17,9 +18,9 @@ const validationSchemaUserData = yup.object({
     .required('Este campo es requerido')
     .max(50, 'El apellido debe tener una longitud máxima de 50 caracteres'),
   phone: yup
-    .string('Enter your password')
-    .length(9, 'El celular debe tener 9 caracteres')
-    .required('Este campo es requerido'),
+    .string('phone')
+    .required('Por favor, ingrese su número de teléfono')
+    .phone('IN', false, 'Ingresa un teléfono válido'),
   address: yup
     .string('Ingresa tu dirección')
     .min(8, 'Tu dirección debe tener al menos 8 caracteres')
