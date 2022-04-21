@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button, TextField, Stack, FormControlLabel, Checkbox, Box } from '@mui/material';
 import { PropTypes } from 'prop-types';
 import { useFormik } from 'formik';
@@ -10,6 +10,22 @@ import { loginUser } from '../../../app/slices/userSlice';
 import Login from '../../../assets/images/login.png';
 import styles from './SignForm.module.scss';
 
+const validationSchemaRegistration = yup.object({
+  email: yup
+    .string('Ingresa tu correo')
+    .email('Ingresa un correo Válido')
+    .required('El email es requerido'),
+  password: yup
+    .string('Ingresa tu contraseña')
+    .min(5, 'La contraseña debe ser de al menos 5 carácteres')
+    .required('La contraseña es requida'),
+  confirmPassword: yup
+    .string('Ingresa tu contraseña')
+    .min(5, 'La contraseña debe ser de al menos 5 carácteres')
+    .matches('password', 'La contraseña debe ser igual')
+    .required('La contraseña es requida'),
+});
+
 const validationSchema = yup.object({
   email: yup
     .string('Ingresa tu correo')
@@ -17,28 +33,46 @@ const validationSchema = yup.object({
     .required('El email es requerido'),
   password: yup
     .string('Ingresa tu contraseña')
-    .min(7, 'La contraseña debe ser de al menos 8 carácteres')
+    .min(5, 'La contraseña debe ser de al menos 5 carácteres')
     .required('La contraseña es requida'),
 });
 
 function SignForm({ register, admin }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [msg, setMsg] = useState('');
+  const validation = register ? validationSchemaRegistration : validationSchema;
   const formik = useFormik({
     initialValues: {
       email: '',
       password: '',
     },
-    validationSchema,
+    validation,
     onSubmit: async values => {
       // eslint-disable-next-line no-console
-      await axios.post('http://localhost:8080/api/users/login', values).then(resp => {
-        navigate(admin ? '/admin/drones' : '/');
-        const payload = {
-          ...resp.data,
-        };
-        dispatch(loginUser(payload));
-      });
+      if (register) {
+        await axios
+          .post('http://localhost:8080/api/users/createUser', values)
+          .then(() => {
+            navigate('/');
+          })
+          .catch(() => {
+            setMsg('Error');
+          });
+      } else {
+        await axios
+          .post('http://localhost:8080/api/users/login', values)
+          .then(resp => {
+            navigate(admin ? '/admin/drones' : '/');
+            const payload = {
+              ...resp.data,
+            };
+            dispatch(loginUser(payload));
+          })
+          .catch(() => {
+            setMsg('Credenciales invalidas');
+          });
+      }
     },
   });
   return (
@@ -83,9 +117,16 @@ function SignForm({ register, admin }) {
       {register ? (
         <>
           <TextField
+            id="confirmPassword"
+            name="confirmPassword"
             type="password"
-            id="sign-form-confirm-passwd"
             label="Confirm Password"
+            value={formik.values.confirmPassword}
+            onChange={formik.handleChange}
+            error={
+              formik.touched.confirmPassword && Boolean(formik.errors.confirmPassword)
+            }
+            helperText={formik.touched.confirmPassword && formik.errors.confirmPassword}
           />
           <FormControlLabel
             control={<Checkbox />}
@@ -98,6 +139,10 @@ function SignForm({ register, admin }) {
       <Button className={styles.signForm__btn} variant="contained" type="submit">
         Enviar{' '}
       </Button>
+
+      <span style={{ color: 'red' }} id="error-message">
+        {msg}
+      </span>
     </Stack>
   );
 }

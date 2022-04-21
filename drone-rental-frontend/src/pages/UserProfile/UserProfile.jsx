@@ -1,39 +1,33 @@
-import { Grid, Typography } from '@mui/material';
+import { Box, Button, Grid, Tab, Tabs, Typography } from '@mui/material';
 import React from 'react';
+import { useSelector } from 'react-redux';
 import UserProfileForm from '../../components/UserProfile/UserProfileForm/UserProfileForm';
+import DefaultProfileImage from '../../assets/images/user.png';
+import UserOrdersTable from '../../components/UserProfile/UserOrders/UserOrdersTable';
 
 function UserProfile() {
-  const imgUrl = 'https://www.winhelponline.com/blog/wp-content/uploads/2017/12/user.png';
-  const styles = {
-    container: {
-      padding: '20px 10px',
-    },
+  const [value, setValue] = React.useState(0);
+  const user = useSelector(state => state.user);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
   };
   return (
-    <div style={styles.container}>
-      <Grid
-        container
-        direction="row"
-        justifyContent="center"
-        alignItems="center"
-        spacing={2}
+    <Box sx={{ flexGrow: 1, display: 'flex' }}>
+      <Tabs
+        orientation="vertical"
+        variant="scrollable"
+        value={value}
+        onChange={handleChange}
+        aria-label="Vertical tabs example"
+        sx={{ borderRight: 1, borderColor: 'divider' }}
       >
-        <Grid item xs={3}>
-          <img src={imgUrl} alt="Profile" />
-        </Grid>
-        <Grid item xs={8}>
-          <Typography gutterBottom variant="h4">
-            Bienvenido
-          </Typography>
-          <Typography gutterBottom variant="h3">
-            Name Name
-          </Typography>
-        </Grid>
-        <Grid item xs={12}>
-          <UserProfileForm />
-        </Grid>
-      </Grid>
-    </div>
+        <Tab label="Perfil" />
+        <Tab label="Mis Órdenes" />
+      </Tabs>
+      <UserProfileForm user={user} value={value} index={0} />
+      <UserOrdersTable value={value} index={1} />
+    </Box>
   );
 }
 

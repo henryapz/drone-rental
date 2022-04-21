@@ -23,6 +23,7 @@ function CategoryCard() {
         {categories?.map(category => (
           <Grid key={category.name} item xs={12} sm={6} md={4}>
             <Card
+              id={`category-${category.name}`}
               sx={{ borderRadius: '0', height: '250px', margin: '0.8em' }}
               onClick={() => handleClick(category.name)}
             >
