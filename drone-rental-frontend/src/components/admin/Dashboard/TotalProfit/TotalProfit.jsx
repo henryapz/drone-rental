@@ -2,8 +2,9 @@ import React from 'react';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import InfoIcon from '@mui/icons-material/Info';
 import { Typography } from '@mui/material';
+import PropTypes from 'prop-types';
 
-function TotalProfit() {
+function TotalProfit({ profit }) {
   const styles = {
     container: {
       backgroundColor: '#1C2B51',
@@ -42,12 +43,19 @@ function TotalProfit() {
           Ingreso Total
         </Typography>
         <Typography gutterBottom variant="h4">
-          $20,000.00
+          ${profit}
         </Typography>
       </div>
       <InfoIcon style={styles.container_info} />
     </div>
   );
 }
+
+TotalProfit.propTypes = {
+  profit: PropTypes.number,
+};
+TotalProfit.defaultProps = {
+  profit: 0,
+};
 
 export default TotalProfit;

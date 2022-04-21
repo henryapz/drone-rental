@@ -23,19 +23,18 @@ function isAuthenticated() {
   return compose().use(async (req, res, next) => {
     const authHeader = req.headers?.authorization;
     if (!authHeader) {
-      return res.status(401).json({ message: 'Unauthorized' });
+      res.status(401).json({ message: 'Unauthorized' });
     }
     // proceder a validar que el token no se haya expirado
     /* const token = authHeader.split(' ')[1] 1 */
     const [, token] = authHeader.split(' ');
     const payload = await validateToken(token);
-    console.log('payload', payload);
     if (!payload) {
-      return res.status(401).json({ message: 'Unauthorized' });
+      res.status(401).json({ message: 'Unauthorized' });
     }
     const user = await getUserByEmail(payload.email);
     if (!user) {
-      return res.status(401).json({ message: 'User not found' });
+      res.status(401).json({ message: 'User not found' });
     }
     req.user = user;
     next();
