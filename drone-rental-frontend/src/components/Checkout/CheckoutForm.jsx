@@ -84,9 +84,9 @@ function CheckoutForm() {
     const payload = {
       order: {
         subTotal: total,
-        tax: 0.18 * total,
+        tax: (0.18 * total).toFixed(2),
         delivery: 5.5,
-        total: total + 5.5,
+        total: (total + 5.5).toFixed(2),
         items: cart.products.map(item => ({
           amount: item.price,
           quantity: item.quantity,
@@ -115,8 +115,8 @@ function CheckoutForm() {
         bill: '',
         description: 'Drone rental',
         value: total,
-        tax: 0.18 * total,
-        taxBase: total - 0.18 * total,
+        tax: (0.18 * total).toFixed(2),
+        taxBase: (total - 0.18 * total).toFixed(2),
         currency: 'USD',
         dues: '12',
         ip: '',
@@ -132,15 +132,15 @@ function CheckoutForm() {
       dispatch(resetCart());
     }
     setOpen(false);
-    navigate('/');
+    navigate('/profile');
   };
 
   const formik = useFormik({
     initialValues: {
-      firstName: '',
-      lastName: '',
-      telephone: '',
-      address: '',
+      firstName: user.firstName || '',
+      lastName: user.lastName || '',
+      telephone: user.phone || '',
+      address: user.address || '',
       email: '',
       cardNumber: '',
       cardName: '',

@@ -45,7 +45,8 @@ function CheckoutModal({ open, setOpen, handleRedirect }) {
         </Box>
       </DialogContent>
       <DialogActions>
-        {order.status === 'rejected' && (
+        {(order.status === 'rejected' ||
+          (order.status === 'fulfilled' && !order.data.success)) && (
           <Button onClick={setOpen} color="secondary">
             Volver
           </Button>

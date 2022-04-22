@@ -7,7 +7,7 @@ const initialState = {
 };
 
 export const createOrder = createAsyncThunk(
-  'orders',
+  'orders/create',
   async (payload, { rejectWithValue }) => {
     try {
       const config = {
@@ -16,6 +16,24 @@ export const createOrder = createAsyncThunk(
       const res = await axios.post(
         'http://localhost:8080/api/orders/',
         payload.body,
+        config,
+      );
+      return res.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  },
+);
+
+export const getOrders = createAsyncThunk(
+  'orders/get',
+  async (payload, { rejectWithValue }) => {
+    try {
+      const config = {
+        headers: { Authorization: `Bearer ${payload.token}` },
+      };
+      const res = await axios.get(
+        `http://localhost:8080/api/orders/?page=${payload.page}&count=${payload.count}`,
         config,
       );
       return res.data;
@@ -42,6 +60,16 @@ const orderSlice = createSlice({
         state.status = 'rejected';
       })
       .addCase(createOrder.fulfilled, (state, action) => {
+        state.status = 'fulfilled';
+        state.data = action.payload;
+      })
+      .addCase(getOrders.pending, state => {
+        state.status = 'loading';
+      })
+      .addCase(getOrders.rejected, state => {
+        state.status = 'rejected';
+      })
+      .addCase(getOrders.fulfilled, (state, action) => {
         state.status = 'fulfilled';
         state.data = action.payload;
       });
