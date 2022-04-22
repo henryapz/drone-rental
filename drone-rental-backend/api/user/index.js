@@ -9,6 +9,7 @@ const {
   countUsers,
   countTotalEarnings,
   countOrdersByMonths,
+  listRecentDrones,
 } = require('./user.controller');
 
 const router = Router();
@@ -23,5 +24,6 @@ router.patch('/updatePassword', verifyToken, updatePassword);
 router.get('/countUsers', verifyToken, verifyAdminRole, countUsers);
 router.get('/totalEarnings', verifyToken, verifyAdminRole, countTotalEarnings);
 router.get('/totalEarningsByMonths', verifyToken, verifyAdminRole, countOrdersByMonths);
+router.get('/listRecentDrones', verifyToken, verifyAdminRole, listRecentDrones);
 
 module.exports = router;

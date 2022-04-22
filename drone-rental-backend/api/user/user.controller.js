@@ -143,6 +143,36 @@ async function countOrdersByMonths(req, res) {
   }
 }
 
+async function listRecentDrones(req, res) {
+  try {
+    const transactionStatus = 'Success';
+    const recentOrders = await Order.find({ transactionStatus })
+      .limit(10)
+      .sort({ createdAt: -1 })
+      .select('userId transactionStatus createdAt total -_id')
+      .populate({
+        path: 'items',
+        populate: [
+          {
+            path: 'droneId',
+            model: 'Drone',
+            select: {
+              _id: 1,
+              model: 1,
+              brand: 1,
+            },
+          },
+        ],
+      });
+    // droneId
+    res.status(200).json({
+      recentOrders,
+    });
+  } catch (error) {
+    res.status(400).json({ error });
+  }
+}
+
 module.exports = {
   createUser,
   loginUser,
@@ -151,4 +181,5 @@ module.exports = {
   countUsers,
   countTotalEarnings,
   countOrdersByMonths,
+  listRecentDrones,
 };
