@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import * as yup from 'yup';
 import 'yup-phone';
 import {
@@ -157,7 +157,6 @@ function CheckoutForm() {
 
   return (
     <Paper sx={{ flex: '1 1 0', padding: 3, textAlign: 'center' }} component="form">
-      {console.log(user)}
       <CheckoutModal
         open={open}
         setOpen={() => setOpen(false)}

@@ -52,7 +52,7 @@ function SignForm({ register, admin }) {
       // eslint-disable-next-line no-console
       if (register) {
         await axios
-          .post('http://localhost:8080/api/users/createUser', values)
+          .post('https://drone-rental-backend.herokuapp.com/api/users/createUser', values)
           .then(() => {
             navigate('/');
           })
@@ -61,7 +61,7 @@ function SignForm({ register, admin }) {
           });
       } else {
         await axios
-          .post('http://localhost:8080/api/users/login', values)
+          .post('https://drone-rental-backend.herokuapp.com/api/users/login', values)
           .then(resp => {
             navigate(admin ? '/admin/drones' : '/');
             const payload = {

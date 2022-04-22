@@ -110,7 +110,7 @@ function Header({ onMenuButtonClick }) {
 
             <IconButton onClick={handleOpenUserMenu} color="inherit">
               {user.userData && (
-                <Typography variant="subtitle2" component="div">
+                <Typography variant="subtitle2" className="user-email" component="div">
                   {user.userData.email}
                 </Typography>
               )}

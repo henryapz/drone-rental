@@ -52,8 +52,6 @@ function AdminDashboard() {
             }
           }
           setdroneOrders(drones);
-          // eslint-disable-next-line no-console
-          console.log(drones);
         });
     } catch (error) {
       /* eslint no-console: ["error", { allow: ["warn", "error"] }] */

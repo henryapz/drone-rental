@@ -20,7 +20,9 @@ const initialState = {
 
 export const getAllDrones = createAsyncThunk('drones/getAll', async () => {
   try {
-    const drones = await axios.get('http://localhost:8080/api/drones/');
+    const drones = await axios.get(
+      'https://drone-rental-backend.herokuapp.com/api/drones/',
+    );
     return drones.data;
   } catch (error) {
     throw new Error(error);
@@ -29,9 +31,12 @@ export const getAllDrones = createAsyncThunk('drones/getAll', async () => {
 
 export const getDronesByPage = createAsyncThunk('drones/getByPage', async payload => {
   try {
-    const drones = await axios.post(`http://localhost:8080/api/drones/${payload.page}`, {
-      perPage: payload.perPage,
-    });
+    const drones = await axios.post(
+      `https://drone-rental-backend.herokuapp.com/api/drones/${payload.page}`,
+      {
+        perPage: payload.perPage,
+      },
+    );
     return drones.data;
   } catch (error) {
     throw new Error(error);
@@ -40,9 +45,12 @@ export const getDronesByPage = createAsyncThunk('drones/getByPage', async payloa
 
 export const createDrone = createAsyncThunk('drones/create', async payload => {
   try {
-    const drones = await axios.post('http://localhost:8080/api/drones/', {
-      ...payload,
-    });
+    const drones = await axios.post(
+      'https://drone-rental-backend.herokuapp.com/api/drones/',
+      {
+        ...payload,
+      },
+    );
     return drones.data;
   } catch (error) {
     throw new Error(error);
@@ -53,11 +61,14 @@ export const uploadDroneImage = createAsyncThunk(
   'drones/uploadImage',
   async ({ model, base64EncodedImage }) => {
     try {
-      const image = await axios.post('http://localhost:8080/api/images', {
-        imagePath: base64EncodedImage,
-        fileName: model,
-        tags: 'drones',
-      });
+      const image = await axios.post(
+        'https://drone-rental-backend.herokuapp.com/api/images',
+        {
+          imagePath: base64EncodedImage,
+          fileName: model,
+          tags: 'drones',
+        },
+      );
       return image.data;
     } catch (error) {
       throw new Error(error);
@@ -67,9 +78,12 @@ export const uploadDroneImage = createAsyncThunk(
 
 export const deleteDrones = createAsyncThunk('drones/delete', async ids => {
   try {
-    const deletedDrones = await axios.delete('http://localhost:8080/api/drones', {
-      data: { ids },
-    });
+    const deletedDrones = await axios.delete(
+      'https://drone-rental-backend.herokuapp.com/api/drones',
+      {
+        data: { ids },
+      },
+    );
     return deletedDrones.data;
   } catch (error) {
     throw new Error(error);

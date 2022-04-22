@@ -103,6 +103,7 @@ function CreateDron() {
       );
     };
     reader.onerror = () => {
+      // eslint-disable-next-line no-console
       console.error('AHHHHHHHH!!');
     };
   };

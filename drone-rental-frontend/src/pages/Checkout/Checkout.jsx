@@ -1,7 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { Container, Box, Typography, Button } from '@mui/material';
-import ProductsTable from '../../components/Shared/ShoppingCart/Productstable';
+import { Container, Box, Typography } from '@mui/material';
 import CheckoutForm from '../../components/Checkout/CheckoutForm';
 import CheckoutProducts from '../../components/Checkout/CheckoutProducts';
 

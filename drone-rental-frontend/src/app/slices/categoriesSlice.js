@@ -8,7 +8,9 @@ const initialState = {
 
 export const getAllCategories = createAsyncThunk('categories/getAll', async () => {
   try {
-    const response = await axios.get('http://localhost:8080/api/categories');
+    const response = await axios.get(
+      'https://drone-rental-backend.herokuapp.com/api/categories',
+    );
     return response.data.map(element => ({
       ...element,
       checked: false,

@@ -7,3 +7,9 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
+
+@media (max-width: 1023px) {
+  .user-email {
+    display: none;
+  }
+}
