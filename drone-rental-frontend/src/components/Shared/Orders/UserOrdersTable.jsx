@@ -149,7 +149,7 @@ function UserOrdersTable({ value, index, countShow }) {
                   label="Estado"
                 >
                   <MenuItem value="Success">Exitoso</MenuItem>
-                  <MenuItem value="Error">Failed</MenuItem>
+                  <MenuItem value="Failed">Error</MenuItem>
                 </Select>
               </FormControl>
               <TextField
