@@ -13,19 +13,31 @@ function getRequest(url, token) {
 }
 
 function getUserCount(token) {
-  return getRequest('http://localhost:8080/api/users/countUsers', token);
+  return getRequest(
+    'https://drone-rental-backend.herokuapp.com/api/users/countUsers',
+    token,
+  );
 }
 
 function getTotalEarning(token) {
-  return getRequest('http://localhost:8080/api/users/totalEarnings', token);
+  return getRequest(
+    'https://drone-rental-backend.herokuapp.com/api/users/totalEarnings',
+    token,
+  );
 }
 
 function getTotalMontlyStats(token) {
-  return getRequest('http://localhost:8080/api/users/totalEarningsByMonths', token);
+  return getRequest(
+    'https://drone-rental-backend.herokuapp.com/api/users/totalEarningsByMonths',
+    token,
+  );
 }
 
 function getRecentDrones(token) {
-  return getRequest(`http://localhost:8080/api/users/listRecentDrones`, token);
+  return getRequest(
+    `https://drone-rental-backend.herokuapp.com/api/users/listRecentDrones`,
+    token,
+  );
 }
 
 export { getTotalEarning, getUserCount, getTotalMontlyStats, getRecentDrones };

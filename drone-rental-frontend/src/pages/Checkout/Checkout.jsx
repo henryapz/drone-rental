@@ -1,12 +1,11 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
-import { Container, Box, Typography, Button } from '@mui/material';
-import ProductsTable from '../../components/Shared/ShoppingCart/Productstable';
+// import { useSelector } from 'react-redux';
+import { Container, Box, Typography } from '@mui/material';
 import CheckoutForm from '../../components/Checkout/CheckoutForm';
 import CheckoutProducts from '../../components/Checkout/CheckoutProducts';
 
 function Checkout() {
-  const cartTotal = useSelector(state => state.cart.total);
+  // const cartTotal = useSelector(state => state.cart.total);
   return (
     <Container sx={{ margin: '2rem auto' }}>
       <Typography variant="h4" align="center" paddingBottom={3}>

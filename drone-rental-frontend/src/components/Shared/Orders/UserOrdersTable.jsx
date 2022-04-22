@@ -73,7 +73,7 @@ TablePaginationActions.propTypes = {
 };
 
 function UserOrdersTable({ value, index, countShow }) {
-  const [isLoading, setIsLoading] = useState(true);
+  const [, setIsLoading] = useState(true);
   const [page, setPage] = React.useState(0);
   const user = useSelector(state => state.user.userData);
   const [pageOptions, setPageOptions] = useState({ page: page + 1, count: countShow });
@@ -113,7 +113,7 @@ function UserOrdersTable({ value, index, countShow }) {
 
   useEffect(() => {
     dispatch(getOrders({ ...pageOptions, token: user.token, orderId, status, email }));
-  }, [pageOptions, dispatch]);
+  }, [pageOptions, dispatch, user.token, orderId, status, email]);
 
   useEffect(() => {
     if (order.status === 'fulfilled') setIsLoading(false);

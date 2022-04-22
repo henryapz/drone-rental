@@ -14,7 +14,7 @@ export const createOrder = createAsyncThunk(
         headers: { Authorization: `Bearer ${payload.token}` },
       };
       const res = await axios.post(
-        'http://localhost:8080/api/orders/',
+        'https://drone-rental-backend.herokuapp.com/api/orders/',
         payload.body,
         config,
       );
@@ -33,11 +33,11 @@ export const getOrders = createAsyncThunk(
         headers: { Authorization: `Bearer ${payload.token}` },
       };
       const res = await axios.get(
-        `http://localhost:8080/api/orders/?page=${payload.page}&count=${
-          payload.count
-        }&orderId=${payload.order || ''}&status=${payload.status || ''}&email=${
-          payload.email || ''
-        }`,
+        `https://drone-rental-backend.herokuapp.com/api/orders/?page=${
+          payload.page
+        }&count=${payload.count}&orderId=${payload.order || ''}&status=${
+          payload.status || ''
+        }&email=${payload.email || ''}`,
         config,
       );
       return res.data;
@@ -60,7 +60,7 @@ const orderSlice = createSlice({
       .addCase(createOrder.pending, state => {
         state.status = 'loading';
       })
-      .addCase(createOrder.rejected, (state, action) => {
+      .addCase(createOrder.rejected, state => {
         state.status = 'rejected';
       })
       .addCase(createOrder.fulfilled, (state, action) => {

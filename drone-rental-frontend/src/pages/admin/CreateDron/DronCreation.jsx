@@ -22,19 +22,20 @@ import {
 } from '../../../app/slices/dronesSlice';
 import UploadImage from '../../../assets/images/img_ph.svg';
 
+const initialState = {
+  model: '',
+  brand: '',
+  description: '',
+  quantity: '',
+  pricePerDay: '',
+  pricePerWeek: '',
+  pricePerMonth: '',
+  productImage: '',
+  category_id: '',
+};
+
 function CreateDron() {
   const fileInput = useRef(null);
-  const initialState = {
-    model: '',
-    brand: '',
-    description: '',
-    quantity: '',
-    pricePerDay: '',
-    pricePerWeek: '',
-    pricePerMonth: '',
-    productImage: '',
-    category_id: '',
-  };
   const [inputError, setInputError] = useState({});
   const [numericError, setNumericError] = useState({
     quantity: false,
@@ -103,6 +104,7 @@ function CreateDron() {
       );
     };
     reader.onerror = () => {
+      // eslint-disable-next-line no-console
       console.error('AHHHHHHHH!!');
     };
   };
