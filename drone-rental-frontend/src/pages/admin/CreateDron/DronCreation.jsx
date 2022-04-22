@@ -127,6 +127,7 @@ function CreateDron() {
 
   useEffect(() => {
     setPayload({ ...payload, productImage: newDrone.imageId });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [newDrone.imageId]);
 
   const styles = {
