@@ -80,7 +80,7 @@ function DronesTable({ page, rowsPerPage, selected, onSelect, onSelectAll }) {
                   <TableCell component="th" scope="row" padding="none">
                     {drone.model}
                   </TableCell>
-                  <TableCell align="right">{drone.category}</TableCell>
+                  <TableCell align="right">{drone.category_id.name}</TableCell>
                   <TableCell align="right">{drone.quantity}</TableCell>
                   <TableCell align="right">
                     <IconButton color="primary">
