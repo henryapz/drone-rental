@@ -1,6 +1,7 @@
 import React from 'react';
+import { nanoid } from '@reduxjs/toolkit';
 import { PropTypes } from 'prop-types';
-import { Container, Box, Typography, Stack } from '@mui/material';
+import { Container, Box, Typography, Grid } from '@mui/material';
 import { useSelector } from 'react-redux';
 import DroneCard from '../../DronesList/DroneCard';
 import Hero from '../../Shared/Hero/Hero';
@@ -8,7 +9,7 @@ import Loader from '../../Shared/Loader/Loader';
 
 function CategoryInfo({ data }) {
   const drones = useSelector(state => state.drones);
-  const categoryDrones = drones.data.filter(
+  const categoryDrones = drones.allDrones.filter(
     drone => drone.category_id.name === data.name.toLowerCase(),
   );
 
@@ -19,7 +20,7 @@ function CategoryInfo({ data }) {
   return (
     <Container>
       <Typography variant="h2" component="h1" textAlign="center" margin="2rem auto">
-        {data?.name}
+        {data?.name.toUpperCase()}
       </Typography>
       <Hero url={data?.image_id.secure_url} alt={`imagen de dron ${data?.name}`} />
       <Box margin="1rem auto">
@@ -31,11 +32,11 @@ function CategoryInfo({ data }) {
         <Typography variant="h5" component="h2" margin="2rem auto">
           Drones relacionados
         </Typography>
-        <Stack direction="row" spacing={2} width="100%">
+        <Grid container spacing={2} justifyContent="space-evenly" alignItems="stretch">
           {categoryDrones.map(drone => (
-            <DroneCard key={drone} drone={drone} />
+            <DroneCard key={nanoid()} drone={drone} />
           ))}
-        </Stack>
+        </Grid>
       </Box>
     </Container>
   );
