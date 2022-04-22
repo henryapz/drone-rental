@@ -82,11 +82,6 @@ function DronesTable({ page, rowsPerPage, selected, onSelect, onSelectAll }) {
                   </TableCell>
                   <TableCell align="right">{drone.category_id.name}</TableCell>
                   <TableCell align="right">{drone.quantity}</TableCell>
-                  <TableCell align="right">
-                    <IconButton color="primary">
-                      <ModeEditIcon />
-                    </IconButton>
-                  </TableCell>
                 </TableRow>
               );
             })}

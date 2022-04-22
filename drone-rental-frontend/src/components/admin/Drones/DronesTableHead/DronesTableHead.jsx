@@ -25,12 +25,6 @@ const headCells = [
     disablePadding: false,
     label: 'Cantidad',
   },
-  {
-    id: 'actions',
-    align: 'right',
-    disablePadding: false,
-    label: 'Acción',
-  },
 ];
 
 function DronesTableHead({
