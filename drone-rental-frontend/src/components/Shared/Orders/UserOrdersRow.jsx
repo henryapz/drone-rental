@@ -49,7 +49,7 @@ function UserOrdersRow({ order }) {
                     <TableCell>Fecha Inicio</TableCell>
                     <TableCell>Fecha Fin</TableCell>
                     <TableCell>Días</TableCell>
-                    <TableCell>Precio</TableCell>
+                    <TableCell>P/U</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -65,7 +65,8 @@ function UserOrdersRow({ order }) {
                       </TableCell>
                       <TableCell>
                         {new Date(item.endDate).getDate() -
-                          new Date(item.startDate).getDate()}
+                          new Date(item.startDate).getDate() +
+                          1}
                       </TableCell>
                       <TableCell>${item.amount.toFixed(2)}</TableCell>
                     </TableRow>

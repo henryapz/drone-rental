@@ -71,7 +71,7 @@ function DronesList() {
             </FormControl>
           </Box>
         </Box>
-        <Box display="flex" gap={5}>
+        <Box display={{ xs: 'block', sm: 'flex' }} gap={5}>
           <DronesFilter />
           {isLoading ? (
             <Loader />

@@ -1,7 +1,16 @@
 import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
   Box,
+  Button,
+  FormControl,
   IconButton,
+  InputLabel,
+  MenuItem,
   Paper,
+  Select,
+  Stack,
   Table,
   TableBody,
   TableCell,
@@ -10,8 +19,12 @@ import {
   TableHead,
   TablePagination,
   TableRow,
+  TextField,
+  Typography,
   useTheme,
 } from '@mui/material';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { useFormik } from 'formik';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import React, { useEffect, useState } from 'react';
@@ -59,20 +72,47 @@ TablePaginationActions.propTypes = {
   rowsPerPage: PropTypes.number.isRequired,
 };
 
-function UserOrdersTable({ value, index }) {
+function UserOrdersTable({ value, index, countShow }) {
   const [isLoading, setIsLoading] = useState(true);
   const [page, setPage] = React.useState(0);
   const user = useSelector(state => state.user.userData);
-  const [pageOptions, setPageOptions] = useState({ page: 1, count: 4 });
+  const [pageOptions, setPageOptions] = useState({ page: page + 1, count: countShow });
   const order = useSelector(state => state.order);
+  const [orderId, setOrderId] = React.useState('');
+  const [status, setStatus] = React.useState('');
+  const [email, setEmail] = React.useState('');
+
   const dispatch = useDispatch();
+
+  const formik = useFormik({
+    initialValues: {
+      orderId: '',
+      status: '',
+      email: '',
+    },
+    onSubmit: async values => {
+      setOrderId(values.orderId);
+      setStatus(values.status);
+      setEmail(setEmail(values.email));
+      dispatch(
+        getOrders({
+          ...pageOptions,
+          token: user.token,
+          orderId: values.orderId,
+          status: values.status,
+          email: values.email,
+        }),
+      );
+    },
+  });
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
+    setPageOptions({ ...pageOptions, page: newPage + 1 });
   };
 
   useEffect(() => {
-    dispatch(getOrders({ ...pageOptions, token: user.token }));
+    dispatch(getOrders({ ...pageOptions, token: user.token, orderId, status, email }));
   }, [pageOptions, dispatch]);
 
   useEffect(() => {
@@ -81,6 +121,51 @@ function UserOrdersTable({ value, index }) {
 
   return (
     <Box hidden={value !== index} sx={{ width: '100%', padding: 4 }}>
+      {user.role === 'Admin' && (
+        <Accordion sx={{ backgroundColor: '#00b6ff17' }}>
+          <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+            <Typography>Filtras órdenes</Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <Stack
+              direction={{ xs: 'column', sm: 'row' }}
+              display="flex"
+              spacing={2}
+              justifyContent="space-between"
+            >
+              <TextField
+                name="orderId"
+                value={formik.values.orderId}
+                onChange={formik.handleChange}
+                label="Id Orden"
+                variant="outlined"
+              />
+              <FormControl sx={{ m: 1, minWidth: 200 }}>
+                <InputLabel>Estado</InputLabel>
+                <Select
+                  name="status"
+                  value={formik.values.status}
+                  onChange={formik.handleChange}
+                  label="Estado"
+                >
+                  <MenuItem value="Success">Exitoso</MenuItem>
+                  <MenuItem value="Error">Failed</MenuItem>
+                </Select>
+              </FormControl>
+              <TextField
+                name="email"
+                value={formik.values.email}
+                onChange={formik.handleChange}
+                label="Email"
+                variant="outlined"
+              />
+              <Button onClick={formik.handleSubmit} variant="contained">
+                Buscar
+              </Button>
+            </Stack>
+          </AccordionDetails>
+        </Accordion>
+      )}
       {(!order.status || order.status === 'loading') && <p>Loading</p>}
       {order.status === 'fulfilled' && (
         <TableContainer component={Paper}>
@@ -99,15 +184,14 @@ function UserOrdersTable({ value, index }) {
                 <UserOrdersRow key={data._id} order={data} />
               ))}
             </TableBody>
-            {/* <TableFooter>
-            {console.log(order.data.totalOrders, pageOptions.count, pageOptions.page)}
+            <TableFooter>
               <TableRow>
                 <TablePagination
-                  rowsPerPageOptions={[]}
-                  colSpan={3}
+                  rowsPerPageOptions={[4]}
+                  colSpan={5}
                   count={order.data.totalOrders}
                   rowsPerPage={pageOptions.count}
-                  page={pageOptions.page}
+                  page={page}
                   SelectProps={{
                     inputProps: {
                       'aria-label': 'rows per page',
@@ -118,7 +202,7 @@ function UserOrdersTable({ value, index }) {
                   ActionsComponent={TablePaginationActions}
                 />
               </TableRow>
-            </TableFooter> */}
+            </TableFooter>
           </Table>
         </TableContainer>
       )}
@@ -127,8 +211,15 @@ function UserOrdersTable({ value, index }) {
 }
 
 UserOrdersTable.propTypes = {
-  value: PropTypes.number.isRequired,
-  index: PropTypes.number.isRequired,
+  value: PropTypes.number,
+  index: PropTypes.number,
+  countShow: PropTypes.number,
+};
+
+UserOrdersTable.defaultProps = {
+  value: -1,
+  index: -1,
+  countShow: 3,
 };
 
 export default UserOrdersTable;

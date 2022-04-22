@@ -16,9 +16,9 @@ import Drones from './pages/admin/Drones/Drones';
 import Dashboard from './pages/admin/Dashboard/Dashboard';
 import UserProfile from './pages/UserProfile/UserProfile';
 import Checkout from './pages/Checkout/Checkout';
-import Orders from './pages/admin/Orders/Orders';
 import CategoryDetail from './pages/CategoryDetail/CategoryDetail';
 import NotFound from './components/Shared/NotFound/NotFound';
+import Orders from './pages/admin/Orders/Orders';
 
 function App() {
   const dispatch = useDispatch();
