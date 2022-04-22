@@ -28,7 +28,7 @@ function DroneInfo({ data }) {
     if (inputValue && rentDates.length > 0 && !rentDates.includes(null)) {
       const initialDate = moment(rentDates[0]);
       const finalDate = moment(rentDates[1]);
-      const days = finalDate.diff(initialDate, 'days');
+      const days = finalDate.diff(initialDate, 'days') + 1;
 
       const payload = {
         droneId: data._id,

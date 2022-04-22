@@ -141,7 +141,7 @@ function CheckoutForm() {
       lastName: user.lastName || '',
       telephone: user.phone || '',
       address: user.address || '',
-      email: '',
+      email: user.email || '',
       cardNumber: '',
       cardName: '',
       cardExpiringDate: '',
@@ -157,6 +157,7 @@ function CheckoutForm() {
 
   return (
     <Paper sx={{ flex: '1 1 0', padding: 3, textAlign: 'center' }} component="form">
+      {console.log(user)}
       <CheckoutModal
         open={open}
         setOpen={() => setOpen(false)}

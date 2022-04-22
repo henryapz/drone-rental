@@ -33,7 +33,11 @@ export const getOrders = createAsyncThunk(
         headers: { Authorization: `Bearer ${payload.token}` },
       };
       const res = await axios.get(
-        `http://localhost:8080/api/orders/?page=${payload.page}&count=${payload.count}`,
+        `http://localhost:8080/api/orders/?page=${payload.page}&count=${
+          payload.count
+        }&orderId=${payload.order || ''}&status=${payload.status || ''}&email=${
+          payload.email || ''
+        }`,
         config,
       );
       return res.data;

@@ -1,4 +1,5 @@
 /* eslint-disable no-underscore-dangle */
+const { default: mongoose } = require('mongoose');
 const { createPayment } = require('../payment/payment.service');
 const Order = require('./models/order.model');
 const { createTokenToPay, createOrderInDB } = require('./order.service');
@@ -44,6 +45,7 @@ async function getOrders(req, res) {
   const { user, query } = req;
   const count = Number(query.count);
   const page = Number(query.page);
+  const { orderId, email, status } = query;
   const start = count * (page - 1);
   const end = start + count;
   let orders = null;
@@ -55,9 +57,17 @@ async function getOrders(req, res) {
         .select('transactionId createdAt total transactionStatus items')
         .sort({ createdAt: -1 });
     } else {
-      orders = await Order.find()
+      const objectFilter = {};
+      if (orderId) objectFilter.transactionId = new mongoose.Types.ObjectId(orderId);
+      if (status) objectFilter.transactionStatus = status;
+
+      const ordersFromDb = await Order.find(objectFilter)
         .select('transactionId createdAt total transactionStatus items')
+        .populate('userId', 'email')
         .sort({ createdAt: -1 });
+      orders = email
+        ? ordersFromDb.filter((x) => (x.userId && x.userId.email === email))
+        : ordersFromDb;
     }
     const filteredOrders = orders.slice(start, end);
     const orderResult = {

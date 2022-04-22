@@ -1,9 +1,8 @@
-import { Box, Button, Grid, Tab, Tabs, Typography } from '@mui/material';
+import { Box, Tab, Tabs } from '@mui/material';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import UserProfileForm from '../../components/UserProfile/UserProfileForm/UserProfileForm';
-import DefaultProfileImage from '../../assets/images/user.png';
-import UserOrdersTable from '../../components/UserProfile/UserOrders/UserOrdersTable';
+import UserOrdersTable from '../../components/Shared/Orders/UserOrdersTable';
 
 function UserProfile() {
   const [value, setValue] = React.useState(0);
