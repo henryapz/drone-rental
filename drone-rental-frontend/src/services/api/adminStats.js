@@ -24,4 +24,8 @@ function getTotalMontlyStats(token) {
   return getRequest('http://localhost:8080/api/users/totalEarningsByMonths', token);
 }
 
-export { getTotalEarning, getUserCount, getTotalMontlyStats };
+function getRecentDrones(token) {
+  return getRequest(`http://localhost:8080/api/users/listRecentDrones`, token);
+}
+
+export { getTotalEarning, getUserCount, getTotalMontlyStats, getRecentDrones };

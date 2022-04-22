@@ -12,18 +12,20 @@ import {
   getUserCount,
   getTotalEarning,
   getTotalMontlyStats,
+  getRecentDrones,
 } from '../../../services/api/adminStats';
 
 function AdminDashboard() {
   const user = useSelector(state => state.user);
-  const data = {
+  const initialData = {
     totalUsers: 0,
     ordersCompleted: 0,
     nonCompletedOrders: 0,
   };
-  const [stats, setStats] = useState(data);
+  const [stats, setStats] = useState(initialData);
   const [profit, setProfit] = useState(0);
   const [monthlyStats, setMonthlyStats] = useState({ totalEarningsByMonths: [] });
+  const [droneOrders, setdroneOrders] = useState([]);
 
   useEffect(() => {
     try {
@@ -36,6 +38,23 @@ function AdminDashboard() {
       getTotalMontlyStats(user.userData.token).then(resp => {
         setMonthlyStats(resp.data);
       });
+      getRecentDrones(user.userData.token)
+        .then(response => response.data)
+        .then(data => {
+          const drones = [];
+          const { recentOrders } = data;
+          for (let i = 0; i < recentOrders.length; i += 1) {
+            const { items, createdAt } = recentOrders[i];
+            for (let j = 0; j < items.length; j += 1) {
+              const item = items[j];
+              const itemId = item._id;
+              drones.push({ createdAt, ...item.droneId, itemId });
+            }
+          }
+          setdroneOrders(drones);
+          // eslint-disable-next-line no-console
+          console.log(drones);
+        });
     } catch (error) {
       /* eslint no-console: ["error", { allow: ["warn", "error"] }] */
       console.error(error);
@@ -78,7 +97,7 @@ function AdminDashboard() {
           <ApexLineChar totalEarningsByMonths={monthlyStats.totalEarningsByMonths} />
         </Grid>
         <Grid item xs={12} md={6}>
-          <RecentActivity />
+          <RecentActivity droneOrders={droneOrders} />
         </Grid>
       </Grid>
     </Box>
