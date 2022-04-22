@@ -7,44 +7,35 @@ import {
   List,
   ListItem,
   ListItemText,
-  MenuItem,
-  Select,
+  Typography,
 } from '@mui/material';
+import PropTypes from 'prop-types';
 
-function RecentActivity() {
-  const selectedFiler = 10;
-  /* const activities = [
-    {
-      userName: 'Henry A.',
-      droneName: 'T800',
-      dronePrice: '5000',
-      time: '',
-    },
-  ]; */
-  const activities = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+function RecentActivity({ droneOrders }) {
+  function parseDate(date) {
+    return new Date(date).toLocaleString();
+  }
   return (
     <div>
       <Card sx={{ minWidth: 275 }}>
-        <CardHeader
-          action={
-            <Select autoWidth value={selectedFiler}>
-              <MenuItem value={10}>Últimos 7 días</MenuItem>
-              <MenuItem value={12}>Mes en curso</MenuItem>
-              <MenuItem value={13}>Últimos 30 días</MenuItem>
-              <MenuItem value={14}>Último mes</MenuItem>
-              <MenuItem value={15}>Últimos 3 meses</MenuItem>
-            </Select>
-          }
-          title="Drone Alquilados"
-        />
+        <CardHeader title="Drones Alquilados Recientemente" />
         <CardContent>
           <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
-            {activities.map(elem => (
-              <React.Fragment key={elem}>
-                <ListItem secondaryAction="1hr ago">
+            {droneOrders.map(elem => (
+              <React.Fragment key={elem.itemId}>
+                <ListItem alignItems="flex-start">
                   <ListItemText
-                    primary={`Cliente ${elem} (Name Name)`}
-                    secondary="$5000"
+                    primary={`${elem.model} — ${elem.brand}`}
+                    secondary={
+                      <Typography
+                        sx={{ display: 'inline' }}
+                        component="span"
+                        variant="body2"
+                        color="text.primary"
+                      >
+                        {parseDate(elem.createdAt)}
+                      </Typography>
+                    }
                   />
                 </ListItem>
                 <Divider />
@@ -56,5 +47,20 @@ function RecentActivity() {
     </div>
   );
 }
+
+RecentActivity.propTypes = {
+  droneOrders: PropTypes.arrayOf(
+    PropTypes.shape({
+      brand: PropTypes.string,
+      model: PropTypes.string,
+      createdAt: PropTypes.string,
+      itemId: PropTypes.string,
+      _id: PropTypes.string,
+    }),
+  ),
+};
+RecentActivity.defaultProps = {
+  droneOrders: [],
+};
 
 export default RecentActivity;
